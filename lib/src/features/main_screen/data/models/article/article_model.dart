@@ -12,7 +12,16 @@ class ArticleModel extends Article {
     String? urlToImage,
     DateTime? publishedAt,
     String? content,
-  }) : super(source: sourceModel, author: author);
+  }) : super(
+          source: sourceModel,
+          author: author,
+          title: title,
+          description: description,
+          url: url,
+          urlToImage: urlToImage,
+          publishedAt: publishedAt,
+          content: content,
+        );
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) => ArticleModel(
         sourceModel: json['source'] == null
@@ -39,4 +48,6 @@ class ArticleModel extends Article {
         'publishedAt': publishedAt?.toIso8601String(),
         'content': content,
       };
+
+
 }

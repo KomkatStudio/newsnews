@@ -14,7 +14,7 @@ class ApiProvider {
       {required String path, required String country}) async {
     final response = await http.get(Uri.parse(
         FlavorConfig.instance.value.baseUrl! +
-            "$path/country=$country&apiKey=${dotenv.get("API_KEY")}"));
+            "$path?country=$country&apiKey=${dotenv.get("API_KEY")}"));
     if (response.statusCode == 200) {
       var converted = jsonDecode(response.body);
       Iterable list = converted['articles'];

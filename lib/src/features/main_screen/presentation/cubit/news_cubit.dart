@@ -6,7 +6,9 @@ import 'package:newsnews/src/features/main_screen/domain/usecases/get_topheadlin
 part 'news_state.dart';
 
 class NewsCubit extends Cubit<NewsState> {
-  NewsCubit(this.getTopHeadline) : super(NewsInitial());
+  NewsCubit({required this.getTopHeadline}) : super(NewsInitial()){
+    getTopHeadlineNews();
+  }
 
   final GetTopHeadline getTopHeadline;
 
