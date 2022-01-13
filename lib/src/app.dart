@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/di/injector.dart';
-import 'package:newsnews/src/features/main_screen/presentation/cubit/news_cubit.dart';
-import 'package:newsnews/src/features/main_screen/presentation/view/main_screen.dart';
+import 'package:newsnews/src/features/feed/presentation/cubit/news_cubit.dart';
+import 'package:newsnews/src/features/main/presentation/cubit/cubit/main_screen_cubit.dart';
+import 'package:newsnews/src/features/main/presentation/view/main_screen.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -11,14 +13,23 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<MainScreenCubit>(
+          create: (context) => s1<MainScreenCubit>(),
+        ),
         BlocProvider<NewsCubit>(
           create: (context) => s1<NewsCubit>(),
         ),
       ],
-      child: const MaterialApp(
-        title: "NewsNews ",
-        home: MainScreen(),
-      ),
+      child: ScreenUtilInit(
+          designSize: const Size(411, 823),
+          minTextAdapt: true,
+          builder: () {
+            return MaterialApp(
+              theme: ThemeData.light(),
+              title: "NewsNews",
+              home: const MainScreen(),
+            );
+          }),
     );
   }
 }

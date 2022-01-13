@@ -1,4 +1,4 @@
-import 'package:newsnews/src/features/main_screen/domain/entities/article/source.dart';
+import 'package:newsnews/src/features/feed/domain/entities/article/source.dart';
 
 class SourceModel extends Source {
   const SourceModel({String? id, String? name}) : super(id: id, name: name);

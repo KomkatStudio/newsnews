@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:newsnews/src/core/errors/exception.dart';
 import 'package:newsnews/src/core/errors/failure.dart';
-import 'package:newsnews/src/features/main_screen/data/providers/api_provider.dart';
-import 'package:newsnews/src/features/main_screen/domain/entities/article/article.dart';
-import 'package:newsnews/src/features/main_screen/domain/repositories/news_repository.dart';
+import 'package:newsnews/src/features/feed/data/providers/api_provider.dart';
+import 'package:newsnews/src/features/feed/domain/entities/article/article.dart';
+import 'package:newsnews/src/features/feed/domain/repositories/news_repository.dart';
 
 class NewsRepositoryImpl implements NewsRepository {
   final ApiProvider apiProvider;

@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:newsnews/src/core/errors/failure.dart';
-import 'package:newsnews/src/features/main_screen/domain/entities/article/article.dart';
+import 'package:newsnews/src/features/feed/domain/entities/article/article.dart';
 
 abstract class NewsRepository {
   Future<Either<Failure, List<Article>>> getTopHeadline(

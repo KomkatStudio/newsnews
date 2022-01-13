@@ -1,4 +1,4 @@
-import 'package:newsnews/src/features/main_screen/domain/entities/article/article.dart';
+import 'package:newsnews/src/features/feed/domain/entities/article/article.dart';
 
 import 'source_model.dart';
 
@@ -48,6 +48,4 @@ class ArticleModel extends Article {
         'publishedAt': publishedAt?.toIso8601String(),
         'content': content,
       };
-
-
 }

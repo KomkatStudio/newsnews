@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:newsnews/src/core/errors/failure.dart';
 import 'package:newsnews/src/core/usecases/usecase.dart';
-import 'package:newsnews/src/features/main_screen/domain/entities/article/article.dart';
-import 'package:newsnews/src/features/main_screen/domain/repositories/news_repository.dart';
+import 'package:newsnews/src/features/feed/domain/entities/article/article.dart';
+import 'package:newsnews/src/features/feed/domain/repositories/news_repository.dart';
 
 class GetTopHeadline extends Usecase<List<Article>, Params> {
   final NewsRepository newsRepository;
