@@ -25,8 +25,9 @@ class App extends StatelessWidget {
           minTextAdapt: true,
           builder: () {
             return MaterialApp(
-              theme: ThemeData.light(),
               title: "NewsNews",
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData.light(),
               home: const MainScreen(),
             );
           }),

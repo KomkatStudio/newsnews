@@ -45,6 +45,7 @@ dependencies:
   fluttericon: ^2.0.0
   google_fonts: ^2.2.0
   carousel_pro: ^1.0.0
+  cached_network_image: ^3.2.0
 
 dev_dependencies:
   flutter_test:
