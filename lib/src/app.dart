@@ -24,11 +24,10 @@ class App extends StatelessWidget {
           designSize: const Size(411, 823),
           minTextAdapt: true,
           builder: () {
-            return MaterialApp(
+            return const MaterialApp(
               title: "NewsNews",
               debugShowCheckedModeBanner: false,
-              theme: ThemeData.light(),
-              home: const MainScreen(),
+              home: MainScreen(),
             );
           }),
     );
