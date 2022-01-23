@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:newsnews/src/features/feed/presentation/cubit/news_cubit.dart';
+import 'package:newsnews/src/features/feed/presentation/view/more_breaking_news.dart';
 import 'package:newsnews/src/features/feed/presentation/widget/headline_card.dart';
 import 'package:newsnews/src/features/feed/presentation/widget/news_card.dart';
 import 'package:newsnews/src/widgets/circle_loading.dart';
@@ -27,6 +28,7 @@ class _FeedScreenState extends State<FeedScreen>
     super.initState();
   }
 
+  bool _isChanged = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,15 +115,53 @@ class _FeedScreenState extends State<FeedScreen>
                   ),
                 ),
                 SizedBox(
+                  height: 8.h,
+                ),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      margin: EdgeInsets.symmetric(horizontal: 2.w),
+                      height: 5.h,
+                      width: _isChanged ? 35.w : 20.w,
+                      decoration: BoxDecoration(
+                        color: _isChanged ? Colors.blue : Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      margin: EdgeInsets.symmetric(horizontal: 2.w),
+                      height: 5.h,
+                      width: _isChanged ? 20.w : 35.w,
+                      decoration: BoxDecoration(
+                        color: _isChanged ? Colors.grey.shade300 : Colors.blue,
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
                   height: 14.h,
                 ),
-                _buildRowTagSeeMore(tag: "Breaking news"),
+                _buildRowTagSeeMore(
+                  tag: "Breaking news",
+                  onSeeMoreTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MoreBreakingNews(),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: 7.h,
                 ),
                 SizedBox(
                   height: 140.h,
                   child: ListView(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
                     scrollDirection: Axis.horizontal,
                     children: [
                       NewsCard(
@@ -132,10 +172,17 @@ class _FeedScreenState extends State<FeedScreen>
                         tag: "Sport",
                         time: "15 mins ago",
                         onNewsTapFunction: () {
-                          pageController.nextPage(
-                            curve: Curves.easeIn,
-                            duration: const Duration(milliseconds: 300),
-                          );
+                          _isChanged
+                              ? pageController.nextPage(
+                                  curve: Curves.easeIn,
+                                  duration: const Duration(milliseconds: 300),
+                                )
+                              : pageController.previousPage(
+                                  curve: Curves.linear,
+                                  duration: const Duration(milliseconds: 300));
+                          setState(() {
+                            _isChanged = !_isChanged;
+                          });
                         },
                       ),
                       NewsCard(
@@ -160,11 +207,12 @@ class _FeedScreenState extends State<FeedScreen>
                 SizedBox(
                   height: 140.h,
                   child: ListView(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
                     scrollDirection: Axis.horizontal,
                     children: [
                       NewsCard(
                         imageUrl:
-                            "https://sportshub.cbsistatic.com/i/r/2021/01/22/4d145216-04f3-4ed7-bbfe-c19b8e2f8819/thumbnail/1200x675/54994d3f30fed2fb6effc7e5b8ea14bb/rodgers-packers-snow.jpg",
+                            "https://i.ytimg.com/vi/zSSlv9lq190/maxresdefault_live.jpg",
                         title:
                             "Manchester City's Kevin De Bruyne will take time to be...",
                         tag: "Sport",
@@ -183,13 +231,20 @@ class _FeedScreenState extends State<FeedScreen>
                     ],
                   ),
                 ),
-                _buildRowTagSeeMore(tag: "Ads", hasSeeMore: false),
+                SizedBox(
+                  height: 14.h,
+                ),
+                _buildRowTagSeeMore(
+                  tag: "Ads",
+                  hasSeeMore: false,
+                ),
                 SizedBox(
                   height: 7.h,
                 ),
                 SizedBox(
                   height: 140.h,
                   child: ListView(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
                     scrollDirection: Axis.horizontal,
                     children: [
                       NewsCard(

@@ -5,7 +5,6 @@ import 'package:newsnews/src/features/feed/data/repositories/news_repository_imp
 import 'package:newsnews/src/features/feed/domain/repositories/news_repository.dart';
 import 'package:newsnews/src/features/feed/domain/usecases/get_topheadline.dart';
 import 'package:newsnews/src/features/feed/presentation/cubit/news_cubit.dart';
-import 'package:newsnews/src/features/main/presentation/cubit/cubit/main_screen_cubit.dart';
 
 final s1 = GetIt.instance;
 
@@ -28,5 +27,4 @@ void initDependence() {
   ///BLOC - Cubit
   ///
   s1.registerFactory<NewsCubit>(() => NewsCubit(getTopHeadline: s1()));
-  s1.registerFactory<MainScreenCubit>(() => MainScreenCubit());
 }

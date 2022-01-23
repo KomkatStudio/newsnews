@@ -24,6 +24,7 @@ class NewsCard extends StatelessWidget {
     return GestureDetector(
       onTap: onNewsTapFunction,
       child: Container(
+        height: 120.h,
         padding: EdgeInsets.symmetric(horizontal: 10.w),
         margin: EdgeInsets.symmetric(vertical: 12.h, horizontal: 5.w),
         width: size.width - 35.w,
