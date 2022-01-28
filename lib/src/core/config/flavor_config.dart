@@ -34,7 +34,6 @@ class FlavorConfig {
 }
 
 void setFlavorDevelopment() {
-  
   FlavorConfig(
       flavor: Flavor.dev,
       name: "NewsNews-Dev",

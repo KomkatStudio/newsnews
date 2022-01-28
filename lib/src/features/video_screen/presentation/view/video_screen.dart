@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
 class VideoScreen extends StatelessWidget {
-  const VideoScreen({ Key? key }) : super(key: key);
+  const VideoScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("Video screne"),),
+    return const Scaffold(
+      body: Center(
+        child: Text("hello world"),
+      ),
     );
   }
 }

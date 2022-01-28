@@ -1,5 +1,3 @@
-
-
 class Router {
   static const feeds = '/feeds';
   static const videos = '/videos';
@@ -7,6 +5,4 @@ class Router {
   static const user = '/user';
   static const moreBreakingNews = '/moreBreakingNews';
   static const moreHotTrendings = '/moreHotTrendings';
-
-
 }

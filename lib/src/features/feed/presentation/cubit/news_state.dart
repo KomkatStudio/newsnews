@@ -15,7 +15,7 @@ class NewsLoaded extends NewsState {
   final List<Article> listArticle;
 
   const NewsLoaded(this.listArticle);
-  
+
   @override
   List<Object> get props => [listArticle];
 }
