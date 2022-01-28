@@ -20,10 +20,23 @@ class App extends StatelessWidget {
         designSize: const Size(411, 823),
         minTextAdapt: true,
         builder: () {
-          return const MaterialApp(
+          return MaterialApp(
             title: "NewsNews",
             debugShowCheckedModeBanner: false,
-            home: MainScreen(),
+            theme: ThemeData(
+              appBarTheme: AppBarTheme(
+                iconTheme: const IconThemeData(color: Colors.black),
+                actionsIconTheme: const IconThemeData(color: Colors.black),
+                backgroundColor: Colors.white,
+                elevation: 2,
+                titleTextStyle: TextStyle(
+                  color: Colors.black,
+                  fontSize: 24.sp,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            home: const MainScreen(),
           );
         },
       ),
