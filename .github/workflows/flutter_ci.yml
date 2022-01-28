@@ -20,10 +20,10 @@ jobs:
       - name: Flutter action
         uses: subosito/flutter-action@v2.2.1
         with:
-          flutter-version: "2.8.0"
+          flutter-version: "2.5.3"
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: "2.15.0"
+          sdk: "2.14.4"
       - name: Flutter pub get dependencies
         run: flutter pub get
       - name: Analyze project
