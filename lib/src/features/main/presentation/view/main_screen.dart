@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/features/favorite/presentation/view/favorite_screen.dart';
 import 'package:newsnews/src/features/feed/presentation/view/feed_screen.dart';
 import 'package:newsnews/src/features/video_screen/presentation/view/video_screen.dart';
@@ -42,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
               style: TextStyle(fontSize: 16.sp),
             ),
             inactiveColor: Colors.grey[400],
+            activeColor: Palette.primaryColor,
           ),
           BottomNavyBarItem(
             textAlign: TextAlign.center,
@@ -51,6 +53,7 @@ class _MainScreenState extends State<MainScreen> {
               style: TextStyle(fontSize: 16.sp),
             ),
             inactiveColor: Colors.grey[400],
+            activeColor: Palette.primaryColor,
           ),
           BottomNavyBarItem(
             textAlign: TextAlign.center,
@@ -60,6 +63,7 @@ class _MainScreenState extends State<MainScreen> {
               style: TextStyle(fontSize: 16.sp),
             ),
             inactiveColor: Colors.grey[400],
+            activeColor: Palette.primaryColor,
           ),
           BottomNavyBarItem(
             textAlign: TextAlign.center,
@@ -69,6 +73,7 @@ class _MainScreenState extends State<MainScreen> {
               style: TextStyle(fontSize: 16.sp),
             ),
             inactiveColor: Colors.grey[400],
+            activeColor: Palette.primaryColor,
           ),
         ],
       ),

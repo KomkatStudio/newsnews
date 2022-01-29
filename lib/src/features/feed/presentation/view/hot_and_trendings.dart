@@ -5,14 +5,14 @@ import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
 import 'package:newsnews/src/widgets/custom_scroll.dart';
 
-class MoreBreakingNews extends StatefulWidget {
-  const MoreBreakingNews({Key? key}) : super(key: key);
+class HotAndTrendings extends StatefulWidget {
+  const HotAndTrendings({Key? key}) : super(key: key);
 
   @override
-  State<MoreBreakingNews> createState() => _MoreBreakingNewsState();
+  State<HotAndTrendings> createState() => _HotAndTrendingsState();
 }
 
-class _MoreBreakingNewsState extends State<MoreBreakingNews> {
+class _HotAndTrendingsState extends State<HotAndTrendings> {
   final categoryList = [
     "All",
     "Politics",
@@ -38,7 +38,7 @@ class _MoreBreakingNewsState extends State<MoreBreakingNews> {
           icon: const FaIcon(FontAwesomeIcons.arrowLeft),
           onPressed: () => Navigator.pop(context),
           color: Colors.black,
-          iconSize: 20.sp,
+          iconSize: 22,
         ),
         title: const Text("Hot & trendings"),
         titleTextStyle: TextStyle(
@@ -53,9 +53,9 @@ class _MoreBreakingNewsState extends State<MoreBreakingNews> {
           IconButton(
             icon: const FaIcon(
               FontAwesomeIcons.redoAlt,
+              size: 22,
               color: Colors.black,
             ),
-            iconSize: 20.sp,
             onPressed: () {},
           ),
         ],
@@ -138,11 +138,11 @@ class CustomCategoryChoiceChip extends StatelessWidget {
       child: ChoiceChip(
         shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.all(Radius.circular(6)),
-          side: BorderSide(color: Palette.primaryColor, width: 1.4),
+          side: BorderSide(color: Palette.primaryColor, width: 1.7),
         ),
         label: Text(category),
         labelStyle: TextStyle(
-          color: choiceStatus ? Colors.white : Colors.black,
+          color: choiceStatus ? Colors.white : Palette.tagCategoryColor,
           fontSize: 16.sp,
           fontWeight: FontWeight.w600,
         ),
@@ -150,7 +150,7 @@ class CustomCategoryChoiceChip extends StatelessWidget {
         selected: choiceStatus,
         onSelected: onSelectCategoryFunction,
         selectedColor: Palette.primaryColor,
-        backgroundColor: Colors.blue.shade50.withOpacity(0.2),
+        backgroundColor: Palette.backgroundChip,
       ),
     );
   }

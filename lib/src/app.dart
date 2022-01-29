@@ -28,7 +28,7 @@ class App extends StatelessWidget {
                 iconTheme: const IconThemeData(color: Colors.black),
                 actionsIconTheme: const IconThemeData(color: Colors.black),
                 backgroundColor: Colors.white,
-                elevation: 2,
+                elevation: 3.5,
                 titleTextStyle: TextStyle(
                   color: Colors.black,
                   fontSize: 24.sp,

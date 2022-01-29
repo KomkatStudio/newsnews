@@ -1,14 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:newsnews/src/widgets/custom_scroll.dart';
+import 'package:newsnews/src/widgets/news_card.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Favorite Screen"),
-      ),
-    );
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("Favorites"),
+          titleTextStyle: TextStyle(
+            fontSize: 20.sp,
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+          ),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: const FaIcon(
+                FontAwesomeIcons.redo,
+                size: 20,
+                color: Colors.black,
+              ),
+              onPressed: () {},
+            ),
+          ],
+        ),
+        body: ScrollConfiguration(
+          behavior: CustomScroll(),
+          child: ListView.builder(
+            itemCount: 3,
+            padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10.w),
+            itemBuilder: (context, index) {
+              return NewsCard(
+                imageUrl:
+                    "https://sportshub.cbsistatic.com/i/r/2021/01/22/4d145216-04f3-4ed7-bbfe-c19b8e2f8819/thumbnail/1200x675/5499"
+                    "4d3f30fed2fb6effc7e5b8ea14bb/rodgers-packers-snow.jpg",
+                title:
+                    "Manchester City's Kevin De Bruyne will take time to be...",
+                tag: "Sport",
+                time: "15 mins ago",
+                verticalMargin: 8.h,
+                needHeart: true,
+                isFavorite: true,
+                onHeartTapFunction: () {},
+                onNewsTapFunction: () {},
+              );
+            },
+          ),
+        ));
   }
 }

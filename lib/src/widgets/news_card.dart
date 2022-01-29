@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:newsnews/src/core/theme/palette.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({
@@ -10,12 +11,20 @@ class NewsCard extends StatelessWidget {
     required this.tag,
     required this.time,
     required this.onNewsTapFunction,
+    required this.verticalMargin,
+    this.needHeart = false,
+    this.onHeartTapFunction,
+    this.isFavorite = false,
   }) : super(key: key);
 
   final String imageUrl;
   final String title;
   final String tag;
   final String time;
+  final double verticalMargin;
+  final bool needHeart;
+  final bool isFavorite;
+  final VoidCallback? onHeartTapFunction;
   final VoidCallback onNewsTapFunction;
 
   @override
@@ -24,9 +33,9 @@ class NewsCard extends StatelessWidget {
     return GestureDetector(
       onTap: onNewsTapFunction,
       child: Container(
-        height: 120.h,
+        height: needHeart ? 150.h : 130.h,
         padding: EdgeInsets.symmetric(horizontal: 10.w),
-        margin: EdgeInsets.symmetric(vertical: 12.h, horizontal: 5.w),
+        margin: EdgeInsets.symmetric(vertical: verticalMargin, horizontal: 5.w),
         width: size.width - 35.w,
         decoration: BoxDecoration(
           color: Colors.white,
@@ -46,7 +55,7 @@ class NewsCard extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.0.w),
                 child: Container(
-                  height: 110.h,
+                  height: 120.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     image: DecorationImage(
@@ -60,22 +69,44 @@ class NewsCard extends StatelessWidget {
               ),
             ),
             SizedBox(
-              width: 20.w,
+              width: 15.w,
             ),
             Expanded(
               flex: 3,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: needHeart
+                    ? MainAxisAlignment.start
+                    : MainAxisAlignment.center,
                 children: [
+                  needHeart
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(vertical: 6.0.h),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: GestureDetector(
+                              child: FaIcon(
+                                isFavorite
+                                    ? FontAwesomeIcons.solidHeart
+                                    : FontAwesomeIcons.heart,
+                                size: 20.sp,
+                                color: isFavorite ? Colors.red : null,
+                              ),
+                              onTap: onHeartTapFunction,
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
                   Text(
                     title,
-                    style:
-                        TextStyle(fontWeight: FontWeight.w600, fontSize: 17.sp),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 17.sp,
+                    ),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
                   SizedBox(
-                    height: 15.h,
+                    height: 16.h,
                   ),
                   Row(
                     children: [
@@ -84,17 +115,18 @@ class NewsCard extends StatelessWidget {
                         width: 70.w,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: Colors.blue.shade50,
+                          color: Palette.backgroundChip,
                           border: Border.all(
-                            color: Colors.blue,
+                            color: Palette.primaryColor,
+                            width: 2,
                           ),
                         ),
                         child: Center(
                           child: Text(
                             tag,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
-                              color: Colors.grey.shade800,
+                              color: Palette.tagCategoryColor,
                             ),
                           ),
                         ),
@@ -106,14 +138,14 @@ class NewsCard extends StatelessWidget {
                         children: [
                           FaIcon(
                             FontAwesomeIcons.clock,
-                            color: Colors.blue,
+                            color: Palette.primaryColor,
                             size: 20.sp,
                           ),
-                          SizedBox(width: 5.w),
+                          SizedBox(width: 3.w),
                           Text(
                             time,
                             style: TextStyle(
-                              color: Colors.grey.shade600,
+                              color: Palette.descriptionColor,
                             ),
                           )
                         ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:newsnews/src/core/theme/palette.dart';
 
 class HeadlineCard extends StatelessWidget {
   const HeadlineCard({
@@ -53,7 +54,7 @@ class HeadlineCard extends StatelessWidget {
                 left: 20.w,
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Colors.blue.shade800,
+                      color: Palette.primaryHeavyColor,
                       borderRadius: BorderRadius.circular(4)),
                   padding: const EdgeInsets.all(5),
                   child: Text(
