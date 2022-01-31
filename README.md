@@ -1,6 +1,6 @@
-# newsnews
+# NewNews
 
-A new Flutter project.
+A new app in store
 
 ## Getting Started
 
