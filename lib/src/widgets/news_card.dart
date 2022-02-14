@@ -110,29 +110,34 @@ class NewsCard extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Container(
-                        height: 30.h,
-                        width: 70.w,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Palette.backgroundChip,
-                          border: Border.all(
-                            color: Palette.primaryColor,
-                            width: 2,
+                      Tooltip(
+                        message: tag,
+                        child: Container(
+                          height: 30.h,
+                          width: 70.w,
+                          padding: EdgeInsets.symmetric(horizontal: 10.w),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Palette.backgroundChipColor,
+                            border: Border.all(
+                              color: Palette.primaryColor,
+                            ),
                           ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            tag,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Palette.tagCategoryColor,
+                          child: Center(
+                            child: Text(
+                              tag,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Palette.tagCategoryColor,
+                              ),
                             ),
                           ),
                         ),
                       ),
                       SizedBox(
-                        width: 12.w,
+                        width: 14.w,
                       ),
                       Row(
                         children: [

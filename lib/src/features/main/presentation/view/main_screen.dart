@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/features/favorite/presentation/view/favorite_screen.dart';
 import 'package:newsnews/src/features/feed/presentation/view/feed_screen.dart';
+import 'package:newsnews/src/features/profile/presentation/view/profile_screen.dart';
 import 'package:newsnews/src/features/video_screen/presentation/view/video_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
           FeedScreen(),
           VideoScreen(),
           FavoriteScreen(),
-          FavoriteScreen(),
+          ProfileScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavyBar(
