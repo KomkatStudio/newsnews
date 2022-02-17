@@ -54,12 +54,15 @@ class CustomStackItem extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 21.sp,
                   fontWeight: FontWeight.bold,
+                  color: Palette.primaryTextColor,
                 ),
               ),
               Text(
                 itemName,
                 style: TextStyle(
                   fontSize: 16.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Palette.primaryTextColor,
                 ),
               )
             ],
