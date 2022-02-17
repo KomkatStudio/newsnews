@@ -53,7 +53,6 @@ class SwitchUserControl extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              color: const Color(0xff403B3B),
               fontWeight: FontWeight.w500,
               fontSize: 16.sp,
             ),

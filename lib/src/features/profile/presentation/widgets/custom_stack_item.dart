@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 
 class CustomStackItem extends StatelessWidget {
@@ -32,40 +31,40 @@ class CustomStackItem extends StatelessWidget {
         ],
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          CircleAvatar(
-            radius: 24.sp,
-            backgroundColor: Colors.blue.shade100.withOpacity(0.3),
-            child: FaIcon(
-              icon,
-              color: Palette.primaryColor,
+          SizedBox(width: 10.w),
+          Expanded(
+            child: CircleAvatar(
+              radius: 24.sp,
+              backgroundColor: Colors.blue.shade100.withOpacity(0.3),
+              child: Icon(
+                icon,
+                color: Palette.primaryColor,
+              ),
             ),
           ),
-          SizedBox(
-            width: 25.w,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "${itemCounter ?? 0}",
-                style: TextStyle(
-                  fontSize: 21.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Palette.primaryTextColor,
+          SizedBox(width: 10.w),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "${itemCounter ?? 0}",
+                  style: TextStyle(
+                    fontSize: 21.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                itemName,
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w500,
-                  color: Palette.primaryTextColor,
-                ),
-              )
-            ],
+                Text(
+                  itemName,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
+              ],
+            ),
           )
         ],
       ),

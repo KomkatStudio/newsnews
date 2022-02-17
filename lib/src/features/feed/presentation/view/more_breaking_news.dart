@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:newsnews/src/widgets/custom_category_choice_chip.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
 import 'package:newsnews/src/widgets/custom_scroll.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class MoreBreakingNews extends StatefulWidget {
   const MoreBreakingNews({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class _MoreBreakingNewsState extends State<MoreBreakingNews> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const FaIcon(FontAwesomeIcons.arrowLeft),
+          icon: const Icon(PhosphorIcons.arrowLeft),
           onPressed: () => Navigator.pop(context),
           color: Colors.black,
           iconSize: 20.sp,
@@ -51,8 +51,8 @@ class _MoreBreakingNewsState extends State<MoreBreakingNews> {
         elevation: 2,
         actions: [
           IconButton(
-            icon: const FaIcon(
-              FontAwesomeIcons.redoAlt,
+            icon: const Icon(
+              PhosphorIcons.arrowClockwise,
               color: Colors.black,
             ),
             iconSize: 20.sp,
@@ -119,4 +119,3 @@ class _MoreBreakingNewsState extends State<MoreBreakingNews> {
     );
   }
 }
-

@@ -6,7 +6,7 @@ import 'package:newsnews/src/features/profile/presentation/widgets/switch_user_c
 import 'package:newsnews/src/features/profile/presentation/widgets/user_tab_control.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-import '../widgets/custom_stack_item.dart';
+import 'custom_stack_item.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -25,27 +25,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final userTabControl = [
       {
         "tabName": "Preferences",
-        "iconData": PhosphorIcons.sliders,
+        "iconData": Icons.tune_rounded,
         "routeName": "/preferences",
       },
       {
         "tabName": "Abouts",
-        "iconData": PhosphorIcons.question,
+        "iconData": Icons.help_outline_rounded,
         "routeName": "/abouts",
       },
       {
         "tabName": "Privacy & security",
-        "iconData": PhosphorIcons.lockSimple,
+        "iconData": Icons.lock_outline_rounded,
         "routeName": "/p&s",
       },
       {
         "tabName": "Help & support",
-        "iconData": PhosphorIcons.headphones,
+        "iconData": Icons.headphones_outlined,
         "routeName": "/help",
       },
       {
         "tabName": "Log out",
-        "iconData": PhosphorIcons.signOut,
+        "iconData": Icons.logout_rounded,
         "routeName": "/logout",
       }
     ];
@@ -92,17 +92,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             .image,
                                       ),
                                     ),
-                                    CircleAvatar(
-                                      radius: 16.sp,
-                                      backgroundColor:
-                                          Palette.textColorInBlueBGColor,
-                                      child: IconButton(
-                                        iconSize: 22.sp,
-                                        padding: EdgeInsets.zero,
-                                        constraints: const BoxConstraints(),
-                                        icon: const Icon(
-                                            PhosphorIcons.cameraBold),
-                                        onPressed: () {},
+                                    InkWell(
+                                      onTap: () {},
+                                      child: CircleAvatar(
+                                        radius: 16.sp,
+                                        backgroundColor:
+                                            Palette.textColorInBlueBGColor,
+                                        child: IconButton(
+                                          icon: const Icon(
+                                            PhosphorIcons.cameraThin,
+                                          ),
+                                          onPressed: () {},
+                                        ),
                                       ),
                                     )
                                   ],
@@ -127,13 +128,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ),
                                         ),
                                         SizedBox(
-                                          width: 2.w,
+                                          width: 5.w,
                                         ),
                                         IconButton(
                                           icon: const Icon(
                                               PhosphorIcons.pencilLine),
                                           color: Palette.textColorInBlueBGColor,
-                                          iconSize: 22.sp,
                                           constraints: const BoxConstraints(),
                                           onPressed: () {},
                                         ),
@@ -219,12 +219,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: const [
                         CustomStackItem(
                           itemName: 'Favorites',
-                          icon: PhosphorIcons.heartBold,
+                          icon: PhosphorIcons.heart,
                           itemCounter: 100,
                         ),
                         CustomStackItem(
                           itemName: 'Likes',
-                          icon: PhosphorIcons.thumbsUpBold,
+                          icon: PhosphorIcons.thumbsUp,
                           itemCounter: 100,
                         ),
                       ],

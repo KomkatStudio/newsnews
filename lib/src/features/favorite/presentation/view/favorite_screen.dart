@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:newsnews/src/widgets/custom_scroll.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class FavoriteScreen extends StatelessWidget {
   const FavoriteScreen({Key? key}) : super(key: key);
@@ -20,10 +20,10 @@ class FavoriteScreen extends StatelessWidget {
           centerTitle: true,
           actions: [
             IconButton(
-              icon: const FaIcon(
-                FontAwesomeIcons.redo,
+              icon: const Icon(
+                PhosphorIcons.arrowClockwise,
                 size: 20,
-                color: Colors.black,
+       
               ),
               onPressed: () {},
             ),

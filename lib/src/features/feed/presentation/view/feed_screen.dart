@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/features/feed/presentation/cubit/news_cubit.dart';
 import 'package:newsnews/src/features/feed/presentation/view/hot_and_trendings.dart';
@@ -10,6 +9,7 @@ import 'package:newsnews/src/features/feed/presentation/widgets/headline_card.da
 import 'package:newsnews/src/widgets/custom_scroll.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
 import 'package:newsnews/src/widgets/circle_loading.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({Key? key}) : super(key: key);
@@ -69,8 +69,8 @@ class _FeedScreenState extends State<FeedScreen>
             icon: Stack(
               alignment: Alignment.topRight,
               children: [
-                const FaIcon(
-                  FontAwesomeIcons.bell,
+                const Icon(
+                  PhosphorIcons.bellSimple,
                   color: Colors.black,
                 ),
                 Container(

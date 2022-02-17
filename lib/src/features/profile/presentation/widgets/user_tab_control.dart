@@ -55,13 +55,11 @@ class UserTabControl extends StatelessWidget {
             Icon(
               iconData,
               color: Palette.primaryColor,
-              size: 24,
             ),
-            SizedBox(width: 10.w),
+            SizedBox(width: 12.w),
             Text(
               tabName,
               style: TextStyle(
-                color: const Color(0xff403B3B),
                 fontWeight: FontWeight.w500,
                 fontSize: 16.sp,
               ),

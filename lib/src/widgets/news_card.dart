@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({
@@ -84,10 +84,10 @@ class NewsCard extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: GestureDetector(
-                              child: FaIcon(
+                              child: Icon(
                                 isFavorite
-                                    ? FontAwesomeIcons.solidHeart
-                                    : FontAwesomeIcons.heart,
+                                    ? PhosphorIcons.heartFill
+                                    : PhosphorIcons.heart,
                                 size: 20.sp,
                                 color: isFavorite ? Colors.red : null,
                               ),
@@ -141,10 +141,9 @@ class NewsCard extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          FaIcon(
-                            FontAwesomeIcons.clock,
+                          Icon(
+                            PhosphorIcons.clock,
                             color: Palette.primaryColor,
-                            size: 20.sp,
                           ),
                           SizedBox(width: 3.w),
                           Text(

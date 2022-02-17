@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:newsnews/src/widgets/custom_category_choice_chip.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
 import 'package:newsnews/src/widgets/custom_scroll.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class HotAndTrendings extends StatefulWidget {
   const HotAndTrendings({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class _HotAndTrendingsState extends State<HotAndTrendings> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const FaIcon(FontAwesomeIcons.arrowLeft),
+          icon: const Icon(PhosphorIcons.arrowLeft),
           onPressed: () => Navigator.pop(context),
           color: Colors.black,
           iconSize: 22,
@@ -51,8 +51,9 @@ class _HotAndTrendingsState extends State<HotAndTrendings> {
         elevation: 2,
         actions: [
           IconButton(
-            icon: const FaIcon(
-              FontAwesomeIcons.redoAlt,
+            icon: const Icon(
+                PhosphorIcons.arrowClockwise,
+
               size: 22,
               color: Colors.black,
             ),

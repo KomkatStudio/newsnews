@@ -24,9 +24,8 @@ class CustomChip extends StatelessWidget {
           ),
         ),
         labelStyle: TextStyle(
-          color: Palette.primaryTextColor,
           fontSize: 14.sp,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w500,
         ),
         backgroundColor: Colors.blue.shade50.withOpacity(0.1),
       ),

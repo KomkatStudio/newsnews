@@ -34,15 +34,13 @@ class HeadlineCard extends StatelessWidget {
           Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.all(6),
+                padding: const EdgeInsets.all(2),
                 child: Container(
                   height: 200.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                      image: Image.network(
-                        imageURL,
-                      ).image,
+                      image: Image.network(imageURL).image,
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -50,12 +48,13 @@ class HeadlineCard extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: 0,
+                bottom: 2.h,
                 left: 20.w,
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Palette.primaryHeavyColor,
-                      borderRadius: BorderRadius.circular(4)),
+                    color: Palette.primaryHeavyColor,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                   padding: const EdgeInsets.all(5),
                   child: Text(
                     newsTag.toUpperCase(),
@@ -70,7 +69,7 @@ class HeadlineCard extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 12.h,
+            height: 10.h,
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0.w),
@@ -80,6 +79,8 @@ class HeadlineCard extends StatelessWidget {
                 fontSize: 19.sp,
                 fontWeight: FontWeight.w700,
               ),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
