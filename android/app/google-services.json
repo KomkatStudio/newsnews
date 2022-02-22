@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "612647796004",
+    "project_id": "newsnews-ecffc",
+    "storage_bucket": "newsnews-ecffc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612647796004:android:1fe2b502d5d5680c6007b1",
+        "android_client_info": {
+          "package_name": "com.komkat.newsnews"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612647796004-fv5qj5g17narv3qq0b1jqu90fveokj2q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.komkat.newsnews",
+            "certificate_hash": "1920f73bffdc69f180b22e3db43a0118e75b5d3f"
+          }
+        },
+        {
+          "client_id": "612647796004-mjlrmv77bolj8fl8d6gb8ircpr619223.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8HBmxEB8wt5YadudaEoDow-rfoYqufKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612647796004-mjlrmv77bolj8fl8d6gb8ircpr619223.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
