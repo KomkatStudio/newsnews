@@ -11,5 +11,5 @@ class Palette {
   static const backgroundBoxColor = Colors.white;
   static const tagInSpecifiedColor = Color(0xfffdac0b);
   static const textColorInBlueBGColor = Colors.white;
-  static const primaryTextColor = Color(0xff403B3B);
+  static const shadowColor = Color(0xFF000000);
 }

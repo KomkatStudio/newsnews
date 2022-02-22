@@ -13,17 +13,15 @@ class FavoriteScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Favorites"),
           titleTextStyle: TextStyle(
-            fontSize: 20.sp,
+            fontSize: 22.sp,
             color: Colors.black,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
           centerTitle: true,
           actions: [
             IconButton(
               icon: const Icon(
                 PhosphorIcons.arrowClockwise,
-                size: 20,
-       
               ),
               onPressed: () {},
             ),

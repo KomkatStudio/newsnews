@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/di/injector.dart';
+import 'package:newsnews/src/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:newsnews/src/features/auth/presentation/pages/sign_in.dart';
 import 'package:newsnews/src/features/feed/presentation/cubit/news_cubit.dart';
-import 'package:newsnews/src/features/main/presentation/view/main_screen.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -15,6 +16,9 @@ class App extends StatelessWidget {
         BlocProvider<NewsCubit>(
           create: (context) => s1<NewsCubit>(),
         ),
+        BlocProvider<AuthCubit>(
+          create: (context) => s1<AuthCubit>(),
+        )
       ],
       child: ScreenUtilInit(
         designSize: const Size(411, 823),
@@ -36,7 +40,7 @@ class App extends StatelessWidget {
                 ),
               ),
             ),
-            home: const MainScreen(),
+            home: const AuthenticationScreen(),
           );
         },
       ),

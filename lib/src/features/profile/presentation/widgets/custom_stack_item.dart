@@ -22,11 +22,11 @@ class CustomStackItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         color: Palette.backgroundBoxColor,
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Color(0xFF334D6E),
-            blurRadius: 14,
-            offset: Offset(0.5, -0.5),
+            color: Palette.shadowColor.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 4),
           ),
         ],
       ),

@@ -1,7 +1,4 @@
-import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/features/favorite/presentation/view/favorite_screen.dart';
 import 'package:newsnews/src/features/feed/presentation/view/feed_screen.dart';
@@ -35,8 +32,8 @@ class _MainScreenState extends State<MainScreen> {
       "activeIcon": PhosphorIcons.heartFill,
     },
     {
-      "icon": PhosphorIcons.userCircle,
-      "activeIcon": PhosphorIcons.userCircleFill
+      "icon": PhosphorIcons.user,
+      "activeIcon": PhosphorIcons.userBold,
     },
   ];
 

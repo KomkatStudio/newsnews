@@ -18,7 +18,7 @@ class NewsCubit extends Cubit<NewsState> {
     final getTop =
         await getTopHeadline.call(const Params(path: "/top-headlines"));
 
-    getTop.fold((failure) => emit(const NewsError("error server")),
+    getTop.fold((l) => emit(const NewsError("error server")),
         (r) => emit(NewsLoaded(r as List<Article>)));
   }
 }

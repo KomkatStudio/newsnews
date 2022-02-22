@@ -36,16 +36,16 @@ class UserTabControl extends StatelessWidget {
                       bottomRight: Radius.circular(10),
                     )
                   : null),
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-              color: Colors.black12,
-              blurRadius: 0.5,
-              offset: Offset(-1, 0),
+              color: Palette.shadowColor.withOpacity(0.1),
+              blurRadius: 1,
+              offset: const Offset(-1, 0),
             ),
             BoxShadow(
-              color: Colors.black12,
-              blurRadius: 5,
-              offset: Offset(1, 0),
+              color: Palette.shadowColor.withOpacity(0.1),
+              blurRadius: 1,
+              offset: const Offset(1, 0),
             ),
           ],
         ),

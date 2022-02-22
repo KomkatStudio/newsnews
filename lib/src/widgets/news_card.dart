@@ -95,7 +95,7 @@ class NewsCard extends StatelessWidget {
                             ),
                           ),
                         )
-                      : const SizedBox(),
+                      : const Spacer(flex: 2),
                   Text(
                     title,
                     style: TextStyle(
@@ -105,9 +105,7 @@ class NewsCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   ),
-                  SizedBox(
-                    height: 16.h,
-                  ),
+                  const Spacer(flex: 2),
                   Row(
                     children: [
                       Tooltip(
@@ -136,8 +134,8 @@ class NewsCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 14.w,
+                      const Spacer(
+                        flex: 2,
                       ),
                       Row(
                         children: [
@@ -153,8 +151,12 @@ class NewsCard extends StatelessWidget {
                             ),
                           )
                         ],
-                      )
+                      ),
+                      const Spacer(),
                     ],
+                  ),
+                  const Spacer(
+                    flex: 2,
                   )
                 ],
               ),

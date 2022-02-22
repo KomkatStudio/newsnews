@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -66,24 +67,18 @@ class _FeedScreenState extends State<FeedScreen>
         ),
         actions: [
           IconButton(
-            icon: Stack(
-              alignment: Alignment.topRight,
-              children: [
-                const Icon(
-                  PhosphorIcons.bellSimple,
-                  color: Colors.black,
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 3.h),
-                  height: 9.h,
-                  width: 9.h,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.blue,
-                  ),
-                )
-              ],
+            icon: Badge(
+              badgeColor: Palette.primaryColor,
+              badgeContent: const Text(
+                "3",
+                style: TextStyle(color: Palette.backgroundBoxColor),
+              ),
+              child: const Icon(
+                PhosphorIcons.bellSimple,
+              ),
+              position: const BadgePosition(top: -10, end: -6),
             ),
+            iconSize: 26,
             onPressed: () {},
           ),
         ],

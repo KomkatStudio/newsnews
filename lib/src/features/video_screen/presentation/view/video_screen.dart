@@ -13,7 +13,7 @@ class VideoScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Video articles"),
           titleTextStyle: TextStyle(
-            fontSize: 20.sp,
+            fontSize: 22.sp,
             color: Colors.black,
             fontWeight: FontWeight.w700,
           ),
