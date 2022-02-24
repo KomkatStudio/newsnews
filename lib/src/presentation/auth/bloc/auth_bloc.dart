@@ -23,8 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<CheckHasCurrentUser>(_checkHasCurrentUser);
   }
 
-  void _signInWithGoogle(
-      AuthWithGoogle event, Emitter<AuthState> emit) async {
+  void _signInWithGoogle(AuthWithGoogle event, Emitter<AuthState> emit) async {
     final signInGoogle = await signInWithGoogle.call(NoParams());
 
     signInGoogle.fold((l) {
@@ -36,18 +35,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }, ((r) => emit(AuthSuccessful())));
   }
 
-  void _checkHasCurrentUser(
+  Future<void> _checkHasCurrentUser(
       CheckHasCurrentUser event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     final hasCurrentUserStatus = await hasCurrentUser.call(NoParams());
 
-    hasCurrentUserStatus
-        .fold((l) => emit(const AuthError("Server check current user error")),
-            (r) async {
-      if (r) {
-        await getCurrentUser.call(NoParams()).then((result) {
-          result.fold((l) {}, (r) => emit(AuthSuccessful()));
-        });
+    hasCurrentUserStatus.fold(
+        (failure) => emit(const AuthError("Server check current user error")),
+        (status) async {
+      if (status) {
+        emit(AuthSuccessful());
       } else {
         emit(NoAuth());
       }

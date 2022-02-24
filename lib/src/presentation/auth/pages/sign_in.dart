@@ -9,64 +9,75 @@ import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/auth/bloc/auth_bloc.dart';
 import 'package:newsnews/src/presentation/auth/widgets/sign_in_with_button.dart';
 
-class AuthenticationScreen extends StatelessWidget {
+class AuthenticationScreen extends StatefulWidget {
   const AuthenticationScreen({Key? key}) : super(key: key);
 
   @override
+  State<AuthenticationScreen> createState() => _AuthenticationScreenState();
+}
+
+class _AuthenticationScreenState extends State<AuthenticationScreen> {
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Palette.primaryColor,
-        body: BlocConsumer<AuthBloc, AuthState>(
-          listener: (context, state) {
-            if (state is AuthSuccessful) {
-              Navigator.popAndPushNamed(context, RouterManager.main);
-            } else if (state is AuthLoading) {
-              showLoadingDialog(context);
-            } else if (state is AuthError) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(state.message),
-              ));
-            }
-          },
-          builder: (context, state) {
-            return Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 28.0.w),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Spacer(
-                      flex: 3,
+    return BlocProvider<AuthBloc>(
+      create: (context) => s1<AuthBloc>()..add(CheckHasCurrentUser()),
+      child: Scaffold(
+            backgroundColor: Palette.primaryColor,
+            body: BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthSuccessful) {
+                  Navigator.popAndPushNamed(context, RouterManager.main);
+                } else if (state is AuthLoading) {
+                  showLoadingDialog(context);
+                } else if (state is AuthError) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(state.message),
+                  ));
+                } else if (state is NoAuth) {
+                  Navigator.pop(context);
+                }
+              },
+              builder: (context, state) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 28.0.w),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Spacer(
+                          flex: 3,
+                        ),
+                        Text(
+                          "NewsNews",
+                          style: TextStyle(
+                            color: Palette.backgroundBoxColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const Spacer(
+                          flex: 2,
+                        ),
+                        SignInWithButton(
+                          logoName: 'Google',
+                          logoPath: AssetPath.googleLogo,
+                          onPressFunction: () =>
+                              context.read<AuthBloc>().add(AuthWithGoogle()),
+                        ),
+                        SizedBox(height: 12.h),
+                        SignInWithButton(
+                          logoName: 'Facebook',
+                          logoPath: AssetPath.facebookLogo,
+                          onPressFunction: () =>
+                              context.read<AuthBloc>().add(CheckHasCurrentUser()),
+                        ),
+                        const Spacer(),
+                      ],
                     ),
-                    Text(
-                      "NewsNews",
-                      style: TextStyle(
-                        color: Palette.backgroundBoxColor,
-                        fontSize: 35.sp,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const Spacer(
-                      flex: 2,
-                    ),
-                    SignInWithButton(
-                      logoName: 'Google',
-                      logoPath: AssetPath.googleLogo,
-                      onPressFunction: () =>
-                          context.read<AuthBloc>().add(AuthWithGoogle()),
-                    ),
-                    SizedBox(height: 12.h),
-                    SignInWithButton(
-                      logoName: 'Facebook',
-                      logoPath: AssetPath.facebookLogo,
-                      onPressFunction: () => context.read<AuthBloc>().add(CheckHasCurrentUser()),
-                    ),
-                    const Spacer(),
-                  ],
-                ),
-              ),
-            );
-          },
-        ));
+                  ),
+                );
+              },
+            )),
+    );
   }
 }

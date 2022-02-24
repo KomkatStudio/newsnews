@@ -6,6 +6,7 @@ import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
 import 'package:newsnews/src/presentation/feed/view/more_breaking_news.dart';
 import 'package:newsnews/src/presentation/main/presentation/view/main_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/profile_screen.dart';
+import 'package:newsnews/src/presentation/test/presentation/pages/test.dart';
 import 'package:newsnews/src/presentation/video_screen/view/video_screen.dart';
 
 class RouterManager {
@@ -13,12 +14,14 @@ class RouterManager {
   static const videos = '/videos';
   static const favorite = '/favorite';
   static const user = '/user';
-  static const main = '/';
+  static const main = '/main';
   static const moreBreakingNews = '/moreBreakingNews';
   static const hotTrendings = '/hotTrendings';
   static const signIn = '/signIn';
+  static const test = '/test';
 
   static Map<String, WidgetBuilder> listRoute = {
+    test:(_) => const TestScreen(),
     main: (_) => const MainScreen(),
     feeds: (_) => const FeedScreen(),
     videos: (_) => const VideoScreen(),
