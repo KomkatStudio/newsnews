@@ -14,9 +14,9 @@ import 'package:newsnews/src/domain/usecases/sign_in_with_google.dart';
 import 'package:newsnews/src/data/repositories/news_repository_impl.dart';
 import 'package:newsnews/src/domain/usecases/get_topheadline.dart';
 import 'package:newsnews/src/domain/usecases/sign_out_the_app.dart';
-import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
-import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
-import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
+import 'package:newsnews/src/presentation/auth/bloc/auth_bloc.dart';
+import 'package:newsnews/src/presentation/feed/bloc/news_bloc.dart';
+import 'package:newsnews/src/presentation/profile/bloc/profile_bloc.dart';
 
 final s1 = GetIt.instance;
 
@@ -39,61 +39,43 @@ void initDependence() {
 
   ///Repository
   s1.registerLazySingleton<NewsRepository>(
-    () => NewsRepositoryImpl(
-      s1(),
-    ),
+    () => NewsRepositoryImpl(s1()),
   );
   s1.registerLazySingleton<FirebaseAuthRepository>(
-    () => FirebaseAuthRepositoryImpl(
-      s1(),
-    ),
+    () => FirebaseAuthRepositoryImpl(s1()),
   );
 
   ///UseCase
   ///
   s1.registerLazySingleton<GetTopHeadline>(
-    () => GetTopHeadline(
-      newsRepository: s1(),
-    ),
+    () => GetTopHeadline(newsRepository: s1()),
   );
   s1.registerLazySingleton<SignInWithGoogle>(
-    () => SignInWithGoogle(
-      firebaseAuthRepository: s1(),
-    ),
+    () => SignInWithGoogle(firebaseAuthRepository: s1()),
   );
   s1.registerLazySingleton<HasCurrentUser>(
-    () => HasCurrentUser(
-      authRepository: s1(),
-    ),
+    () => HasCurrentUser(authRepository: s1()),
   );
   s1.registerLazySingleton<GetCurrentUser>(
-    () => GetCurrentUser(
-      authRepository: s1(),
-    ),
+    () => GetCurrentUser(authRepository: s1()),
   );
   s1.registerLazySingleton<SignOutTheApp>(
-    () => SignOutTheApp(
-      authRepository: s1(),
-    ),
+    () => SignOutTheApp(authRepository: s1()),
   );
 
   ///BLOC - Cubit
   ///
-  s1.registerFactory<NewsCubit>(
-    () => NewsCubit(
-      getTopHeadline: s1(),
-    ),
+  s1.registerFactory<NewsBloc>(
+    () => NewsBloc(getTopHeadline: s1()),
   );
-  s1.registerFactory<AuthCubit>(
-    () => AuthCubit(
+  s1.registerFactory<AuthBloc>(
+    () => AuthBloc(
       signInWithGoogle: s1(),
       hasCurrentUser: s1(),
       getCurrentUser: s1(),
     ),
   );
-  s1.registerFactory<ProfileCubit>(
-    () => ProfileCubit(
-      signOutTheApp: s1(),
-    ),
+  s1.registerFactory<ProfileBloc>(
+    () => ProfileBloc(signOutTheApp: s1()),
   );
 }

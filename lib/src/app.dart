@@ -3,21 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/di/injector.dart';
-import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
-import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
+import 'package:newsnews/src/presentation/auth/bloc/auth_bloc.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthCubit>(create: (_) => s1<AuthCubit>()),
-        BlocProvider<NewsCubit>(
-          create: (_) => s1<NewsCubit>(),
-        ),
-      ],
+    return BlocProvider<AuthBloc>(
+      create: (context) => s1<AuthBloc>(),
       child: ScreenUtilInit(
         designSize: const Size(411, 823),
         minTextAdapt: true,

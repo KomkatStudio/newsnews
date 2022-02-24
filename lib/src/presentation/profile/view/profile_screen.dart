@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
-import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
+import 'package:newsnews/src/presentation/profile/bloc/profile_bloc.dart';
 import 'package:newsnews/src/presentation/profile/widgets/custom_chip.dart';
 import 'package:newsnews/src/presentation/profile/widgets/custom_stack_item.dart';
 import 'package:newsnews/src/presentation/profile/widgets/switch_user_control.dart';
@@ -54,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
     ];
     return Scaffold(
-      body: BlocListener<ProfileCubit, ProfileState>(
+      body: BlocListener<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state is ProfileSignOutLoading) {
             showLoadingDialog(context);
@@ -225,12 +225,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             tabName: userTabControl[i]["tabName"] as String,
                             iconData: userTabControl[i]["iconData"] as IconData,
                           ),
-                        BlocBuilder<ProfileCubit, ProfileState>(
+                        BlocBuilder<ProfileBloc, ProfileState>(
                           builder: (context, state) {
                             return UserTabControl(
                               typeBorderRadius: 1,
                               onTabNameFunction: () =>
-                                  context.read<ProfileCubit>().signOut(),
+                                  context.read<ProfileBloc>().add(SignOutEvent()),
                               tabName: userTabControl[userTabControl.length - 1]
                                   ["tabName"] as String,
                               iconData:

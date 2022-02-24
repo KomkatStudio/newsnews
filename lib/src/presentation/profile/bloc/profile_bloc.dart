@@ -3,18 +3,19 @@ import 'package:equatable/equatable.dart';
 import 'package:newsnews/src/core/usecases/usecase.dart';
 import 'package:newsnews/src/domain/usecases/sign_out_the_app.dart';
 
+part 'profile_event.dart';
 part 'profile_state.dart';
 
-class ProfileCubit extends Cubit<ProfileState> {
+class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   final SignOutTheApp _signOutTheApp;
 
-  ProfileCubit({required SignOutTheApp signOutTheApp})
+  ProfileBloc({required SignOutTheApp signOutTheApp})
       : _signOutTheApp = signOutTheApp,
         super(ProfileInitial()) {
-    test();
+    on<SignOutEvent>(signOut);
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut(SignOutEvent event, Emitter<ProfileState> emit) async {
     emit(ProfileSignOutLoading());
     final signOutUnit = await _signOutTheApp.call(NoParams());
 
@@ -22,10 +23,5 @@ class ProfileCubit extends Cubit<ProfileState> {
         (l) => emit(const ProfileSignedOutFail(
             message: "firebase error signout no thanh cong")),
         (r) => emit(ProfileSignedOutSuccessfully()));
-  }
-
-  Future<void> test() async {
-    emit(ProfileSignOutLoading());
-    print("hello");
   }
 }

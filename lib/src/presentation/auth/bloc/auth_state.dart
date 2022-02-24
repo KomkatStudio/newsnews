@@ -1,4 +1,5 @@
-part of 'auth_cubit.dart';
+part of 'auth_bloc.dart';
+
 
 abstract class AuthState extends Equatable {
   const AuthState();
@@ -14,11 +15,8 @@ class AuthLoading extends AuthState {}
 class NoAuth extends AuthState {}
 
 class AuthSuccessful extends AuthState {
-  final String uuid;
-  const AuthSuccessful(this.uuid);
-
-  @override
-  List<Object> get props => [uuid];
+  // final String uuid;
+  // const AuthSuccessful(this.uuid);
 }
 
 class AuthError extends AuthState {

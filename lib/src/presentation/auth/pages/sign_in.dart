@@ -5,9 +5,9 @@ import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/theme/asset_path.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
-import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
+import 'package:newsnews/src/di/injector.dart';
+import 'package:newsnews/src/presentation/auth/bloc/auth_bloc.dart';
 import 'package:newsnews/src/presentation/auth/widgets/sign_in_with_button.dart';
-import 'package:newsnews/src/presentation/main/presentation/view/main_screen.dart';
 
 class AuthenticationScreen extends StatelessWidget {
   const AuthenticationScreen({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class AuthenticationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Palette.primaryColor,
-        body: BlocConsumer<AuthCubit, AuthState>(
+        body: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if (state is AuthSuccessful) {
               Navigator.popAndPushNamed(context, RouterManager.main);
@@ -53,13 +53,13 @@ class AuthenticationScreen extends StatelessWidget {
                       logoName: 'Google',
                       logoPath: AssetPath.googleLogo,
                       onPressFunction: () =>
-                          context.read<AuthCubit>().signInUsingGoolge(),
+                          context.read<AuthBloc>().add(AuthWithGoogle()),
                     ),
                     SizedBox(height: 12.h),
                     SignInWithButton(
                       logoName: 'Facebook',
                       logoPath: AssetPath.facebookLogo,
-                      onPressFunction: () {},
+                      onPressFunction: () => context.read<AuthBloc>().add(CheckHasCurrentUser()),
                     ),
                     const Spacer(),
                   ],

@@ -6,24 +6,25 @@ import 'package:newsnews/src/domain/usecases/get_current_user.dart';
 import 'package:newsnews/src/domain/usecases/has_current_user.dart';
 import 'package:newsnews/src/domain/usecases/sign_in_with_google.dart';
 
+part 'auth_event.dart';
 part 'auth_state.dart';
 
-class AuthCubit extends Cubit<AuthState> {
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SignInWithGoogle signInWithGoogle;
   final HasCurrentUser hasCurrentUser;
   final GetCurrentUser getCurrentUser;
 
-  AuthCubit(
+  AuthBloc(
       {required this.hasCurrentUser,
       required this.signInWithGoogle,
       required this.getCurrentUser})
       : super(AuthInitial()) {
-    checkHasCurrentUser();
+    on<AuthWithGoogle>(_signInWithGoogle);
+    on<CheckHasCurrentUser>(_checkHasCurrentUser);
   }
 
-  Future<void> signInUsingGoolge() async {
-    emit(AuthLoading());
-
+  void _signInWithGoogle(
+      AuthWithGoogle event, Emitter<AuthState> emit) async {
     final signInGoogle = await signInWithGoogle.call(NoParams());
 
     signInGoogle.fold((l) {
@@ -32,10 +33,11 @@ class AuthCubit extends Cubit<AuthState> {
       } else {
         emit(const AuthError("Server error"));
       }
-    }, ((r) => emit(AuthSuccessful(r!.user!.uid))));
+    }, ((r) => emit(AuthSuccessful())));
   }
 
-  Future<void> checkHasCurrentUser() async {
+  void _checkHasCurrentUser(
+      CheckHasCurrentUser event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
     final hasCurrentUserStatus = await hasCurrentUser.call(NoParams());
 
@@ -43,8 +45,9 @@ class AuthCubit extends Cubit<AuthState> {
         .fold((l) => emit(const AuthError("Server check current user error")),
             (r) async {
       if (r) {
-        final getCurrentUserUC = await getCurrentUser.call(NoParams());
-        getCurrentUserUC.fold((l) {}, (r) => emit(AuthSuccessful(r)));
+        await getCurrentUser.call(NoParams()).then((result) {
+          result.fold((l) {}, (r) => emit(AuthSuccessful()));
+        });
       } else {
         emit(NoAuth());
       }

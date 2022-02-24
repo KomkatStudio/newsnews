@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
-import 'package:newsnews/src/di/injector.dart';
-import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
+import 'package:newsnews/src/presentation/feed/bloc/news_bloc.dart';
 import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
 import 'package:newsnews/src/presentation/feed/view/more_breaking_news.dart';
 import 'package:newsnews/src/presentation/feed/widgets/headline_card.dart';
@@ -31,7 +30,6 @@ class _FeedScreenState extends State<FeedScreen>
     super.initState();
     tabController = TabController(vsync: this, length: 6);
     pageController = PageController();
-    BlocProvider.of<NewsCubit>(context).getTopHeadlineNews();
   }
 
   @override
@@ -85,7 +83,7 @@ class _FeedScreenState extends State<FeedScreen>
           ),
         ],
       ),
-      body: BlocBuilder<NewsCubit, NewsState>(
+      body: BlocBuilder<NewsBloc, NewsState>(
         builder: (context, state) {
           if (state is NewsLoading) {
             return const CircleLoading();
