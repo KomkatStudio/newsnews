@@ -37,7 +37,6 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> checkHasCurrentUser() async {
     emit(AuthLoading());
-
     final hasCurrentUserStatus = await hasCurrentUser.call(NoParams());
 
     hasCurrentUserStatus

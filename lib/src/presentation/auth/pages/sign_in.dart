@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newsnews/src/core/config/router.dart';
+import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/theme/asset_path.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
+import 'package:newsnews/src/presentation/auth/widgets/sign_in_with_button.dart';
 import 'package:newsnews/src/presentation/main/presentation/view/main_screen.dart';
 
 class AuthenticationScreen extends StatelessWidget {
@@ -17,8 +19,9 @@ class AuthenticationScreen extends StatelessWidget {
         body: BlocConsumer<AuthCubit, AuthState>(
           listener: (context, state) {
             if (state is AuthSuccessful) {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => const MainScreen()));
+              Navigator.popAndPushNamed(context, RouterManager.main);
+            } else if (state is AuthLoading) {
+              showLoadingDialog(context);
             } else if (state is AuthError) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.message),
@@ -65,62 +68,5 @@ class AuthenticationScreen extends StatelessWidget {
             );
           },
         ));
-  }
-}
-
-class SignInWithButton extends StatelessWidget {
-  const SignInWithButton({
-    Key? key,
-    required this.logoPath,
-    required this.logoName,
-    required this.onPressFunction,
-  }) : super(key: key);
-
-  final String logoPath;
-  final String logoName;
-  final VoidCallback onPressFunction;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressFunction,
-      child: Container(
-        height: 55.h,
-        width: 100.sh,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: Palette.backgroundBoxColor,
-        ),
-        alignment: Alignment.center,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: SizedBox.square(
-                  dimension: 28.sp,
-                  child: SvgPicture.asset(logoPath),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 12.w,
-            ),
-            Expanded(
-              flex: 2,
-              child: Text(
-                "Sign in with $logoName",
-                style: TextStyle(
-                  fontSize: 17.sp,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

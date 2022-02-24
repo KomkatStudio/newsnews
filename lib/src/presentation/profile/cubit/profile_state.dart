@@ -8,3 +8,19 @@ abstract class ProfileState extends Equatable {
 }
 
 class ProfileInitial extends ProfileState {}
+
+class ProfileSignOutLoading extends ProfileState {}
+
+class ProfileSignedOutSuccessfully extends ProfileState {}
+
+class ProfileSignedOutFail extends ProfileState {
+  final String message;
+  const ProfileSignedOutFail({
+    required this.message,
+  });
+
+  @override
+  List<Object> get props => [message];
+
+  
+}

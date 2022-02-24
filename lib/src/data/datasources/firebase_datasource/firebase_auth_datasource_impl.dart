@@ -1,7 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:newsnews/src/core/errors/exception.dart';
-import 'package:newsnews/src/data/datasources/firebase_auth_datasource.dart';
+import 'package:newsnews/src/data/datasources/firebase_datasource/firebase_auth_datasource.dart';
 
 class FirebaseAuthDatasourceImpl extends FirebaseAuthDatasource {
   final GoogleSignIn _googleSignIn;
@@ -42,4 +43,7 @@ class FirebaseAuthDatasourceImpl extends FirebaseAuthDatasource {
 
   @override
   Future<String> getCurrentUserId() async => _firebaseAuth.currentUser!.uid;
+
+  @override
+  Future<void> signOut() async => await _firebaseAuth.signOut();
 }

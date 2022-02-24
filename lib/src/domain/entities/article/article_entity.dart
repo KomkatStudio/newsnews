@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import 'source.dart';
+import 'source_entity.dart';
 
 class ArticleEntity extends Equatable {
   final SourceEntity? source;

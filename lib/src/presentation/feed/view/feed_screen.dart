@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
+import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
 import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
 import 'package:newsnews/src/presentation/feed/view/more_breaking_news.dart';
@@ -23,15 +24,16 @@ class _FeedScreenState extends State<FeedScreen>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
   late final PageController pageController;
+  bool _isChanged = false;
 
   @override
   void initState() {
+    super.initState();
     tabController = TabController(vsync: this, length: 6);
     pageController = PageController();
-    super.initState();
+    BlocProvider.of<NewsCubit>(context).getTopHeadlineNews();
   }
 
-  bool _isChanged = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -206,7 +208,8 @@ class _FeedScreenState extends State<FeedScreen>
                             _isChanged
                                 ? pageController.nextPage(
                                     curve: Curves.easeIn,
-                                    duration: const Duration(milliseconds: 300),
+                                    duration:
+                                        const Duration(milliseconds: 300),
                                   )
                                 : pageController.previousPage(
                                     curve: Curves.linear,

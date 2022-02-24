@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
+import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/favorite/presentation/view/favorite_screen.dart';
+import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
 import 'package:newsnews/src/presentation/feed/view/feed_screen.dart';
+import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
 import 'package:newsnews/src/presentation/profile/view/profile_screen.dart';
 import 'package:newsnews/src/presentation/video_screen/view/video_screen.dart';
 
@@ -40,32 +44,44 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: IndexedStack(
-          index: _currentIndex,
-          children: const [
-            FeedScreen(),
-            VideoScreen(),
-            FavoriteScreen(),
-            ProfileScreen(),
-          ],
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<NewsCubit>(
+          create: (_) => s1<NewsCubit>()
+      
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          selectedItemColor: Palette.primaryColor,
-          onTap: (value) => setState(() {
-            _currentIndex = value;
-          }),
-          type: BottomNavigationBarType.fixed,
-          items: itemIconList
-              .map(
-                (element) => BottomNavigationBarItem(
-                  icon: Icon(element["icon"]),
-                  activeIcon: Icon(element["activeIcon"]),
-                  label: labelList[itemIconList.indexOf(element)],
-                ),
-              )
-              .toList(),
-        ));
+        BlocProvider<ProfileCubit>(
+          create: (_) => s1<ProfileCubit>(),
+
+        ),
+      ],
+      child: Scaffold(
+          body: IndexedStack(
+            index: _currentIndex,
+            children: const [
+              FeedScreen(),
+              VideoScreen(),
+              FavoriteScreen(),
+              ProfileScreen(),
+            ],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            selectedItemColor: Palette.primaryColor,
+            onTap: (value) => setState(() {
+              _currentIndex = value;
+            }),
+            type: BottomNavigationBarType.fixed,
+            items: itemIconList
+                .map(
+                  (element) => BottomNavigationBarItem(
+                    icon: Icon(element["icon"]),
+                    activeIcon: Icon(element["activeIcon"]),
+                    label: labelList[itemIconList.indexOf(element)],
+                  ),
+                )
+                .toList(),
+          ),),
+    );
   }
 }

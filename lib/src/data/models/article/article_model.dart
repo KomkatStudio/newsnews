@@ -1,4 +1,4 @@
-import 'package:newsnews/src/domain/entities/article/article.dart';
+import 'package:newsnews/src/domain/entities/article/article_entity.dart';
 
 import 'source_model.dart';
 
