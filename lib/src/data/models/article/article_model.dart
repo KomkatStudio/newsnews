@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:newsnews/src/domain/entities/article/article_entity.dart';
 
 import 'source_model.dart';
@@ -48,4 +49,10 @@ class ArticleModel extends ArticleEntity {
         'publishedAt': publishedAt?.toIso8601String(),
         'content': content,
       };
+
+  factory ArticleModel.fromSnapshot(DocumentSnapshot snapshot) {
+    return ArticleModel(
+        author: snapshot['author'] as String?,
+        content: snapshot['content'] as String?, title: snapshot['title'] as String?, url: snapshot['url']);
+  }
 }

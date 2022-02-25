@@ -10,9 +10,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   ProfileCubit({required SignOutTheApp signOutTheApp})
       : _signOutTheApp = signOutTheApp,
-        super(ProfileInitial()) {
-    test();
-  }
+        super(ProfileInitial());
 
   Future<void> signOut() async {
     emit(ProfileSignOutLoading());
@@ -24,8 +22,4 @@ class ProfileCubit extends Cubit<ProfileState> {
         (r) => emit(ProfileSignedOutSuccessfully()));
   }
 
-  Future<void> test() async {
-    emit(ProfileSignOutLoading());
-    print("hello");
-  }
 }

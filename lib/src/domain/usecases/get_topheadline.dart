@@ -11,7 +11,7 @@ class GetTopHeadline extends Usecase<List<ArticleEntity>, Params> {
   GetTopHeadline({required this.newsRepository});
 
   @override
-  Future<Either<Failure, List<ArticleEntity>?>> call(Params params) async {
+  Future<Either<Failure, List<ArticleEntity>>> call(Params params) async {
     return await newsRepository.getTopHeadline(
         path: params.path, country: params.country);
   }
@@ -20,9 +20,18 @@ class GetTopHeadline extends Usecase<List<ArticleEntity>, Params> {
 class Params extends Equatable {
   final String country;
   final String path;
+  final int pageSize;
+  final String? category;
+  final String? query;
 
-  const Params({required this.path, this.country = 'us'});
+  const Params({
+    required this.path,
+    this.country = 'us',
+    this.pageSize = 10,
+    this.category,
+    this.query,
+  });
 
   @override
-  List<Object?> get props => [country, path];
+  List<Object?> get props => [country, path, pageSize];
 }

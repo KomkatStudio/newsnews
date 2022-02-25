@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newsnews/src/presentation/auth/pages/sign_in.dart';
+import 'package:newsnews/src/presentation/auth/pages/authentication_screen.dart';
 import 'package:newsnews/src/presentation/favorite/presentation/view/favorite_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/feed_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
@@ -13,10 +13,10 @@ class RouterManager {
   static const videos = '/videos';
   static const favorite = '/favorite';
   static const user = '/user';
-  static const main = '/';
+  static const main = '/main';
   static const moreBreakingNews = '/moreBreakingNews';
   static const hotTrendings = '/hotTrendings';
-  static const signIn = '/signIn';
+  static const signIn = '/';
 
   static Map<String, WidgetBuilder> listRoute = {
     main: (_) => const MainScreen(),

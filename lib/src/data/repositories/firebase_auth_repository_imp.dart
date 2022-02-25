@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:newsnews/src/core/errors/exception.dart';
 import 'package:newsnews/src/core/errors/failure.dart';
 import 'package:newsnews/src/core/usecases/usecase.dart';
@@ -47,7 +46,7 @@ class FirebaseAuthRepositoryImpl extends FirebaseAuthRepository {
   @override
   Future<Either<Failure, NoParams>> signOut() async {
     try {
-      final unit = await _authDatasource.signOut();
+      await _authDatasource.signOut();
       return Right(NoParams());
     } on FirebaseAuthException {
       return Left(FirebaseFailure());
