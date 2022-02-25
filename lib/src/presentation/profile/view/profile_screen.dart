@@ -5,6 +5,7 @@ import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
+import 'package:newsnews/src/presentation/profile/cubit/theme_cubit.dart';
 import 'package:newsnews/src/presentation/profile/widgets/custom_chip.dart';
 import 'package:newsnews/src/presentation/profile/widgets/custom_stack_item.dart';
 import 'package:newsnews/src/presentation/profile/widgets/switch_user_control.dart';
@@ -207,13 +208,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           }),
                           label: 'Notification',
                         ),
-                        SwitchUserControl(
-                          label: 'Dark Mode',
-                          isLast: true,
-                          onSwitchActionFunction: (value) => setState(() {
-                            darkModeStatus = !darkModeStatus;
-                          }),
-                          status: darkModeStatus,
+                        BlocSelector<ThemeCubit, ThemeState, bool>(
+                          selector: (state) => state is DarkTheme,
+                          builder: (context, value) {
+                            return BlocBuilder<ThemeCubit, ThemeState>(
+                              builder: (context, state) {
+                                return SwitchUserControl(
+                                  label: 'Dark Mode',
+                                  isLast: true,
+                                  onSwitchActionFunction: (value) =>
+                                      context.read<ThemeCubit>().changeDarkModeStatus(value: value),
+                                  status: value,
+                                );
+                              },
+                            );
+                          },
                         ),
                         SizedBox(height: 20.h),
                         for (int i = 0; i < userTabControl.length - 1; i++)

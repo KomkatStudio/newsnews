@@ -13,3 +13,5 @@ class CacheFailure extends Failure {}
 class FirebaseFailure extends Failure{}
 
 class UserCancelFailure extends Failure{}
+
+class LocalSettingFailure extends Failure{}
