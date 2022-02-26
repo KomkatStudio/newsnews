@@ -1,12 +1,12 @@
 import 'package:newsnews/src/core/errors/failure.dart';
 import 'package:dartz/dartz.dart';
 import 'package:newsnews/src/core/usecases/usecase.dart';
-import 'package:newsnews/src/domain/repositories/firebase_repositories/firebase_auth_repository.dart';
+import 'package:newsnews/src/domain/repositories/firebase_repositories/firebase_services_repository.dart';
 
 class SignOutTheApp extends Usecase<NoParams, NoParams> {
-  final FirebaseAuthRepository _authRepository;
+  final FirebaseServicesRepository _authRepository;
   SignOutTheApp({
-    required FirebaseAuthRepository authRepository,
+    required FirebaseServicesRepository authRepository,
   }) : _authRepository = authRepository;
 
   @override

@@ -1,5 +1,4 @@
-
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:newsnews/src/domain/entities/article/source_entity.dart';
 
 class SourceModel extends SourceEntity {
@@ -10,8 +9,19 @@ class SourceModel extends SourceEntity {
         name: json['name'] as String?,
       );
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-      };
+  factory SourceModel.fromSnapshot(DocumentSnapshot snapshot) => SourceModel(
+        id: snapshot['id'] as String?,
+        name: snapshot['name'] as String?,
+      );
+
+  Map<String, dynamic> toJsonAndDocument() {
+    return {
+      'id': id,
+      'name': name,
+    };
+  }
+
+  factory SourceModel.fromEntity(SourceEntity? entity) {
+    return SourceModel(id: entity?.id, name: entity?.name);
+  }
 }

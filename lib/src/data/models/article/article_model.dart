@@ -39,8 +39,8 @@ class ArticleModel extends ArticleEntity {
         content: json['content'] as String?,
       );
 
-  Map<String, dynamic> toJson() => {
-        'source': (source as SourceModel?)?.toJson(),
+  Map<String, dynamic> toJsonAndSnapshot() => {
+        'source': (source as SourceModel?)?.toJsonAndDocument(),
         'author': author,
         'title': title,
         'description': description,
@@ -52,7 +52,32 @@ class ArticleModel extends ArticleEntity {
 
   factory ArticleModel.fromSnapshot(DocumentSnapshot snapshot) {
     return ArticleModel(
-        author: snapshot['author'] as String?,
-        content: snapshot['content'] as String?, title: snapshot['title'] as String?, url: snapshot['url']);
+      sourceModel: snapshot['source'] == null
+          ? null
+          : SourceModel.fromSnapshot(
+              snapshot['source'] as DocumentSnapshot,
+            ),
+      author: snapshot['author'] as String?,
+      content: snapshot['content'] as String?,
+      title: snapshot['title'] as String?,
+      url: snapshot['url'] as String?,
+      urlToImage: snapshot['urlToImage'] as String?,
+      publishedAt: snapshot['publishedAt'] == null
+          ? null
+          : DateTime.parse(snapshot['publishedAt'] as String),
+    );
+  }
+
+  factory ArticleModel.fromEntity(ArticleEntity? entity) {
+    return ArticleModel(
+      author: entity?.author,
+      content: entity?.content,
+      description: entity?.content,
+      publishedAt: entity?.publishedAt,
+      sourceModel: SourceModel?.fromEntity(entity?.source),
+      title: entity?.title,
+      url: entity?.title,
+      urlToImage: entity?.urlToImage,
+    );
   }
 }

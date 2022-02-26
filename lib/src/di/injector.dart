@@ -1,17 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart';
 import 'package:newsnews/src/core/constant/local_box.dart';
-import 'package:newsnews/src/data/datasources/firebase_datasource/firebase_auth_datasource.dart';
-import 'package:newsnews/src/data/datasources/firebase_datasource/firebase_auth_datasource_impl.dart';
+import 'package:newsnews/src/data/datasources/firebase_datasource/firebase_services_datasource.dart';
+import 'package:newsnews/src/data/datasources/firebase_datasource/firebase_services_datasource_impl.dart';
 import 'package:newsnews/src/data/datasources/local_datasource/hive_setting_datasource.dart';
 import 'package:newsnews/src/data/datasources/local_datasource/hive_setting_datasource_impl.dart';
 import 'package:newsnews/src/data/datasources/news_datasource/news_api_remote_datasource.dart';
-import 'package:newsnews/src/data/repositories/firebase_auth_repository_imp.dart';
+import 'package:newsnews/src/data/repositories/firebase_services_repository_imp.dart';
 import 'package:newsnews/src/data/repositories/local_setting_repository_impl.dart';
-import 'package:newsnews/src/domain/repositories/firebase_repositories/firebase_auth_repository.dart';
+import 'package:newsnews/src/domain/repositories/firebase_repositories/firebase_services_repository.dart';
 import 'package:newsnews/src/domain/repositories/local_repositories/local_setting_repository.dart';
 import 'package:newsnews/src/domain/repositories/news_repositories/news_repository.dart';
 import 'package:newsnews/src/domain/usecases/change_dark_mode_status.dart';
@@ -40,14 +41,16 @@ Future<void> initDependence() async {
   s1.registerLazySingleton(() => Client());
   s1.registerLazySingleton(() => FirebaseAuth.instance);
   s1.registerLazySingleton(() => GoogleSignIn());
+  s1.registerLazySingleton(() => FirebaseFirestore.instance);
 
   ///DataSource (Firebase + NewsApi)
   s1.registerLazySingleton<NewsApiRemoteDatasouce>(
       () => NewsApiRemoteDatasouce(s1()));
-  s1.registerLazySingleton<FirebaseAuthDatasource>(
-    () => FirebaseAuthDatasourceImpl(
+  s1.registerLazySingleton<FirebaseServicesDatasource>(
+    () => FirebaseServicesDatasourceImpl(
       firebaseAuth: s1(),
       googleSignIn: s1(),
+      firebaseFirestore: s1(),
     ),
   );
 
@@ -60,8 +63,8 @@ Future<void> initDependence() async {
   s1.registerLazySingleton<NewsRepository>(
     () => NewsRepositoryImpl(s1()),
   );
-  s1.registerLazySingleton<FirebaseAuthRepository>(
-    () => FirebaseAuthRepositoryImpl(s1()),
+  s1.registerLazySingleton<FirebaseServicesRepository>(
+    () => FirebaseServicesRepositoryImpl(firebaseServices: s1()),
   );
   s1.registerLazySingleton<LocalSettingRepository>(
     () => LocalSettingRepositoryImpl(setting: s1()),
@@ -73,7 +76,7 @@ Future<void> initDependence() async {
     () => GetTopHeadline(newsRepository: s1()),
   );
   s1.registerLazySingleton<SignInWithGoogle>(
-    () => SignInWithGoogle(firebaseAuthRepository: s1()),
+    () => SignInWithGoogle(firebaseServices : s1()),
   );
   s1.registerLazySingleton<HasCurrentUser>(
     () => HasCurrentUser(authRepository: s1()),

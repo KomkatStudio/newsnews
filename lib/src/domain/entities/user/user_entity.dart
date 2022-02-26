@@ -5,8 +5,8 @@ class UserEntity {
   final String? displayName;
   final String? email;
   final String? imageUrl;
-  final List<ArticleEntity?>? favorites;
-  final List<String?>? interest;
+  final List<ArticleEntity>? favorites;
+  final List<String>? interest;
   UserEntity({
     this.uuid,
     this.displayName,

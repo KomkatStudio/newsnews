@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
+import 'package:newsnews/src/presentation/feed/view/detail_article_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
 import 'package:newsnews/src/presentation/feed/view/more_breaking_news.dart';
 import 'package:newsnews/src/presentation/feed/widgets/headline_card.dart';
@@ -346,13 +347,19 @@ class _FeedScreenState extends State<FeedScreen>
             height: 320.h,
             child: PageView(
               controller: pageController,
-              children: const [
+              children: [
                 HeadlineCard(
                   imageURL:
                       "https://www.reuters.com/resizer/T2bX-QG7Lo0g5TfWkk2KdqlSCs0=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/PG6LBB7KM5LJHKHOD3BHBR3IAE.jpg",
                   newsTag: "Covid 19",
                   newsTitle:
                       "Covid 19 in children occurs mostly for a short duration, finds study",
+                  onHeadlineTapFunction: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const DetailArticleScreen(),
+                    ),
+                  ),
                 ),
                 HeadlineCard(
                   imageURL:
@@ -360,6 +367,7 @@ class _FeedScreenState extends State<FeedScreen>
                   newsTag: "Covid 19",
                   newsTitle:
                       "Covid 19 in children occurs mostly for a short duration, finds study",
+                  onHeadlineTapFunction: () {},
                 ),
               ],
             ),

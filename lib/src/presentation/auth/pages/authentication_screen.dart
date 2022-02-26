@@ -17,63 +17,64 @@ class AuthenticationScreen extends StatelessWidget {
     return BlocProvider<AuthCubit>(
       create: (_) => s1<AuthCubit>(),
       child: Scaffold(
-          backgroundColor: Palette.primaryColor,
-          body: BlocConsumer<AuthCubit, AuthState>(
-            listener: (context, state) {
-              if (state is AuthSuccessful) {
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  RouterManager.main,
-                  (route) => false,
-                );
-              } else if (state is AuthLoading) {
-                showLoadingDialog(context);
-              } else if (state is AuthError) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text(state.message),
-                ));
-              }
-            },
-            builder: (context, state) {
-              return Center(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 28.0.w),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Spacer(
-                        flex: 3,
-                      ),
-                      Text(
-                        "NewsNews",
-                        style: TextStyle(
-                          color: Palette.backgroundBoxColor,
-                          fontSize: 35.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const Spacer(
-                        flex: 2,
-                      ),
-                      SignInWithButton(
-                        logoName: 'Google',
-                        logoPath: AssetPath.googleLogo,
-                        onPressFunction: () =>
-                            context.read<AuthCubit>().signInUsingGoolge(),
-                      ),
-                      SizedBox(height: 12.h),
-                      SignInWithButton(
-                        logoName: 'Facebook',
-                        logoPath: AssetPath.facebookLogo,
-                        onPressFunction: () {},
-                      ),
-                      const Spacer(),
-                    ],
-                  ),
-                ),
+        backgroundColor: Palette.primaryColor,
+        body: BlocListener<AuthCubit, AuthState>(
+          listener: (context, state) {
+            if (state is AuthSuccessful) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                RouterManager.main,
+                (route) => false,
               );
-            },
-          )),
+            } else if (state is AuthLoading) {
+              showLoadingDialog(context);
+            } else if (state is AuthError) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(state.message),
+              ));
+            }
+          },
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 28.0.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(
+                    flex: 3,
+                  ),
+                  Text(
+                    "NewsNews",
+                    style: TextStyle(
+                      color: Palette.backgroundBoxColor,
+                      fontSize: 35.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  const Spacer(
+                    flex: 2,
+                  ),
+                  Builder(builder: (context) {
+                    return SignInWithButton(
+                      logoName: 'Google',
+                      logoPath: AssetPath.googleLogo,
+                      onPressFunction: () =>
+                          context.read<AuthCubit>().signInUsingGoolge(),
+                    );
+                  }),
+                  SizedBox(height: 12.h),
+                  SignInWithButton(
+                    logoName: 'Facebook',
+                    logoPath: AssetPath.facebookLogo,
+                    onPressFunction: () {},
+                  ),
+                  const Spacer(),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

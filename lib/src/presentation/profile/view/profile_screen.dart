@@ -211,16 +211,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         BlocSelector<ThemeCubit, ThemeState, bool>(
                           selector: (state) => state is DarkTheme,
                           builder: (context, value) {
-                            return BlocBuilder<ThemeCubit, ThemeState>(
-                              builder: (context, state) {
-                                return SwitchUserControl(
-                                  label: 'Dark Mode',
-                                  isLast: true,
-                                  onSwitchActionFunction: (value) =>
-                                      context.read<ThemeCubit>().changeDarkModeStatus(value: value),
-                                  status: value,
-                                );
-                              },
+                            return SwitchUserControl(
+                              label: 'Dark Mode',
+                              isLast: true,
+                              onSwitchActionFunction: (value) => context
+                                  .read<ThemeCubit>()
+                                  .changeDarkModeStatus(value: value),
+                              status: value,
                             );
                           },
                         ),
