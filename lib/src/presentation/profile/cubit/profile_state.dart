@@ -11,16 +11,36 @@ class ProfileInitial extends ProfileState {}
 
 class ProfileSignOutLoading extends ProfileState {}
 
-class ProfileSignedOutSuccessfully extends ProfileState {}
+class ProfileSignOutSuccessfully extends ProfileState {}
 
-class ProfileSignedOutFail extends ProfileState {
+class ProfileSignOutFail extends ProfileState {
   final String message;
-  const ProfileSignedOutFail({
+  const ProfileSignOutFail({
     required this.message,
   });
 
   @override
   List<Object> get props => [message];
+}
 
-  
+class LoadUserDataLoading extends ProfileState {}
+
+class LoadUserDataSuccessfully extends ProfileState {
+  final UserEntity user;
+  const LoadUserDataSuccessfully({
+    required this.user,
+  });
+
+  @override
+  List<Object> get props => [user];
+}
+
+class LoadUserDataFail extends ProfileState {
+  final String message;
+  const LoadUserDataFail({
+    required this.message,
+  });
+
+  @override
+  List<Object> get props => [message];
 }

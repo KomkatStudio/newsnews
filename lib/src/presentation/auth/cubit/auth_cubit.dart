@@ -32,7 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
       } else {
         emit(const AuthError("Server error"));
       }
-    }, ((r) => emit(AuthSuccessful(r!.user!.uid))));
+    }, ((r) => emit(AuthSuccessful())));
   }
 
   Future<void> checkHasCurrentUser() async {
@@ -44,7 +44,7 @@ class AuthCubit extends Cubit<AuthState> {
             (r) async {
       if (r) {
         final getCurrentUserUC = await getCurrentUser.call(NoParams());
-        getCurrentUserUC.fold((l) {}, (r) => emit(AuthSuccessful(r)));
+        getCurrentUserUC.fold((l) {}, (r) => emit(AuthSuccessful()));
       } else {
         emit(NoAuth());
       }

@@ -74,8 +74,6 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
       userCollection.doc(userUid).get().then((userDoc) {
         if (!userDoc.exists) {
           userCollection.doc(userUid).set(user.toDocument());
-        } else {
-          userCollection.doc(userUid).update(user.toDocument());
         }
       });
     } catch (e) {

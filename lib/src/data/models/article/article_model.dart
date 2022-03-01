@@ -50,19 +50,19 @@ class ArticleModel extends ArticleEntity {
         'content': content,
       };
 
-  factory ArticleModel.fromSnapshot(DocumentSnapshot snapshot) {
+  factory ArticleModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     return ArticleModel(
-      sourceModel: snapshot['source'] == null
+      sourceModel: snapshot.data()!['source'] == null
           ? null
           : SourceModel.fromSnapshot(
-              snapshot['source'] as DocumentSnapshot,
+              snapshot.data()!['source'] as DocumentSnapshot<Map<String, dynamic>>,
             ),
-      author: snapshot['author'] as String?,
-      content: snapshot['content'] as String?,
-      title: snapshot['title'] as String?,
-      url: snapshot['url'] as String?,
-      urlToImage: snapshot['urlToImage'] as String?,
-      publishedAt: snapshot['publishedAt'] == null
+      author: snapshot.data()!['author'] as String?,
+      content: snapshot.data()!['content'] as String?,
+      title: snapshot.data()!['title'] as String?,
+      url: snapshot.data()!['url'] as String?,
+      urlToImage: snapshot.data()!['urlToImage'] as String?,
+      publishedAt: snapshot.data()!['publishedAt'] == null
           ? null
           : DateTime.parse(snapshot['publishedAt'] as String),
     );

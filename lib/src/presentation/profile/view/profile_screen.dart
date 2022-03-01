@@ -59,7 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         listener: (context, state) {
           if (state is ProfileSignOutLoading) {
             showLoadingDialog(context);
-          } else if (state is ProfileSignedOutSuccessfully) {
+          } else if (state is ProfileSignOutSuccessfully) {
             Navigator.pushNamedAndRemoveUntil(context, RouterManager.signIn,
                 ModalRoute.withName(RouterManager.signIn));
           }
@@ -99,11 +99,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           shape: BoxShape.circle,
                                         ),
                                         padding: const EdgeInsets.all(3.5),
-                                        child: CircleAvatar(
-                                          backgroundImage: Image.network(
-                                                  "https://avatars.githubuserconten"
-                                                  "t.com/u/63831488?v=4")
-                                              .image,
+                                        child: BlocBuilder<ProfileCubit,
+                                            ProfileState>(
+                                          builder: (context, state) {
+                                            if (state is LoadUserDataLoading) {
+                                              return CircularProgressIndicator(
+                                                color: Palette.primaryColor,
+                                              );
+                                            } else if (state
+                                                is LoadUserDataSuccessfully) {
+                                              return CircleAvatar(
+                                                backgroundImage: Image.network(
+                                                  state.user.imageUrl!,
+                                                ).image,
+                                              );
+                                            } else {
+                                              return CircleAvatar(
+                                                backgroundColor:
+                                                    Palette.backgroundBoxColor,
+                                                child: Icon(
+                                                  PhosphorIcons.warning,
+                                                  color: Palette.primaryColor,
+                                                ),
+                                              );
+                                            }
+                                          },
                                         ),
                                       ),
                                       CircleAvatar(
@@ -138,7 +158,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               color: Palette
                                                   .textColorInBlueBGColor,
                                               fontWeight: FontWeight.w600,
-                                              letterSpacing: 0.4,
+                                              letterSpacing: 0.4.w,
                                             ),
                                           ),
                                           SizedBox(
@@ -161,6 +181,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           fontSize: 14.sp,
                                           color: Palette.textColorInBlueBGColor,
                                           fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.2.w,
                                         ),
                                       )
                                     ],
@@ -231,19 +252,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             tabName: userTabControl[i]["tabName"] as String,
                             iconData: userTabControl[i]["iconData"] as IconData,
                           ),
-                        BlocBuilder<ProfileCubit, ProfileState>(
-                          builder: (context, state) {
-                            return UserTabControl(
-                              typeBorderRadius: 1,
-                              onTabNameFunction: () =>
-                                  context.read<ProfileCubit>().signOut(),
-                              tabName: userTabControl[userTabControl.length - 1]
-                                  ["tabName"] as String,
-                              iconData:
-                                  userTabControl[userTabControl.length - 1]
-                                      ["iconData"] as IconData,
-                            );
-                          },
+                        UserTabControl(
+                          typeBorderRadius: 1,
+                          onTabNameFunction: () =>
+                              context.read<ProfileCubit>().signOut(),
+                          tabName: userTabControl[userTabControl.length - 1]
+                              ["tabName"] as String,
+                          iconData: userTabControl[userTabControl.length - 1]
+                              ["iconData"] as IconData,
                         ),
                       ],
                     ),

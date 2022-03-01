@@ -37,18 +37,21 @@ class HeadlineCard extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(2),
-                  child: Container(
-                    height: 200.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: Image.network(imageURL).image,
-                        fit: BoxFit.cover,
+                Hero(
+                  tag: imageURL,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Container(
+                      height: 200.h,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        image: DecorationImage(
+                          image: Image.network(imageURL).image,
+                          fit: BoxFit.cover,
+                        ),
                       ),
+                      margin: EdgeInsets.only(bottom: 12.h),
                     ),
-                    margin: EdgeInsets.only(bottom: 12.h),
                   ),
                 ),
                 Positioned(

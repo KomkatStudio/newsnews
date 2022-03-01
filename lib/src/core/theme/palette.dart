@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Palette {
   static final primaryHeavyColor = Colors.blue.shade800;
   static final primaryColor = Colors.blue.shade700;
-  static final primaryLowerColor = Colors.blue.shade400;
+  static final primaryLowerColor = Colors.blue.shade500;
   static final unSelectedColor = Colors.grey.shade400;
   static const favoriteColor = Colors.red;
   static const tagCategoryColor = Colors.black87;

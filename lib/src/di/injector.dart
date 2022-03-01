@@ -17,7 +17,9 @@ import 'package:newsnews/src/domain/repositories/local_repositories/local_settin
 import 'package:newsnews/src/domain/repositories/news_repositories/news_repository.dart';
 import 'package:newsnews/src/domain/usecases/change_dark_mode_status.dart';
 import 'package:newsnews/src/domain/usecases/get_current_user.dart';
+import 'package:newsnews/src/domain/usecases/get_user_data.dart';
 import 'package:newsnews/src/domain/usecases/has_current_user.dart';
+import 'package:newsnews/src/domain/usecases/save_favorite_article.dart';
 import 'package:newsnews/src/domain/usecases/sign_in_with_google.dart';
 import 'package:newsnews/src/data/repositories/news_repository_impl.dart';
 import 'package:newsnews/src/domain/usecases/get_topheadline.dart';
@@ -90,6 +92,12 @@ Future<void> initDependence() async {
       () => GetDarkMode(settingRepository: s1()));
   s1.registerLazySingleton<ChangeDarkModeStatus>(
       () => ChangeDarkModeStatus(localSettingRepository: s1()));
+      s1.registerLazySingleton<GetUserData>(
+    () => GetUserData(firebaseRepository: s1()),
+  );
+  s1.registerLazySingleton<SaveFavoriteArticle>(
+    () => SaveFavoriteArticle(firebaseServicesRepository: s1()),
+  );
 
   ///BLOC - Cubit
   ///
@@ -104,7 +112,7 @@ Future<void> initDependence() async {
     ),
   );
   s1.registerFactory<ProfileCubit>(
-    () => ProfileCubit(signOutTheApp: s1()),
+    () => ProfileCubit(signOutTheApp: s1(), getUserData: s1()),
   );
   s1.registerFactory<ThemeCubit>(
       () => ThemeCubit(getDarkMode: s1(), changeDarkModeStatus: s1()));

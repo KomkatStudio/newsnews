@@ -357,7 +357,12 @@ class _FeedScreenState extends State<FeedScreen>
                   onHeadlineTapFunction: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const DetailArticleScreen(),
+                      builder: (context) => const DetailArticleScreen(
+                        imageUrl:
+                            "https://www.reuters.com/resizer/T2bX-QG7Lo0g5TfWkk2KdqlSCs0=/1200x628/smart/filters:quality(80)/cloudfront-us-east-2.images.arcpublishing.com/reuters/PG6LBB7KM5LJHKHOD3BHBR3IAE.jpg",
+                        title:
+                            "Covid 19 in children occurs mostly for a short duration, finds study",
+                      ),
                     ),
                   ),
                 ),

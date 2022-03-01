@@ -3,7 +3,7 @@ import 'package:newsnews/src/data/models/article/article_model.dart';
 import 'package:newsnews/src/domain/entities/user/user_entity.dart';
 
 class UserModel extends UserEntity {
-  UserModel({
+  const UserModel({
     required String? uuid,
     required String? displayName,
     required String? email,
@@ -19,16 +19,18 @@ class UserModel extends UserEntity {
           imageUrl: imageUrl,
         );
 
-  factory UserModel.fromSnapshot(DocumentSnapshot snapshot) {
+  factory UserModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
     return UserModel(
-      uuid: snapshot['uuid'] as String,
-      displayName: snapshot['displayName'] as String?,
-      email: snapshot['email'] as String?,
-      favorites: (snapshot['favorites'] as List<ArticleModel>?)
-          ?.map((e) => ArticleModel.fromSnapshot(e as DocumentSnapshot))
+      uuid: snapshot.data()!['uuid'] as String?,
+      displayName: snapshot.data()!['displayName'] as String?,
+      email: snapshot.data()!['email'] as String?,
+      favorites: (snapshot.data()!['favorites'] as List<ArticleModel>?)
+          ?.map((e) => ArticleModel.fromSnapshot(
+              e as DocumentSnapshot<Map<String, dynamic>>))
           .toList(),
-      imageUrl: snapshot['imageUrl'] as String?,
-      interest: (snapshot['interest'] as List<String>?),
+      imageUrl: snapshot.data()!['imageUrl'] as String?,
+      interest: (snapshot.data()!['interest'] as List<String>?),
     );
   }
   Map<String, dynamic> toDocument() {
@@ -42,13 +44,14 @@ class UserModel extends UserEntity {
     };
   }
 
-   factory UserModel.fromEntity(UserEntity? entity){
+  factory UserModel.fromEntity(UserEntity? entity) {
     return UserModel(
-        uuid: entity?.uuid,
-        displayName: entity?.displayName,
-        email: entity?.email,
-        favorites: entity?.favorites as List<ArticleModel>?,
-        imageUrl: entity?.imageUrl,
-        interest: entity?.interest);
+      uuid: entity?.uuid,
+      displayName: entity?.displayName,
+      email: entity?.email,
+      favorites: entity?.favorites as List<ArticleModel>?,
+      imageUrl: entity?.imageUrl,
+      interest: entity?.interest,
+    );
   }
 }

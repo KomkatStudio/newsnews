@@ -14,11 +14,6 @@ class AuthLoading extends AuthState {}
 class NoAuth extends AuthState {}
 
 class AuthSuccessful extends AuthState {
-  final String uuid;
-  const AuthSuccessful(this.uuid);
-
-  @override
-  List<Object> get props => [uuid];
 }
 
 class AuthError extends AuthState {
