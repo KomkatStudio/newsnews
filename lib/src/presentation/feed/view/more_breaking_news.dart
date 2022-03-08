@@ -35,27 +35,22 @@ class _MoreBreakingNewsState extends State<MoreBreakingNews> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
+          splashRadius: 24,
           icon: const Icon(PhosphorIcons.arrowLeft),
           onPressed: () => Navigator.pop(context),
           color: Colors.black,
-          iconSize: 20.sp,
         ),
-        title: const Text("Hot & trendings"),
-        titleTextStyle: TextStyle(
-          color: Colors.black,
-          fontSize: 22.sp,
-          fontWeight: FontWeight.w600,
-        ),
+        title: const Text("More breaking news"),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 2,
         actions: [
           IconButton(
+            splashRadius: 24,
             icon: const Icon(
               PhosphorIcons.arrowClockwise,
               color: Colors.black,
             ),
-            iconSize: 20.sp,
             onPressed: () {},
           ),
         ],

@@ -31,7 +31,7 @@ class FavoriteScreen extends StatelessWidget {
           behavior: CustomScroll(),
           child: ListView.builder(
             itemCount: 3,
-            padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 10.w),
+            padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 5.w),
             itemBuilder: (context, index) {
               return NewsCard(
                 imageUrl:

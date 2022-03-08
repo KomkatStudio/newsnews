@@ -1,4 +1,6 @@
+// import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -14,5 +16,13 @@ Future<void> main() async {
   await di.initDependence();
   await dotenv.load(fileName: "assets/.env");
   setFlavorDevelopment();
-  bootstrap(() => const App());
+  // bootstrap(
+  //   () => DevicePreview(
+  //     enabled: !kReleaseMode,
+  //     builder: (context) => const App(),
+  //   ),
+  // );
+  bootstrap(
+    () => const App(),
+  );
 }

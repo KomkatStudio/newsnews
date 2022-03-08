@@ -1,19 +1,22 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:newsnews/src/core/config/custom_cache_manager.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
+import 'package:newsnews/src/widgets/custom_error.dart';
 
 class HeadlineCard extends StatelessWidget {
   const HeadlineCard({
     Key? key,
     required this.newsTitle,
     required this.newsTag,
-    required this.imageURL,
+    this.imageURL,
     required this.onHeadlineTapFunction,
   }) : super(key: key);
 
   final String newsTitle;
   final String newsTag;
-  final String imageURL;
+  final String? imageURL;
   final VoidCallback onHeadlineTapFunction;
 
   @override
@@ -34,23 +37,50 @@ class HeadlineCard extends StatelessWidget {
           ],
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Stack(
               children: [
                 Hero(
-                  tag: imageURL,
+                  tag: newsTitle,
                   child: Padding(
                     padding: const EdgeInsets.all(5),
-                    child: Container(
-                      height: 200.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: Image.network(imageURL).image,
-                          fit: BoxFit.cover,
+                    child: CachedNetworkImage(
+                      cacheManager: CustomCacheManager.customCacheManager,
+                      imageUrl: imageURL ?? "",
+                      imageBuilder: (context, imageProvider) => Container(
+                        height: 200.h,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: imageProvider,
+                            fit: BoxFit.cover,
+                          ),
+                          borderRadius: BorderRadius.circular(15),
                         ),
+                        margin: EdgeInsets.only(bottom: 10.h),
                       ),
-                      margin: EdgeInsets.only(bottom: 12.h),
+                      progressIndicatorBuilder: (context, string, progress) {
+                        return Container(
+                          height: 200.h,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              value: progress.progress,
+                              color: Palette.primaryColor,
+                            ),
+                          ),
+                          margin: EdgeInsets.only(bottom: 10.h),
+                        );
+                      },
+                      errorWidget: (context, string, dymamic) => Container(
+                        height: 200.h,
+                        child: const Center(
+                          child: CustomError(
+                            messageError: "This no image or fail",
+                          ),
+                        ),
+                        margin: EdgeInsets.only(bottom: 10.h),
+                      ),
                     ),
                   ),
                 ),
@@ -75,9 +105,7 @@ class HeadlineCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: 10.h,
-            ),
+            const Spacer(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0.w),
               child: Text(
@@ -89,6 +117,9 @@ class HeadlineCard extends StatelessWidget {
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
+            ),
+            const Spacer(
+              flex: 2,
             ),
           ],
         ),

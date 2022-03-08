@@ -40,9 +40,9 @@ class FirebaseServicesRepositoryImpl extends FirebaseServicesRepository {
   }
 
   @override
-  Future<Either<Failure, String>> getCurrentUser() async {
+  Future<Either<Failure, User>> getCurrentUser() async {
     try {
-      final currentUser = await _firebaseServices.getCurrentUserId();
+      final currentUser = await _firebaseServices.getCurrentUser();
       return Right(currentUser);
     } on FirebaseServerException {
       return Left(FirebaseFailure());

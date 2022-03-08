@@ -10,7 +10,7 @@ abstract class FirebaseServicesRepository {
 
   Future<Either<Failure, bool>> isSignIn();
 
-  Future<Either<Failure, String>> getCurrentUser();
+  Future<Either<Failure, User>> getCurrentUser();
 
   Future<Either<Failure, NoParams>> signOut();
 

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
+import 'package:newsnews/src/core/helpers/show_snackbar_impl.dart';
 import 'package:newsnews/src/core/theme/asset_path.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/di/injector.dart';
@@ -26,12 +27,15 @@ class AuthenticationScreen extends StatelessWidget {
                 RouterManager.main,
                 (route) => false,
               );
+              showSnackbarImpl(context,
+                  message: "Signed in with your Google: " + state.email);
             } else if (state is AuthLoading) {
               showLoadingDialog(context);
             } else if (state is AuthError) {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 content: Text(state.message),
               ));
+              Navigator.pop(context);
             }
           },
           child: Center(

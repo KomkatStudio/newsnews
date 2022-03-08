@@ -1,49 +1,70 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:newsnews/src/domain/entities/article/article_entity.dart';
-import 'package:newsnews/src/domain/usecases/get_topheadline.dart';
+import 'package:newsnews/src/domain/usecases/get_everything_from_query.dart'
+    as everything;
+import 'package:newsnews/src/domain/usecases/get_topheadline.dart' as top;
 
 part 'news_state.dart';
 
 class NewsCubit extends Cubit<NewsState> {
-  NewsCubit({required this.getTopHeadline}) : super(NewsInitial()) {
-    getTopHeadlineNews();
+  NewsCubit(
+      {required top.GetTopHeadline getTopHeadline,
+      required everything.GetEverythingFromQuery getEverythingFromQuery})
+      : _getTopHeadline = getTopHeadline,
+        _getEverythingFromQuery = getEverythingFromQuery,
+        super(NewsInitial()) {
+    getArticles();
   }
-  final GetTopHeadline getTopHeadline;
+  final top.GetTopHeadline _getTopHeadline;
+  final everything.GetEverythingFromQuery _getEverythingFromQuery;
 
-  Future<void> getTopHeadlineNews() async {
+  Future<void> getArticles() async {
     emit(NewsLoading());
     final listCategory = [
       '',
       'covid-19',
       'business',
       'entertainment',
-      'general',
       'health',
       'technology',
       'science',
       'sports'
     ];
-    var listHeadlines = <ArticleEntity>[];
+    var listArticle = <ArticleEntity>[];
     try {
-      await getTopHeadline
-          .call(const Params(path: "/top-headlines"))
+      ///get all top headlines
+      await _getTopHeadline
+          .call(const top.Params(path: "/top-headlines"))
           .then(((value) => value.fold((l) {}, (r) {
-                listHeadlines = [...r];
+                listArticle.addAll(r);
               })));
-      await getTopHeadline
-          .call(Params(path: "/top-headlines", query: listCategory[1]))
+
+      ///Get covid with query
+      await _getEverythingFromQuery
+          .call(everything.Params(path: "/everything", query: listCategory[1]))
           .then(((value) => value.fold((l) {}, (r) {
-                listHeadlines = [...r];
+                log(listCategory[1] + ":" + r.length.toString());
+                listArticle.addAll(r);
               })));
       for (int i = 2; i < listCategory.length; i++) {
-        await getTopHeadline
-            .call(Params(path: "/top-headlines", category: listCategory[i]))
-            .then(((value) => value.fold((l) {}, (r) {
-                  listHeadlines = [...r];
-                })));
+        ///Get top headlines
+        await _getTopHeadline
+            .call(top.Params(path: "/top-headlines", category: listCategory[i]))
+            .then(
+              ((value) => value.fold(
+                    (l) => log("Get top ${listCategory[i]} fail"),
+                    (r) {
+                      log(listCategory[i] + ":" + r.length.toString());
+                      listArticle.addAll(r);
+                    },
+                  )),
+            );
       }
-      emit(NewsLoaded(listHeadlines));
+      log(listArticle.toString());
+      emit(NewsLoaded(listArticle));
     } catch (e) {
       emit(const NewsError("error server"));
     }

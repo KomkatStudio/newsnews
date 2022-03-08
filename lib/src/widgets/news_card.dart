@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:newsnews/src/core/config/custom_cache_manager.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
+import 'package:newsnews/src/widgets/custom_error.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class NewsCard extends StatelessWidget {
@@ -29,17 +32,19 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: onNewsTapFunction,
       child: Container(
-        height: needHeart ? 150.h : 130.h,
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
-        margin: EdgeInsets.symmetric(vertical: verticalMargin, horizontal: 5.w),
-        width: size.width - 35.w,
+        height: needHeart ? 120.h : null,
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        margin: EdgeInsets.symmetric(
+          horizontal: 8.w,
+          vertical: verticalMargin,
+        ),
+        width: 0.9.sw,
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(15),
           boxShadow: const [
             BoxShadow(
               color: Colors.black12,
@@ -52,19 +57,41 @@ class NewsCard extends StatelessWidget {
           children: [
             Expanded(
               flex: 2,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.0.w),
-                child: Container(
-                  height: 120.h,
+              child: CachedNetworkImage(
+                cacheManager: CustomCacheManager.customCacheManager,
+                imageUrl: imageUrl,
+                imageBuilder: (context, imageProvider) => Container(
+                  height: 100.h,
+
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
                     image: DecorationImage(
-                      image: Image.network(
-                        imageUrl,
-                      ).image,
+                      image: imageProvider,
                       fit: BoxFit.cover,
                     ),
+                    borderRadius: BorderRadius.circular(15),
                   ),
+                  // margin: EdgeInsets.only(bottom: 10.h),
+                ),
+                progressIndicatorBuilder: (context, string, progress) {
+                  return SizedBox(
+                    height: 200.h,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: progress.progress,
+                        color: Palette.primaryColor,
+                      ),
+                    ),
+                    // margin: EdgeInsets.only(bottom: 10.h),
+                  );
+                },
+                errorWidget: (context, string, dymamic) => SizedBox(
+                  height: 200.h,
+                  child: const Center(
+                    child: CustomError(
+                      messageError: "This no image or fail",
+                    ),
+                  ),
+                  // margin: EdgeInsets.only(bottom: 10.h),
                 ),
               ),
             ),
@@ -72,15 +99,13 @@ class NewsCard extends StatelessWidget {
               width: 15.w,
             ),
             Expanded(
-              flex: 3,
+              flex: 4,
               child: Column(
-                mainAxisAlignment: needHeart
-                    ? MainAxisAlignment.start
-                    : MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   needHeart
                       ? Padding(
-                          padding: EdgeInsets.symmetric(vertical: 6.0.h),
+                          padding: EdgeInsets.symmetric(vertical: 2.0.h),
                           child: Align(
                             alignment: Alignment.centerRight,
                             child: GestureDetector(
@@ -88,7 +113,7 @@ class NewsCard extends StatelessWidget {
                                 isFavorite
                                     ? PhosphorIcons.heartFill
                                     : PhosphorIcons.heart,
-                                size: 20.sp,
+                                size: 26.sp,
                                 color: isFavorite ? Colors.red : null,
                               ),
                               onTap: onHeartTapFunction,
@@ -107,6 +132,7 @@ class NewsCard extends StatelessWidget {
                   ),
                   const Spacer(flex: 2),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Tooltip(
                         message: tag,
@@ -138,12 +164,12 @@ class NewsCard extends StatelessWidget {
                         flex: 2,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Icon(
                             PhosphorIcons.clock,
                             color: Palette.primaryColor,
                           ),
-                          SizedBox(width: 3.w),
                           Text(
                             time,
                             style: TextStyle(

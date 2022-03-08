@@ -1,5 +1,13 @@
 import 'package:intl/intl.dart';
 
+extension DataTimeX on DateTime {
+  String formatISOTime() {
+    //converts date into the following format:
+// or 2019-06-04T12:08:56.235
+    return DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(this);
+  }
+}
+
 extension StringX on String {
   String convertToMMddyyy() {
     DateTime parseDate = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(this);
@@ -14,7 +22,6 @@ extension StringX on String {
     var outputFormat = DateFormat('MM-dd-yyyy hh:mm');
     return outputFormat.format(inputDate);
   }
-
 
   // String getImageUrlOfSource(){
   //   switch(this){

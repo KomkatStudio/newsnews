@@ -33,6 +33,13 @@
                 "--flavor",
                 "beta"
             ],
+        },
+        {
+            "name": "NewsNews Release Test",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_dev.dart",
+            "flutterMode": "release"
         }
     ]
 }

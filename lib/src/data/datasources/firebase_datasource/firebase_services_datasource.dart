@@ -9,7 +9,7 @@ abstract class FirebaseServicesDatasource {
 
   Future<bool> isSignIn();
 
-  Future<String> getCurrentUserId();
+  Future<User> getCurrentUser();
 
   Future<void> signOut();
 

@@ -35,26 +35,20 @@ class _HotAndTrendingsState extends State<HotAndTrendings> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
+          splashRadius: 24,
           icon: const Icon(PhosphorIcons.arrowLeft),
           onPressed: () => Navigator.pop(context),
           color: Colors.black,
-          iconSize: 22,
         ),
         title: const Text("Hot & trendings"),
-        titleTextStyle: TextStyle(
-          color: Colors.black,
-          fontSize: 22.sp,
-          fontWeight: FontWeight.w600,
-        ),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 2,
         actions: [
           IconButton(
+            splashRadius: 24,
             icon: const Icon(
-                PhosphorIcons.arrowClockwise,
-
-              size: 22,
+              PhosphorIcons.arrowClockwise,
               color: Colors.black,
             ),
             onPressed: () {},

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -39,7 +41,7 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
     } on UserCancelException {
       throw UserCancelException();
     } catch (e) {
-      print(e.toString());
+      log(e.toString());
       throw FirebaseServerException();
     }
   }
@@ -48,7 +50,7 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
   Future<bool> isSignIn() async => _firebaseAuth.currentUser?.uid != null;
 
   @override
-  Future<String> getCurrentUserId() async => _firebaseAuth.currentUser!.uid;
+  Future<User> getCurrentUser() async => _firebaseAuth.currentUser!;
 
   @override
   Future<void> signOut() async => await _firebaseAuth.signOut();
@@ -56,9 +58,9 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
   @override
   Future<void> saveFavoriteArticle(ArticleModel article) async {
     try {
-      final userUid = await getCurrentUserId();
+      final user = await getCurrentUser();
       final userCollection = _firebaseFirestore.collection('users');
-      userCollection.doc(userUid).update({
+      userCollection.doc(user.uid).update({
         'favorites': FieldValue.arrayUnion([article.toJsonAndSnapshot()])
       });
     } catch (e) {
@@ -67,13 +69,13 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
   }
 
   @override
-  Future<void> saveUserInformation(UserModel user) async {
+  Future<void> saveUserInformation(UserModel userModel) async {
     try {
       final userCollection = _firebaseFirestore.collection('users');
-      final userUid = await getCurrentUserId();
-      userCollection.doc(userUid).get().then((userDoc) {
+    final user = await getCurrentUser();
+      userCollection.doc(user.uid).get().then((userDoc) {
         if (!userDoc.exists) {
-          userCollection.doc(userUid).set(user.toDocument());
+          userCollection.doc(user.uid).set(userModel.toDocument());
         }
       });
     } catch (e) {
@@ -84,9 +86,9 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
   @override
   Future<UserModel> getUserData() async {
     try {
-      final userUid = await getCurrentUserId();
+    final user = await getCurrentUser();
       final userSnapshot =
-          await _firebaseFirestore.collection('users').doc(userUid).get();
+          await _firebaseFirestore.collection('users').doc(user.uid).get();
       final userData = UserModel.fromSnapshot(userSnapshot);
       return userData;
     } catch (e) {

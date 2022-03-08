@@ -12,7 +12,7 @@ class SwitchUserControl extends StatelessWidget {
   }) : super(key: key);
 
   final bool status;
-  final void Function(bool value) onSwitchActionFunction;
+  final ValueChanged<bool> onSwitchActionFunction;
   final String label;
   final bool isLast;
 
@@ -55,6 +55,7 @@ class SwitchUserControl extends StatelessWidget {
             style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 16.sp,
+              color: Palette.textColor,
             ),
           ),
           Switch(

@@ -1,20 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:newsnews/src/core/config/custom_cache_manager.dart';
 import 'package:newsnews/src/core/extension/extension.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
+import 'package:newsnews/src/domain/entities/article/article_entity.dart';
 import 'package:newsnews/src/widgets/animated_effect_size.dart';
+import 'package:newsnews/src/widgets/custom_error.dart';
 import 'package:newsnews/src/widgets/custom_scroll.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class DetailArticleScreen extends StatefulWidget {
-  final String imageUrl;
-  final String title;
-  const DetailArticleScreen(
-      {Key? key, required this.imageUrl, required this.title})
-      : super(key: key);
+  const DetailArticleScreen({Key? key}) : super(key: key);
 
   @override
   State<DetailArticleScreen> createState() => _DetailArticleScreenState();
@@ -25,6 +25,10 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final argument =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final ArticleEntity article = argument['article'];
+    final newsTag = argument["newsTag"] as String;
     return Scaffold(
       body: Column(
         children: [
@@ -34,21 +38,66 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                 height: 390.h,
               ),
               Hero(
-                tag: widget.imageUrl,
-                child: Container(
-                  height: 370.h,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(
-                      bottom: Radius.circular(25),
+                tag: article.title!,
+                child: CachedNetworkImage(
+                  cacheManager: CustomCacheManager.customCacheManager,
+                  imageUrl: article.urlToImage ?? "",
+                  imageBuilder: (context, imageProvider) => Container(
+                    height: 370.h,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(25),
+                      ),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    image: DecorationImage(
-                      image: Image.network(
-                        widget.imageUrl,
-                      ).image,
-                      fit: BoxFit.cover,
+                  ),
+                  progressIndicatorBuilder: (context, string, progress) {
+                    return Container(
+                      height: 370.h,
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(25),
+                        ),
+                      ),
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: progress.progress,
+                          color: Palette.primaryColor,
+                        ),
+                      ),
+                    );
+                  },
+                  errorWidget: (context, string, dymamic) => Container(
+                    height: 370.h,
+                    child: const Center(
+                      child: CustomError(
+                        messageError: "This no image or fail",
+                      ),
+                    ),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.vertical(
+                        bottom: Radius.circular(25),
+                      ),
                     ),
                   ),
                 ),
+                // child: Container(
+                //   height: 370.h,
+                //   decoration: BoxDecoration(
+                // borderRadius: const BorderRadius.vertical(
+                //   bottom: Radius.circular(25),
+                // ),
+                //     image: DecorationImage(
+                //       image: Image.network(
+                //         widget.imageUrl,
+                //       ).image,
+                //       fit: BoxFit.cover,
+                //     ),
+                //   ),
+                // ),
               ),
               Container(
                 height: 370.h,
@@ -104,9 +153,9 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                           color: Palette.backgroundInDetailBoxColor.shade800,
                           borderRadius: BorderRadius.circular(3.r),
                         ),
-                        child: const Text(
-                          "COVID 19",
-                          style: TextStyle(
+                        child: Text(
+                          newsTag.toUpperCase(),
+                          style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             color: Palette.backgroundBoxColor,
                           ),
@@ -127,7 +176,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                         ),
                         padding: EdgeInsets.only(left: 10.w),
                         child: Text(
-                          widget.title,
+                          article.title!,
                           style: TextStyle(
                             height: 1.4,
                             fontSize: 24.sp,
@@ -222,7 +271,9 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                               ),
                               SizedBox(width: 5.w),
                               Text(
-                                "2022-02-28T21:01:00Z".convertToDateTime(),
+                                article.publishedAt!
+                                    .formatISOTime()
+                                    .convertToDateTime(),
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 16.sp,
@@ -252,7 +303,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                               ),
                               SizedBox(width: 5.w),
                               Text(
-                                "KCRA Sacramento",
+                                article.source?.name ?? "Unknown publisher",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 15.sp,
@@ -285,22 +336,19 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                                       TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: "Estée Lauder Cos. has fired John Demsey, a senior "
-                                                    "executive who last week posted a meme on his personal "
-                                                    "Instagram account that contained a racial "
-                                                    "slur and a joke about Covid-19.\r\nThe company announce… [+301 chars]"
-                                                .replaceAll(RegExp(r'\[.*\]'), ''),
+                                            text: article.content!.replaceAll(
+                                                RegExp(r'\[.*\]'), ''),
                                           ),
                                           TextSpan(
-                                              text: "\tRead more",
-                                              style: TextStyle(
-                                                color:
-                                                    Palette.primaryHeavyColor,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 19.sp,
-                                              ),
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap = () {})
+                                            text: "\tRead more",
+                                            style: TextStyle(
+                                              color: Palette.primaryHeavyColor,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 19.sp,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {},
+                                          )
                                         ],
                                       ),
                                       style: TextStyle(
@@ -325,9 +373,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                                   ),
                                   SizedBox(height: 5.h),
                                   Text(
-                                    'What are the common COVID-19 symptoms you can get from BA.2 '
-                                    'variant or long COVID? Read about the COVID-19 symptoms you can '
-                                    'experience now.',
+                                    article.description!,
                                     style: TextStyle(
                                       height: 1.8.h,
                                       fontSize: 18.sp,
@@ -417,7 +463,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Sharon Terlep",
+                                  article.author ?? "Unknown author",
                                   style: TextStyle(
                                     color: Colors.black87,
                                     fontWeight: FontWeight.w700,
@@ -427,7 +473,8 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                                 SizedBox(height: 5.h),
                                 Text(
                                   "Posted on " +
-                                      "2022-02-28T21:01:00Z"
+                                      article.publishedAt!
+                                          .formatISOTime()
                                           .convertToMMddyyy() +
                                       " (UTC)",
                                   style: TextStyle(

@@ -21,7 +21,7 @@ class SignInWithButton extends StatelessWidget {
       onTap: onPressFunction,
       child: Container(
         height: 55.h,
-        width: 100.sh,
+        width: 1.sw,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Palette.backgroundBoxColor,

@@ -12,7 +12,7 @@ class CustomCategoryChoiceChip extends StatelessWidget {
 
   final String category;
   final bool choiceStatus;
-  final void Function(bool)? onSelectCategoryFunction;
+  final ValueChanged<bool>? onSelectCategoryFunction;
   @override
   Widget build(BuildContext context) {
     return Padding(

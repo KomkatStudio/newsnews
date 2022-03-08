@@ -6,11 +6,9 @@ import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
 import 'package:newsnews/src/presentation/profile/cubit/theme_cubit.dart';
-import 'package:newsnews/src/presentation/profile/widgets/custom_chip.dart';
 import 'package:newsnews/src/presentation/profile/widgets/custom_stack_item.dart';
 import 'package:newsnews/src/presentation/profile/widgets/switch_user_control.dart';
 import 'package:newsnews/src/presentation/profile/widgets/user_tab_control.dart';
-
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -26,32 +24,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final interestedList = ["Covid 19", "Entertainment", "Science"];
+    // final interestedList = ["Covid 19", "Entertainment", "Science"];
     final userTabControl = [
       {
         "tabName": "Preferences",
         "iconData": PhosphorIcons.sliders,
-        "routeName": "/preferences",
+        "routeName": RouterManager.preferences,
       },
       {
         "tabName": "Abouts",
         "iconData": PhosphorIcons.question,
-        "routeName": "/abouts",
+        "routeName": RouterManager.about,
       },
       {
         "tabName": "Privacy & security",
         "iconData": PhosphorIcons.lockSimple,
-        "routeName": "/p&s",
+        "routeName": RouterManager.privacySecurity,
       },
       {
         "tabName": "Help & support",
         "iconData": PhosphorIcons.headphones,
-        "routeName": "/help",
+        "routeName": RouterManager.helpSupport,
       },
       {
         "tabName": "Log out",
         "iconData": PhosphorIcons.signOut,
-        "routeName": "/logout",
+        // "routeName": "/logout",
       }
     ];
     return Scaffold(
@@ -65,8 +63,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           }
         },
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
+          child: RefreshIndicator(
+            onRefresh: () => context.read<ProfileCubit>().getUserInformation(),
+            child: ListView(
               children: [
                 Stack(
                   children: [
@@ -75,118 +74,154 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         Container(
                           height: 210.h,
-                          width: ScreenUtil().screenWidth,
+                          width: 1.sw,
                           color: Palette.primaryColor,
                           child: Column(
                             children: [
                               const Spacer(
                                 flex: 1,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Stack(
-                                    alignment: Alignment.bottomRight,
-                                    children: [
-                                      Container(
-                                        height: 90.h,
-                                        width: 90.h,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Palette.tagInSpecifiedColor,
-                                            width: 2.5,
-                                          ),
-                                          shape: BoxShape.circle,
-                                        ),
-                                        padding: const EdgeInsets.all(3.5),
-                                        child: BlocBuilder<ProfileCubit,
-                                            ProfileState>(
-                                          builder: (context, state) {
-                                            if (state is LoadUserDataLoading) {
-                                              return CircularProgressIndicator(
-                                                color: Palette.primaryColor,
-                                              );
-                                            } else if (state
-                                                is LoadUserDataSuccessfully) {
-                                              return CircleAvatar(
+                              BlocBuilder<ProfileCubit, ProfileState>(
+                                builder: (context, state) {
+                                  if (state is LoadUserDataSuccessfully) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Stack(
+                                          alignment: Alignment.bottomRight,
+                                          children: [
+                                            Container(
+                                              height: 90.h,
+                                              width: 90.h,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Palette
+                                                      .tagInSpecifiedColor,
+                                                  width: 2.5,
+                                                ),
+                                                shape: BoxShape.circle,
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.all(3.5),
+                                              child: CircleAvatar(
                                                 backgroundImage: Image.network(
                                                   state.user.imageUrl!,
+                                                  loadingBuilder:
+                                                      (BuildContext context,
+                                                          Widget child,
+                                                          ImageChunkEvent?
+                                                              loadingProgress) {
+                                                    if (loadingProgress ==
+                                                        null) {
+                                                      return child;
+                                                    } else {
+                                                      return Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          value: loadingProgress
+                                                                      .expectedTotalBytes !=
+                                                                  null
+                                                              ? loadingProgress
+                                                                      .cumulativeBytesLoaded /
+                                                                  loadingProgress
+                                                                      .expectedTotalBytes!
+                                                              : null,
+                                                        ),
+                                                      );
+                                                    }
+                                                  },
                                                 ).image,
-                                              );
-                                            } else {
-                                              return CircleAvatar(
-                                                backgroundColor:
-                                                    Palette.backgroundBoxColor,
-                                                child: Icon(
-                                                  PhosphorIcons.warning,
-                                                  color: Palette.primaryColor,
-                                                ),
-                                              );
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                      CircleAvatar(
-                                        radius: 16.sp,
-                                        backgroundColor:
-                                            Palette.textColorInBlueBGColor,
-                                        child: IconButton(
-                                          iconSize: 22.sp,
-                                          padding: EdgeInsets.zero,
-                                          constraints: const BoxConstraints(),
-                                          icon: const Icon(
-                                              PhosphorIcons.cameraBold),
-                                          onPressed: () {},
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    width: 15.w,
-                                  ),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "Nguyễn Minh Dũng",
-                                            style: TextStyle(
-                                              fontSize: 20.sp,
-                                              color: Palette
-                                                  .textColorInBlueBGColor,
-                                              fontWeight: FontWeight.w600,
-                                              letterSpacing: 0.4.w,
+                                              ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            width: 2.w,
-                                          ),
-                                          IconButton(
-                                            icon: const Icon(
-                                                PhosphorIcons.pencilLine),
-                                            color:
-                                                Palette.textColorInBlueBGColor,
-                                            iconSize: 22.sp,
-                                            constraints: const BoxConstraints(),
-                                            onPressed: () {},
-                                          ),
-                                        ],
-                                      ),
-                                      Text(
-                                        "ngminhdung1311@gmail.com",
-                                        style: TextStyle(
-                                          fontSize: 14.sp,
-                                          color: Palette.textColorInBlueBGColor,
-                                          fontWeight: FontWeight.w400,
-                                          letterSpacing: 0.2.w,
+                                            CircleAvatar(
+                                              radius: 16.sp,
+                                              backgroundColor: Palette
+                                                  .textColorInBlueBGColor,
+                                              child: IconButton(
+                                                iconSize: 22.sp,
+                                                padding: EdgeInsets.zero,
+                                                constraints:
+                                                    const BoxConstraints(),
+                                                icon: const Icon(
+                                                    PhosphorIcons.cameraBold),
+                                                onPressed: () {},
+                                              ),
+                                            )
+                                          ],
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                        SizedBox(
+                                          width: 15.w,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  state.user.displayName ??
+                                                      "Your display name will be here",
+                                                  style: TextStyle(
+                                                    fontSize: 20.sp,
+                                                    color: Palette
+                                                        .textColorInBlueBGColor,
+                                                    fontWeight: FontWeight.w600,
+                                                    letterSpacing: 0.4.w,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 2.w,
+                                                ),
+                                                IconButton(
+                                                  icon: const Icon(
+                                                      PhosphorIcons.pencilLine),
+                                                  color: Palette
+                                                      .textColorInBlueBGColor,
+                                                  iconSize: 22.sp,
+                                                  constraints:
+                                                      const BoxConstraints(),
+                                                  onPressed: () {},
+                                                ),
+                                              ],
+                                            ),
+                                            Text(
+                                              state.user.email ??
+                                                  "Your email will be here",
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
+                                                color: Palette
+                                                    .textColorInBlueBGColor,
+                                                fontWeight: FontWeight.w400,
+                                                letterSpacing: 0.2.w,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    );
+                                  } else if (state is LoadUserDataFail) {
+                                    return Center(
+                                      child: Column(children: [
+                                        const Icon(PhosphorIcons.warningBold,
+                                            color: Palette.backgroundBoxColor),
+                                        Text(
+                                          "Please scroll down to refresh",
+                                          style: TextStyle(
+                                              color: Palette.backgroundBoxColor,
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500),
+                                        )
+                                      ]),
+                                    );
+                                  } else {
+                                    return const CircularProgressIndicator(
+                                      color: Palette.backgroundBoxColor,
+                                    );
+                                  }
+                                },
                               ),
                               const Spacer(
                                 flex: 2,
@@ -198,27 +233,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 75.h,
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 14.w, bottom: 8.h),
+                          padding: EdgeInsets.only(left: 16.w, bottom: 8.h),
                           child: Text(
-                            "Interest",
+                            "User Settings",
                             style: TextStyle(
                               fontSize: 20.sp,
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                         ),
-                        SizedBox(
-                          height: 50.h,
-                          child: ListView.builder(
-                            padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: interestedList.length,
-                            itemBuilder: (context, index) {
-                              return CustomChip(
-                                  interest: interestedList[index]);
-                            },
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: EdgeInsets.only(left: 14.w, bottom: 8.h),
+                        //   child: Text(
+                        //     "Interest",
+                        //     style: TextStyle(
+                        //       fontSize: 20.sp,
+                        //       fontWeight: FontWeight.w700,
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 50.h,
+                        //   child: ListView.builder(
+                        //     padding: EdgeInsets.symmetric(horizontal: 8.w),
+                        //     scrollDirection: Axis.horizontal,
+                        //     itemCount: interestedList.length,
+                        //     itemBuilder: (context, index) {
+                        //       return CustomChip(
+                        //           interest: interestedList[index]);
+                        //     },
+                        //   ),
+                        // ),
                         SizedBox(
                           height: 10.h,
                         ),
@@ -248,7 +293,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             typeBorderRadius: i == 0
                                 ? 0
                                 : (i == userTabControl.length - 1 ? 1 : 2),
-                            onTabNameFunction: () {},
+                            onTabNameFunction: () => Navigator.pushNamed(
+                              context,
+                              userTabControl[i]["routeName"] as String,
+                            ),
                             tabName: userTabControl[i]["tabName"] as String,
                             iconData: userTabControl[i]["iconData"] as IconData,
                           ),

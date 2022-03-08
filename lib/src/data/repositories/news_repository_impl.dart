@@ -12,10 +12,31 @@ class NewsRepositoryImpl implements NewsRepository {
 
   @override
   Future<Either<Failure, List<ArticleEntity>>> getTopHeadline(
-      {required String path, required String country}) async {
+      {required String path,
+      required String country,
+      String? category,
+      String? query}) async {
     try {
       final listArticle = await newsApiRemoteDatasouce.getTopHeadlines(
-          path: path, country: country);
+        path: path,
+        country: country,
+        category: category,
+        query: query,
+      );
+      return Right(listArticle);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ArticleEntity>>> getEverythingFromQuery(
+      {required String path, String? query}) async {
+    try {
+      final listArticle = await newsApiRemoteDatasouce.getEverythingFromQuery(
+        path: path,
+        query: query,
+      );
       return Right(listArticle);
     } on ServerException {
       return Left(ServerFailure());

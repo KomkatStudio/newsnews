@@ -62,6 +62,7 @@ class UserTabControl extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 16.sp,
+                 color: Palette.textColor,
               ),
             ),
           ],

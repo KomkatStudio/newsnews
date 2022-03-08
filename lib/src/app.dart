@@ -1,3 +1,4 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,9 @@ class App extends StatelessWidget {
               return MaterialApp(
                 title: "NewsNews",
                 debugShowCheckedModeBanner: false,
+                useInheritedMediaQuery: true,
+      locale: DevicePreview.locale(context),
+      builder: DevicePreview.appBuilder,
                 theme: ThemeData(
                   appBarTheme: AppBarTheme(
                     iconTheme: const IconThemeData(color: Colors.black),
