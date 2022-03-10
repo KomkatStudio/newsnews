@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/widgets/custom_category_choice_chip.dart';
-import 'package:newsnews/src/widgets/news_card.dart';
 import 'package:newsnews/src/widgets/custom_scroll.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
