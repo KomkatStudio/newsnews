@@ -4,7 +4,9 @@ import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/presentation/feed/widgets/big_tag.dart';
 
 class RowTagSeeMore extends StatelessWidget {
-  const RowTagSeeMore({Key? key, required this.tag, this.hasSeeMore = true,this.onSeeMoreTap}) : super(key: key);
+  const RowTagSeeMore(
+      {Key? key, required this.tag, this.hasSeeMore = true, this.onSeeMoreTap})
+      : super(key: key);
 
   final String tag;
   final bool hasSeeMore;
@@ -20,7 +22,7 @@ class RowTagSeeMore extends StatelessWidget {
             ? GestureDetector(
                 onTap: onSeeMoreTap,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 14.w),
+                  padding: EdgeInsets.only(right: 14.w),
                   child: Text(
                     "See more",
                     style: TextStyle(

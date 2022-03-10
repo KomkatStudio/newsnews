@@ -13,9 +13,9 @@ abstract class FirebaseServicesDatasource {
 
   Future<void> signOut();
 
-  Future<void> saveUserInformation(UserModel user);
+  Future<void> saveUserInformation(UserModel userModel);
 
-  Future<void> saveFavoriteArticle(ArticleModel article);
+  Future<void> saveFavoriteArticle(ArticleModel articleModel);
 
   Future<UserModel> getUserData();
 }

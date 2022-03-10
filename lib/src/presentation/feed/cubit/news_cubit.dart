@@ -63,7 +63,7 @@ class NewsCubit extends Cubit<NewsState> {
                   )),
             );
       }
-      log(listArticle.toString());
+      log(listArticle.length.toString());
       emit(NewsLoaded(listArticle));
     } catch (e) {
       emit(const NewsError("error server"));

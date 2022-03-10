@@ -33,19 +33,23 @@ class FavoriteScreen extends StatelessWidget {
             itemCount: 3,
             padding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 5.w),
             itemBuilder: (context, index) {
-              return NewsCard(
-                imageUrl:
-                    "https://sportshub.cbsistatic.com/i/r/2021/01/22/4d145216-04f3-4ed7-bbfe-c19b8e2f8819/thumbnail/1200x675/5499"
-                    "4d3f30fed2fb6effc7e5b8ea14bb/rodgers-packers-snow.jpg",
-                title:
-                    "Manchester City's Kevin De Bruyne will take time to be...",
-                tag: "Sport",
-                time: "15 mins ago",
-                verticalMargin: 8.h,
-                needHeart: true,
-                isFavorite: true,
-                onHeartTapFunction: () {},
-                onNewsTapFunction: () {},
+              // return NewsCard(
+              //   imageUrl:
+              //       "https://sportshub.cbsistatic.com/i/r/2021/01/22/4d145216-04f3-4ed7-bbfe-c19b8e2f8819/thumbnail/1200x675/5499"
+              //       "4d3f30fed2fb6effc7e5b8ea14bb/rodgers-packers-snow.jpg",
+              //   title:
+              //       "Manchester City's Kevin De Bruyne will take time to be...",
+              //   tag: "Sport",
+              //   time: "15 mins ago",
+              //   verticalMargin: 8.h,
+              //   needHeart: true,
+              //   isFavorite: true,
+              //   onHeartTapFunction: () {},
+              //   onNewsTapFunction: () {},
+              // );
+              return Container(
+                height: 200.h,
+                color: Colors.red,
               );
             },
           ),

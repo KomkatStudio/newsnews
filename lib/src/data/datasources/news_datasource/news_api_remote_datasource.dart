@@ -25,6 +25,7 @@ class NewsApiRemoteDatasouce {
     String? url;
     if (category == null) {
       if (query == null) {
+        pageSize = NumbericContant.pageSizeForToplines;
         url =
             "${FlavorConfig.instance.value.baseUrl!}$path?country=$country&pageSize=$pageSize";
       } else {
@@ -36,7 +37,10 @@ class NewsApiRemoteDatasouce {
           "${FlavorConfig.instance.value.baseUrl!}$path?country=$country&category=$category&pageSize=$pageSize";
     }
     log(url);
-    final response = await http.get(Uri.parse(url), headers: header);
+    final response = await http.get(Uri.parse(url), headers: header).timeout(
+          const Duration(minutes: 1),
+          onTimeout: () => throw ServerException(),
+        );
     if (response.statusCode == 200) {
       var converted = jsonDecode(response.body);
       Iterable list = converted['articles'];
@@ -46,6 +50,7 @@ class NewsApiRemoteDatasouce {
     }
   }
 
+  //Stream
   Future<List<ArticleEntity>> getEverythingFromQuery(
       {required String path,
       String? query,

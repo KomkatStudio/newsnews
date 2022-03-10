@@ -56,12 +56,12 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
   Future<void> signOut() async => await _firebaseAuth.signOut();
 
   @override
-  Future<void> saveFavoriteArticle(ArticleModel article) async {
+  Future<void> saveFavoriteArticle(ArticleModel articleModel) async {
     try {
       final user = await getCurrentUser();
       final userCollection = _firebaseFirestore.collection('users');
       userCollection.doc(user.uid).update({
-        'favorites': FieldValue.arrayUnion([article.toJsonAndSnapshot()])
+        'favorites': FieldValue.arrayUnion([articleModel.toJsonAndSnapshot()])
       });
     } catch (e) {
       throw FirebaseServerException();
@@ -72,7 +72,7 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
   Future<void> saveUserInformation(UserModel userModel) async {
     try {
       final userCollection = _firebaseFirestore.collection('users');
-    final user = await getCurrentUser();
+      final user = await getCurrentUser();
       userCollection.doc(user.uid).get().then((userDoc) {
         if (!userDoc.exists) {
           userCollection.doc(user.uid).set(userModel.toDocument());
@@ -86,7 +86,7 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
   @override
   Future<UserModel> getUserData() async {
     try {
-    final user = await getCurrentUser();
+      final user = await getCurrentUser();
       final userSnapshot =
           await _firebaseFirestore.collection('users').doc(user.uid).get();
       final userData = UserModel.fromSnapshot(userSnapshot);

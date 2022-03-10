@@ -69,9 +69,18 @@ class _PageTabViewState extends State<PageTabView>
         return state is NewsLoaded ? state.listArticle : [];
       },
       builder: (context, listArticle) {
-        final tagArticleList =
-            listArticle.getRange(0, NumbericContant.pageSize).toList();
+        final tagArticleList = listArticle
+            .getRange(0, NumbericContant.pageSizeForToplines)
+            .toList();
         log(tagArticleList.length.toString());
+        final listForTop = tagArticleList.getRange(0, 3).toList();
+        log(listForTop.length.toString());
+
+        final listForBreakingNews = tagArticleList.getRange(3, 7).toList();
+        log(listForBreakingNews.length.toString());
+
+        final listForHotTrendings = tagArticleList.getRange(7, 11).toList();
+        log(listForHotTrendings.length.toString());
         return ScrollConfiguration(
           behavior: CustomScroll(),
           child: ListView(
@@ -84,8 +93,6 @@ class _PageTabViewState extends State<PageTabView>
                 height: 12.h,
               ),
               Builder(builder: (context) {
-                final listForTop = tagArticleList.getRange(0, 3).toList();
-                log(listForTop.length.toString());
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 2.w),
                   color: Theme.of(context).scaffoldBackgroundColor,
@@ -143,14 +150,19 @@ class _PageTabViewState extends State<PageTabView>
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return NewsCard(
-                      imageUrl:
-                          "https://sportshub.cbsistatic.com/i/r/2021/01/22/4d145216-04f3-4ed7-bbfe-c19b8e2f8819/thumbnail/1200x675/54994d3f30fed2fb6effc7e5b8ea14bb/rodgers-packers-snow.jpg",
-                      title:
-                          "Manchester City's Kevin De Bruyne will take time to be...",
-                      tag: "Sport",
+                      imageUrl: listForBreakingNews[index].urlToImage!,
+                      title: listForBreakingNews[index].title!,
+                      tag: "EVERYTHING",
                       time: "15 mins ago",
                       verticalMargin: 12.h,
-                      onNewsTapFunction: () {},
+                      onNewsTapFunction: () => Navigator.pushNamed(
+                        context,
+                        RouterManager.detailArticle,
+                        arguments: {
+                          "article": listForBreakingNews[index],
+                          "newsTag": "EVERYTHING",
+                        },
+                      ),
                     );
                   },
                 ),
@@ -178,14 +190,19 @@ class _PageTabViewState extends State<PageTabView>
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return NewsCard(
-                      imageUrl:
-                          "https://sportshub.cbsistatic.com/i/r/2021/01/22/4d145216-04f3-4ed7-bbfe-c19b8e2f8819/thumbnail/1200x675/54994d3f30fed2fb6effc7e5b8ea14bb/rodgers-packers-snow.jpg",
-                      title:
-                          "Manchester City's Kevin De Bruyne will take time to be...",
-                      tag: "Sport",
+                      imageUrl: listForHotTrendings[index].urlToImage!,
+                      title: listForHotTrendings[index].title!,
+                      tag: "EVERYTHING",
                       time: "15 mins ago",
                       verticalMargin: 12.h,
-                      onNewsTapFunction: () {},
+                      onNewsTapFunction: () => Navigator.pushNamed(
+                        context,
+                        RouterManager.detailArticle,
+                        arguments: {
+                          "article": listForHotTrendings[index],
+                          "newsTag": "EVERYTHING",
+                        },
+                      ),
                     );
                   },
                 ),
@@ -206,28 +223,12 @@ class _PageTabViewState extends State<PageTabView>
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   scrollDirection: Axis.horizontal,
                   children: [
-                    NewsCard(
-                      imageUrl:
-                          'https://sportshub.cbsistatic.com/i/r/2021/01/22/'
-                          '4d145216-04f3-4ed7-bbfe-c19b8e2f8819/thumbnail/1200x675/54994d3f30fed2fb6effc7e5b8ea14bb/rodgers-packers-snow.jpg',
-                      title:
-                          "Manchester City's Kevin De Bruyne will take time to be...",
-                      tag: "Sport",
-                      time: "15 mins ago",
-                      verticalMargin: 12.h,
-                      onNewsTapFunction: () {},
-                    ),
-                    NewsCard(
-                      imageUrl:
-                          "https://sportshub.cbsistatic.com/i/r/2021/01/22/4d145216-04f3-4ed7-bbfe-c19b8e2f8819/thumbnail/1200x675/5499"
-                          "4d3f30fed2fb6effc7e5b8ea14bb/rodgers-packers-snow.jpg",
-                      title:
-                          "Manchester City's Kevin De Bruyne will take time to be...",
-                      tag: "Sport",
-                      time: "15 mins ago",
-                      verticalMargin: 12.h,
-                      onNewsTapFunction: () {},
-                    ),
+                    Container(
+                      width: 200,
+                      color: Colors.white,
+                      alignment: Alignment.center,
+                      child: const Text("Ads"),
+                    )
                   ],
                 ),
               ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class AnimatedEffectSize extends StatelessWidget {
   final Widget? child;
 
@@ -77,7 +76,7 @@ class AnimatedEffectSize extends StatelessWidget {
           return Stack(
             clipBehavior: Clip.none,
             children: children,
-            alignment: Alignment.center,
+            // alignment: Alignment.center,
           );
         },
       ),

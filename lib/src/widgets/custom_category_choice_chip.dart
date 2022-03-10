@@ -32,7 +32,7 @@ class CustomCategoryChoiceChip extends StatelessWidget {
         selected: choiceStatus,
         onSelected: onSelectCategoryFunction,
         selectedColor: Palette.primaryColor,
-        backgroundColor: Colors.blue.shade50.withOpacity(0.2),
+        backgroundColor: Colors.blue.shade50.withOpacity(0.1),
       ),
     );
   }

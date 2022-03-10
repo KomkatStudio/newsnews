@@ -10,7 +10,6 @@ import 'package:newsnews/src/domain/entities/article/article_entity.dart';
 import 'package:newsnews/src/widgets/animated_effect_size.dart';
 import 'package:newsnews/src/widgets/custom_error.dart';
 import 'package:newsnews/src/widgets/custom_scroll.dart';
-import 'package:newsnews/src/widgets/news_card.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class DetailArticleScreen extends StatefulWidget {
@@ -38,7 +37,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                 height: 390.h,
               ),
               Hero(
-                tag: article.title!,
+                tag: article.title! + "_" + newsTag,
                 child: CachedNetworkImage(
                   cacheManager: CustomCacheManager.customCacheManager,
                   imageUrl: article.urlToImage ?? "",
@@ -207,7 +206,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                           BoxShadow(
                             color: Palette.shadowColor.withOpacity(0.1),
                             blurRadius: 3,
-                            offset: const Offset(1, 4),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -322,7 +321,8 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                             ? Padding(
                                 padding: EdgeInsets.symmetric(vertical: 4.0.h),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     Text(
                                       "Content",
@@ -336,8 +336,9 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                                       TextSpan(
                                         children: [
                                           TextSpan(
-                                            text: article.content!.replaceAll(
-                                                RegExp(r'\[.*\]'), ''),
+                                            text: article.content?.replaceAll(
+                                                    RegExp(r'\[.*\]'), '') ??
+                                                "No content here, please read it in Read more",
                                           ),
                                           TextSpan(
                                             text: "\tRead more",
@@ -373,7 +374,8 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                                   ),
                                   SizedBox(height: 5.h),
                                   Text(
-                                    article.description!,
+                                    article.description ??
+                                        "No description, please read content",
                                     style: TextStyle(
                                       height: 1.8.h,
                                       fontSize: 18.sp,
@@ -520,37 +522,6 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                     ),
                     SizedBox(
                       height: 8.h,
-                    ),
-                    SizedBox(
-                      height: 140.h,
-                      child: ListView(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w),
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          NewsCard(
-                            imageUrl:
-                                'https://sportshub.cbsistatic.com/i/r/2021/01/22/'
-                                '4d145216-04f3-4ed7-bbfe-c19b8e2f8819/thumbnail/1200x675/54994d3f30fed2fb6effc7e5b8ea14bb/rodgers-packers-snow.jpg',
-                            title:
-                                "Manchester City's Kevin De Bruyne will take time to be...",
-                            tag: "Sport",
-                            time: "15 mins ago",
-                            verticalMargin: 12.h,
-                            onNewsTapFunction: () {},
-                          ),
-                          NewsCard(
-                            imageUrl:
-                                "https://sportshub.cbsistatic.com/i/r/2021/01/22/4d145216-04f3-4ed7-bbfe-c19b8e2f8819/thumbnail/1200x675/5499"
-                                "4d3f30fed2fb6effc7e5b8ea14bb/rodgers-packers-snow.jpg",
-                            title:
-                                "Manchester City's Kevin De Bruyne will take time to be...",
-                            tag: "Sport",
-                            time: "15 mins ago",
-                            verticalMargin: 12.h,
-                            onNewsTapFunction: () {},
-                          ),
-                        ],
-                      ),
                     ),
                   ],
                 ),

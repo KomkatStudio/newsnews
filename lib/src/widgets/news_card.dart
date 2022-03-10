@@ -35,7 +35,7 @@ class NewsCard extends StatelessWidget {
     return GestureDetector(
       onTap: onNewsTapFunction,
       child: Container(
-        height: needHeart ? 120.h : null,
+        height: needHeart ? 120.h : 110.h,
         padding: EdgeInsets.symmetric(horizontal: 8.w),
         margin: EdgeInsets.symmetric(
           horizontal: 8.w,
@@ -57,41 +57,43 @@ class NewsCard extends StatelessWidget {
           children: [
             Expanded(
               flex: 2,
-              child: CachedNetworkImage(
-                cacheManager: CustomCacheManager.customCacheManager,
-                imageUrl: imageUrl,
-                imageBuilder: (context, imageProvider) => Container(
-                  height: 100.h,
-
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
+              child: Hero(
+                tag: title + "_" + tag,
+                child: CachedNetworkImage(
+                  cacheManager: CustomCacheManager.customCacheManager,
+                  imageUrl: imageUrl,
+                  imageBuilder: (context, imageProvider) => Container(
+                    height: 100.h,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(15),
                     ),
-                    borderRadius: BorderRadius.circular(15),
+                    // margin: EdgeInsets.only(bottom: 10.h),
                   ),
-                  // margin: EdgeInsets.only(bottom: 10.h),
-                ),
-                progressIndicatorBuilder: (context, string, progress) {
-                  return SizedBox(
+                  progressIndicatorBuilder: (context, string, progress) {
+                    return SizedBox(
+                      height: 200.h,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: progress.progress,
+                          color: Palette.primaryColor,
+                        ),
+                      ),
+                      // margin: EdgeInsets.only(bottom: 10.h),
+                    );
+                  },
+                  errorWidget: (context, string, dymamic) => SizedBox(
                     height: 200.h,
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        value: progress.progress,
-                        color: Palette.primaryColor,
+                    child: const Center(
+                      child: CustomError(
+                        messageError: "No image here",
                       ),
                     ),
                     // margin: EdgeInsets.only(bottom: 10.h),
-                  );
-                },
-                errorWidget: (context, string, dymamic) => SizedBox(
-                  height: 200.h,
-                  child: const Center(
-                    child: CustomError(
-                      messageError: "This no image or fail",
-                    ),
                   ),
-                  // margin: EdgeInsets.only(bottom: 10.h),
                 ),
               ),
             ),
@@ -138,7 +140,6 @@ class NewsCard extends StatelessWidget {
                         message: tag,
                         child: Container(
                           height: 30.h,
-                          width: 70.w,
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
