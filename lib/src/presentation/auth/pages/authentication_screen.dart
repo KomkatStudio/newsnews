@@ -15,16 +15,15 @@ class AuthenticationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthCubit>(
-      create: (_) => s1<AuthCubit>(),
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Palette.primaryColor,
         body: BlocListener<AuthCubit, AuthState>(
           listener: (context, state) {
+           
             if (state is AuthSuccessful) {
               Navigator.pushNamedAndRemoveUntil(
                 context,
-                RouterManager.main,
+                RouteManager.main,
                 (route) => false,
               );
               showSnackbarImpl(context,
@@ -78,7 +77,7 @@ class AuthenticationScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
+
     );
   }
 }

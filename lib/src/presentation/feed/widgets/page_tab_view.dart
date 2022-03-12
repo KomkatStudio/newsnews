@@ -108,7 +108,7 @@ class _PageTabViewState extends State<PageTabView>
                         newsTitle: listForTop[index].title!,
                         onHeadlineTapFunction: () => Navigator.pushNamed(
                           context,
-                          RouterManager.detailArticle,
+                          RouteManager.detailArticle,
                           arguments: {
                             "article": listForTop[index],
                             "newsTag": "EVERYTHING",
@@ -157,7 +157,7 @@ class _PageTabViewState extends State<PageTabView>
                       verticalMargin: 12.h,
                       onNewsTapFunction: () => Navigator.pushNamed(
                         context,
-                        RouterManager.detailArticle,
+                        RouteManager.detailArticle,
                         arguments: {
                           "article": listForBreakingNews[index],
                           "newsTag": "EVERYTHING",
@@ -197,7 +197,7 @@ class _PageTabViewState extends State<PageTabView>
                       verticalMargin: 12.h,
                       onNewsTapFunction: () => Navigator.pushNamed(
                         context,
-                        RouterManager.detailArticle,
+                        RouteManager.detailArticle,
                         arguments: {
                           "article": listForHotTrendings[index],
                           "newsTag": "EVERYTHING",

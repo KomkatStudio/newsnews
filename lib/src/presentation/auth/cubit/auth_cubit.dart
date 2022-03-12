@@ -17,9 +17,7 @@ class AuthCubit extends Cubit<AuthState> {
       {required this.hasCurrentUser,
       required this.signInWithGoogle,
       required this.getCurrentUser})
-      : super(AuthInitial()) {
-    checkHasCurrentUser();
-  }
+      : super(AuthInitial());
 
   Future<void> signInUsingGoolge() async {
     emit(AuthLoading());

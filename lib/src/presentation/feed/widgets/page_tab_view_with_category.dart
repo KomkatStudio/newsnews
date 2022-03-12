@@ -112,7 +112,7 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                       newsTitle: listForTop[index].title!,
                       onHeadlineTapFunction: () => Navigator.pushNamed(
                         context,
-                        RouterManager.detailArticle,
+                        RouteManager.detailArticle,
                         arguments: {
                           "article": listForTop[index],
                           "newsTag": widget.category,
@@ -151,7 +151,7 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                     return NewsCard(
                       imageUrl: listForMore[index].urlToImage ?? "",
                       onNewsTapFunction: () => Navigator.pushNamed(
-                          context, RouterManager.detailArticle,
+                          context, RouteManager.detailArticle,
                           arguments: {
                             "article": listForMore[index],
                             "newsTag": widget.category,

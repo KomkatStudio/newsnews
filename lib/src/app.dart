@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/di/injector.dart';
+import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
 import 'package:newsnews/src/presentation/profile/cubit/theme_cubit.dart';
 
 class App extends StatelessWidget {
@@ -11,8 +12,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ThemeCubit>(
-      create: (context) => s1<ThemeCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ThemeCubit>(
+          create: (context) => s1<ThemeCubit>(),
+        ),
+        BlocProvider<AuthCubit>(
+          create: (context) => s1<AuthCubit>(),
+        ),
+      ],
       child: ScreenUtilInit(
         designSize: const Size(411, 823),
         minTextAdapt: true,
@@ -24,8 +32,8 @@ class App extends StatelessWidget {
                 title: "NewsNews",
                 debugShowCheckedModeBanner: false,
                 useInheritedMediaQuery: true,
-      locale: DevicePreview.locale(context),
-      builder: DevicePreview.appBuilder,
+                locale: DevicePreview.locale(context),
+                builder: DevicePreview.appBuilder,
                 theme: ThemeData(
                   appBarTheme: AppBarTheme(
                     iconTheme: const IconThemeData(color: Colors.black),
@@ -41,7 +49,7 @@ class App extends StatelessWidget {
                 ),
                 themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
                 darkTheme: ThemeData.dark(),
-                routes: RouterManager.listRoute,
+                routes: RouteManager.listRoute,
               );
             },
           );
