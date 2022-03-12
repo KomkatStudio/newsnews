@@ -6,7 +6,6 @@ import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/helpers/show_snackbar_impl.dart';
 import 'package:newsnews/src/core/theme/asset_path.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
-import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
 import 'package:newsnews/src/presentation/auth/widgets/sign_in_with_button.dart';
 
