@@ -15,7 +15,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await di.initDependence();
   await dotenv.load(fileName: "assets/.env");
-  setFlavorDevelopment();
+  setFlavorProduction();
   // bootstrap(
   //   () => DevicePreview(
   //     enabled: !kReleaseMode,

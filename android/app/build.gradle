@@ -43,7 +43,7 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+    
         applicationId "com.komkat.newsnews"
         minSdkVersion 19
         targetSdkVersion flutter.targetSdkVersion
@@ -52,27 +52,8 @@ android {
         multiDexEnabled true
     }
 
-    flavorDimensions "app"
-    productFlavors {
-        prod {
-            dimension "app"
-            versionNameSuffix "-prod"
-        }
-        beta {
-            dimension "app"
-            versionNameSuffix "-beta"
-        }
-
-        dev {
-            dimension "app"
-            versionNameSuffix "-dev"
-        }
-    }
-
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
     }

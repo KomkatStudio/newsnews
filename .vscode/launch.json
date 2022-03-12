@@ -5,41 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "NewsNews Prod",
+            "name": "NewsNews",
             "request": "launch",
             "type": "dart",
-            "program": "lib/main_prod.dart",
-            "args": [
-                "--flavor",
-                "prod"
-            ],
+            "program": "lib/main.dart",
         },
-        {
-            "name": "NewsNews Dev",
-            "request": "launch",
-            "type": "dart",
-            "program": "lib/main_dev.dart",
-            "args": [
-                "--flavor",
-                "dev"
-            ],
-        },
-        {
-            "name": "NewsNews Beta",
-            "request": "launch",
-            "type": "dart",
-            "program": "lib/main_beta.dart",
-            "args": [
-                "--flavor",
-                "beta"
-            ],
-        },
-        {
-            "name": "NewsNews Release Test",
-            "request": "launch",
-            "type": "dart",
-            "program": "lib/main_dev.dart",
-            "flutterMode": "release"
-        }
     ]
 }
