@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:newsnews/src/core/config/router.dart';
-import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/helpers/show_snackbar_impl.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
@@ -51,8 +50,6 @@ class _SplashScreenState extends State<SplashScreen>
               RouteManager.signIn,
               (route) => false,
             );
-          } else if (state is AuthLoading) {
-            showLoadingDialog(context);
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(state.message),
@@ -83,11 +80,15 @@ class _SplashScreenState extends State<SplashScreen>
                 selector: (state) {
                   return state is AuthLoading;
                 },
-                builder: (context, state) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: Palette.backgroundInDetailBoxColor,
-                    ),
+                builder: (context, isLoading) {
+                  return Center(
+                    child: isLoading
+                        ? const CircularProgressIndicator(
+                            color: Palette.backgroundInDetailBoxColor,
+                          )
+                        : SizedBox(
+                            height: 20.h,
+                          ),
                   );
                 },
               )
