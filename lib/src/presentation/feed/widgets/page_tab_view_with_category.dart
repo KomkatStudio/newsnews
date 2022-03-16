@@ -138,7 +138,9 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                 onSeeMoreTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MoreBreakingNews(),
+                    builder: (context) => MoreNews(
+                      title: widget.category,
+                    ),
                   ),
                 ),
               ),

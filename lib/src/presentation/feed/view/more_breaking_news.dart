@@ -4,14 +4,15 @@ import 'package:newsnews/src/widgets/custom_category_choice_chip.dart';
 import 'package:newsnews/src/widgets/custom_scroll.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-class MoreBreakingNews extends StatefulWidget {
-  const MoreBreakingNews({Key? key}) : super(key: key);
+class MoreNews extends StatefulWidget {
+  final String title;
+  const MoreNews({Key? key, required this.title}) : super(key: key);
 
   @override
-  State<MoreBreakingNews> createState() => _MoreBreakingNewsState();
+  State<MoreNews> createState() => _MoreNewsState();
 }
 
-class _MoreBreakingNewsState extends State<MoreBreakingNews> {
+class _MoreNewsState extends State<MoreNews> {
   final categoryList = [
     "All",
     "Covid-19",
@@ -41,7 +42,7 @@ class _MoreBreakingNewsState extends State<MoreBreakingNews> {
           onPressed: () => Navigator.pop(context),
           color: Colors.black,
         ),
-        title: const Text("More breaking news"),
+        title: Text(widget.title),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 2,

@@ -4,7 +4,6 @@ import 'package:newsnews/src/presentation/favorite/view/favorite_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/detail_article_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/feed_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
-import 'package:newsnews/src/presentation/feed/view/more_breaking_news.dart';
 import 'package:newsnews/src/presentation/main/presentation/view/main_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/about_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/privacy_security_screen.dart';
@@ -18,7 +17,7 @@ class RouteManager {
   static const favorite = '/favorite';
   static const user = '/user';
   static const main = '/main';
-  static const moreBreakingNews = '/moreBreakingNews';
+  static const moreNews = '/moreNews';
   static const hotTrendings = '/hotTrendings';
   static const signIn = '/signIn';
   static const preferences = "/preferences";
@@ -35,7 +34,6 @@ class RouteManager {
     videos: (_) => const SearchScreen(),
     favorite: (_) => const FavoriteScreen(),
     user: (_) => const ProfileScreen(),
-    moreBreakingNews: (_) => const MoreBreakingNews(),
     hotTrendings: (_) => const HotAndTrendings(),
     signIn: (_) => const AuthenticationScreen(),
     privacySecurity: (_) => const PrivacyScreenScreen(),

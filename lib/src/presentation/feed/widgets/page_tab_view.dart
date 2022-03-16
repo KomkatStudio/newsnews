@@ -135,7 +135,9 @@ class _PageTabViewState extends State<PageTabView>
                 onSeeMoreTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MoreBreakingNews(),
+                    builder: (context) => const MoreNews(
+                      title: "More Breaking News",
+                    ),
                   ),
                 ),
               ),
