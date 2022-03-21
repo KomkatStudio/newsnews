@@ -338,7 +338,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                                           TextSpan(
                                             text: article.content?.replaceAll(
                                                     RegExp(r'\[.*\]'), '') ??
-                                                "No content here, please read it in Read more",
+                                                "No content here, please read it in ",
                                           ),
                                           TextSpan(
                                             text: "\tRead more",
@@ -475,10 +475,8 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                                 SizedBox(height: 5.h),
                                 Text(
                                   "Posted on " +
-                                      article.publishedAt!
-                                          .formatISOTime()
-                                          .convertToMMddyyy() +
-                                      " (UTC)",
+                                      article.publishedAt!.getTimeAgo() +
+                                      ' (UTC)',
                                   style: TextStyle(
                                     color: Colors.black54,
                                     fontWeight: FontWeight.w700,

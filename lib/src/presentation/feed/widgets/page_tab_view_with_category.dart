@@ -1,10 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/config/router.dart';
-import 'package:newsnews/src/core/constant/numberic_constant.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/domain/entities/article/article_entity.dart';
 import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
@@ -75,12 +72,9 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
       },
       builder: (context, listArticle) {
         final tagArticleList = listArticle
-            .getRange(widget.categoryIndex * NumbericContant.pageSize + 10,
-                (widget.categoryIndex + 1) * NumbericContant.pageSize + 10)
+            .where((element) => element.category == widget.category)
             .toList();
-        log(tagArticleList.length.toString());
         final listForTop = tagArticleList.getRange(0, 3).toList();
-        log(listForTop.length.toString());
         final listForMore =
             tagArticleList.getRange(4, tagArticleList.length).toList();
         return ScrollConfiguration(
@@ -159,7 +153,7 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                             "newsTag": widget.category,
                           }),
                       tag: widget.category,
-                      time: "Hello",
+                      time: listForMore[index].publishedAt,
                       title: listForMore[index].title!,
                       verticalMargin: 12.h,
                     );

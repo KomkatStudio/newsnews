@@ -155,7 +155,7 @@ class _PageTabViewState extends State<PageTabView>
                       imageUrl: listForBreakingNews[index].urlToImage!,
                       title: listForBreakingNews[index].title!,
                       tag: "EVERYTHING",
-                      time: "15 mins ago",
+                      time: listForBreakingNews[index].publishedAt,
                       verticalMargin: 12.h,
                       onNewsTapFunction: () => Navigator.pushNamed(
                         context,
@@ -192,10 +192,10 @@ class _PageTabViewState extends State<PageTabView>
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return NewsCard(
-                      imageUrl: listForHotTrendings[index].urlToImage!,
+                      imageUrl: listForHotTrendings[index].urlToImage ?? "",
                       title: listForHotTrendings[index].title!,
                       tag: "EVERYTHING",
-                      time: "15 mins ago",
+                      time: listForBreakingNews[index].publishedAt,
                       verticalMargin: 12.h,
                       onNewsTapFunction: () => Navigator.pushNamed(
                         context,

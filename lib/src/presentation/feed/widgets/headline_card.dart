@@ -43,7 +43,7 @@ class HeadlineCard extends StatelessWidget {
             Stack(
               children: [
                 Hero(
-                  tag: newsTitle,
+                  tag: newsTitle + "_" + newsTag,
                   child: Padding(
                     padding: const EdgeInsets.all(5),
                     child: CachedNetworkImage(

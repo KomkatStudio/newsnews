@@ -5,14 +5,15 @@ import 'package:newsnews/src/core/config/custom_cache_manager.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/widgets/custom_error.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:newsnews/src/core/extension/extension.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({
     Key? key,
-    required this.imageUrl,
+    this.imageUrl,
     required this.title,
     required this.tag,
-    required this.time,
+    this.time,
     required this.onNewsTapFunction,
     required this.verticalMargin,
     this.needHeart = false,
@@ -20,10 +21,10 @@ class NewsCard extends StatelessWidget {
     this.isFavorite = false,
   }) : super(key: key);
 
-  final String imageUrl;
+  final String? imageUrl;
   final String title;
   final String tag;
-  final String time;
+  final DateTime? time;
   final double verticalMargin;
   final bool needHeart;
   final bool isFavorite;
@@ -61,7 +62,7 @@ class NewsCard extends StatelessWidget {
                 tag: title + "_" + tag,
                 child: CachedNetworkImage(
                   cacheManager: CustomCacheManager.customCacheManager,
-                  imageUrl: imageUrl,
+                  imageUrl: imageUrl ?? "",
                   imageBuilder: (context, imageProvider) => Container(
                     height: 100.h,
                     decoration: BoxDecoration(
@@ -82,7 +83,6 @@ class NewsCard extends StatelessWidget {
                           color: Palette.primaryColor,
                         ),
                       ),
-                      // margin: EdgeInsets.only(bottom: 10.h),
                     );
                   },
                   errorWidget: (context, string, dymamic) => SizedBox(
@@ -92,7 +92,6 @@ class NewsCard extends StatelessWidget {
                         messageError: "No image here",
                       ),
                     ),
-                    // margin: EdgeInsets.only(bottom: 10.h),
                   ),
                 ),
               ),
@@ -172,7 +171,7 @@ class NewsCard extends StatelessWidget {
                             color: Palette.primaryColor,
                           ),
                           Text(
-                            time,
+                            time?.getTimeAgo() ?? "Recently",
                             style: TextStyle(
                               color: Palette.descriptionColor,
                             ),
