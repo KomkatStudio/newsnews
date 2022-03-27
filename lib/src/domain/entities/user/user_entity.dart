@@ -17,9 +17,6 @@ class UserEntity extends Equatable {
     this.favorites,
     this.interest,
   });
-  
-
-  
 
   @override
   List<Object?> get props {

@@ -6,10 +6,11 @@ import 'package:newsnews/src/presentation/feed/view/feed_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
 import 'package:newsnews/src/presentation/main/presentation/view/main_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/about_screen.dart';
+import 'package:newsnews/src/presentation/profile/view/edit_profile_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/privacy_security_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/profile_screen.dart';
+import 'package:newsnews/src/presentation/search/view/search_screen.dart';
 import 'package:newsnews/src/presentation/splash/splash_screen.dart';
-import 'package:newsnews/src/presentation/video_screen/view/search_screen.dart';
 
 class RouteManager {
   static const feeds = '/feeds';
@@ -17,14 +18,15 @@ class RouteManager {
   static const favorite = '/favorite';
   static const user = '/user';
   static const main = '/main';
-  static const moreNews = '/moreNews';
-  static const hotTrendings = '/hotTrendings';
-  static const signIn = '/signIn';
+  static const moreNews = '/more';
+  static const hotTrendings = '/trendings';
+  static const signIn = '/register';
   static const preferences = "/preferences";
   static const about = '/abouts';
   static const privacySecurity = '/privacy';
   static const helpSupport = '/help';
   static const detailArticle = '/detail';
+  static const editProfile = '/edit';
   static const splash = '/';
 
   static Map<String, WidgetBuilder> listRoute = {
@@ -39,5 +41,6 @@ class RouteManager {
     privacySecurity: (_) => const PrivacyScreenScreen(),
     about: (_) => const AboutScreen(),
     detailArticle: (_) => const DetailArticleScreen(),
+    editProfile:(_) => const EditProfileScreen()
   };
 }

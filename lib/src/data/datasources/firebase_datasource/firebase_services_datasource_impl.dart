@@ -92,6 +92,7 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
       final userData = UserModel.fromSnapshot(userSnapshot);
       return userData;
     } catch (e) {
+      log(e.toString());
       throw FirebaseServerException();
     }
   }

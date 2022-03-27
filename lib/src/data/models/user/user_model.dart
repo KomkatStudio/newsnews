@@ -30,7 +30,9 @@ class UserModel extends UserEntity {
               e as DocumentSnapshot<Map<String, dynamic>>))
           .toList(),
       imageUrl: snapshot.data()!['imageUrl'] as String?,
-      interest: (snapshot.data()!['interest'] as List<String>?),
+      interest: (snapshot.data()!['interest'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
   }
   Map<String, dynamic> toDocument() {

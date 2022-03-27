@@ -88,13 +88,9 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                 tag: "Top ${widget.category.toUpperCase()} Headlines",
                 fontSize: 24.sp,
               ),
-              SizedBox(
-                height: 12.h,
-              ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 2.w),
                 color: Theme.of(context).scaffoldBackgroundColor,
-                height: 320.h,
+                height: 330.h,
                 child: PageView.builder(
                   onPageChanged: changePage,
                   itemCount: listForTop.length,
@@ -139,7 +135,7 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                 ),
               ),
               SizedBox(
-                height: 140.h,
+                height: 150.h,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: 3,
@@ -155,7 +151,7 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                       tag: widget.category,
                       time: listForMore[index].publishedAt,
                       title: listForMore[index].title!,
-                      verticalMargin: 12.h,
+                      verticalMargin: 16.h,
                     );
                   },
                 ),

@@ -32,8 +32,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(LoadUserDataLoading());
     final getDataUnit = await _getUserData.call(NoParams());
     getDataUnit.fold(
-        (l) => emit(const LoadUserDataFail(
-            message: "firebase error signout no thanh cong")),
+        (l) => emit(const LoadUserDataFail(message: "Load user data fail")),
         (r) => emit(LoadUserDataSuccessfully(user: r!)));
   }
 }

@@ -89,14 +89,11 @@ class _PageTabViewState extends State<PageTabView>
                 height: 24.h,
               ),
               BigTag(tag: "Top Headline", fontSize: 24.sp),
-              SizedBox(
-                height: 12.h,
-              ),
               Builder(builder: (context) {
                 return Container(
                   padding: EdgeInsets.symmetric(horizontal: 2.w),
                   color: Theme.of(context).scaffoldBackgroundColor,
-                  height: 320.h,
+                  height: 330.h,
                   child: PageView.builder(
                     onPageChanged: changePage,
                     itemCount: listForTop.length,
@@ -142,10 +139,7 @@ class _PageTabViewState extends State<PageTabView>
                 ),
               ),
               SizedBox(
-                height: 7.h,
-              ),
-              SizedBox(
-                height: 140.h,
+                height: 150.h,
                 child: ListView.builder(
                   itemCount: 3,
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -156,7 +150,7 @@ class _PageTabViewState extends State<PageTabView>
                       title: listForBreakingNews[index].title!,
                       tag: "EVERYTHING",
                       time: listForBreakingNews[index].publishedAt,
-                      verticalMargin: 12.h,
+                      verticalMargin: 16.h,
                       onNewsTapFunction: () => Navigator.pushNamed(
                         context,
                         RouteManager.detailArticle,
@@ -170,7 +164,7 @@ class _PageTabViewState extends State<PageTabView>
                 ),
               ),
               SizedBox(
-                height: 14.h,
+                height: 8.h,
               ),
               RowTagSeeMore(
                 tag: "Hot & trendings",
@@ -182,10 +176,7 @@ class _PageTabViewState extends State<PageTabView>
                 ),
               ),
               SizedBox(
-                height: 7.h,
-              ),
-              SizedBox(
-                height: 140.h,
+                height: 150.h,
                 child: ListView.builder(
                   itemCount: 3,
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -196,7 +187,7 @@ class _PageTabViewState extends State<PageTabView>
                       title: listForHotTrendings[index].title!,
                       tag: "EVERYTHING",
                       time: listForBreakingNews[index].publishedAt,
-                      verticalMargin: 12.h,
+                      verticalMargin: 16.h,
                       onNewsTapFunction: () => Navigator.pushNamed(
                         context,
                         RouteManager.detailArticle,

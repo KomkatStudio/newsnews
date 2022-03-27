@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
+import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
 import 'package:newsnews/src/presentation/profile/cubit/theme_cubit.dart';
 
 class App extends StatelessWidget {
@@ -19,6 +20,9 @@ class App extends StatelessWidget {
         ),
         BlocProvider<AuthCubit>(
           create: (context) => s1<AuthCubit>(),
+        ),
+        BlocProvider<ProfileCubit>(
+          create: (_) => s1<ProfileCubit>(),
         ),
       ],
       child: ScreenUtilInit(

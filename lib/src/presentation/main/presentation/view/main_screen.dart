@@ -7,7 +7,7 @@ import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
 import 'package:newsnews/src/presentation/feed/view/feed_screen.dart';
 import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
 import 'package:newsnews/src/presentation/profile/view/profile_screen.dart';
-import 'package:newsnews/src/presentation/video_screen/view/search_screen.dart';
+import 'package:newsnews/src/presentation/search/view/search_screen.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class MainScreen extends StatefulWidget {
@@ -46,7 +46,6 @@ class _MainScreenState extends State<MainScreen> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<NewsCubit>(create: (_) => s1<NewsCubit>()),
-        BlocProvider<ProfileCubit>(create: (_) => s1<ProfileCubit>()),
       ],
       child: Scaffold(
         body: IndexedStack(

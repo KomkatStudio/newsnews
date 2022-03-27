@@ -99,7 +99,8 @@ Future<void> initDependence() async {
   s1.registerLazySingleton<SaveFavoriteArticle>(
     () => SaveFavoriteArticle(firebaseServicesRepository: s1()),
   );
-  s1.registerLazySingleton<GetEverythingFromQuery>(() => GetEverythingFromQuery(newsRepository: s1()));
+  s1.registerLazySingleton<GetEverythingFromQuery>(
+      () => GetEverythingFromQuery(newsRepository: s1()));
 
   ///BLOC - Cubit
   ///
