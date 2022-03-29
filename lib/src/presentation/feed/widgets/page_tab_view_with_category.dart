@@ -76,7 +76,9 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
       },
       builder: (context, listArticle) {
         final tagArticleList = listArticle
-            .where((element) => element.category == widget.category)
+            .where((element) =>
+                element.category!.toLowerCase() ==
+                widget.category.toLowerCase())
             .toList();
         final listForTop = tagArticleList.getRange(0, 3).toList();
         final listForMore =

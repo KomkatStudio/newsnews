@@ -10,7 +10,6 @@ class UserModel extends UserEntity {
     required List<ArticleModel>? favorites,
     required List<String>? interest,
     required String? imageUrl,
-  
   }) : super(
           uuid: uuid,
           displayName: displayName,

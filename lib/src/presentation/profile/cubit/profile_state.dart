@@ -44,3 +44,23 @@ class LoadUserDataFail extends ProfileState {
   @override
   List<Object> get props => [message];
 }
+
+class UpdateUserDataLoading extends ProfileState {}
+
+class UpdateUserDataFail extends ProfileState {
+  final String message;
+  const UpdateUserDataFail({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+class UpdateUserDataSuccessfully extends ProfileState {
+  final String message;
+  const UpdateUserDataSuccessfully({required this.message});
+
+  @override
+  List<Object> get props => [message];
+}
+
+

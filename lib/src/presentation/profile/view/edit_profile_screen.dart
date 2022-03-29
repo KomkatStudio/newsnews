@@ -36,14 +36,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       displayNameController =
           TextEditingController(text: state.user.displayName);
       if (state.user.interest != null) {
-        categoryList.forEach(((category) {
-          if (state.user.interest!.asMap().containsValue(category)) {
-            choseCategoryList[category.indexOf(category)] = true;
-          }
-        }));
+        for (var interest in state.user.interest!) {
+          choseCategoryList[categoryList.indexOf(interest)] = true;
+        }
       }
     }
-
     super.initState();
   }
 
@@ -169,6 +166,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               SizedBox(height: 32.h),
               const Text("Interest"),
+              SizedBox(height: 8.h),
               Wrap(
                 children: categoryList
                     .map(
@@ -176,9 +174,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         category: category,
                         choiceStatus:
                             choseCategoryList[categoryList.indexOf(category)],
+                        onSelectCategoryFunction: (value) {
+                          setState(() {
+                            choseCategoryList[categoryList.indexOf(category)] =
+                                value;
+                          });
+                        },
+                        sideBorderIsPrimaryColor: false,
                       ),
                     )
                     .toList(),
+              ),
+              SizedBox(height: 16.h),
+              InkWell(
+                onTap: () {},
+                borderRadius: BorderRadius.circular(12.r),
+                child: Ink(
+                  height: 50.h,
+                  width: double.infinity,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12.r),
+                    color: Palette.primaryColor,
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Update ",
+                      style: TextStyle(
+                        color: Palette.backgroundBoxColor,
+                        fontSize: 18.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ),
               )
             ],
           ),

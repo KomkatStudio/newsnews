@@ -18,6 +18,7 @@ import 'package:newsnews/src/domain/repositories/news_repositories/news_reposito
 import 'package:newsnews/src/domain/usecases/change_dark_mode_status.dart';
 import 'package:newsnews/src/domain/usecases/get_current_user.dart';
 import 'package:newsnews/src/domain/usecases/get_everything_from_query.dart';
+import 'package:newsnews/src/domain/usecases/get_news_from_server_test.dart';
 import 'package:newsnews/src/domain/usecases/get_user_data.dart';
 import 'package:newsnews/src/domain/usecases/has_current_user.dart';
 import 'package:newsnews/src/domain/usecases/save_favorite_article.dart';
@@ -101,11 +102,12 @@ Future<void> initDependence() async {
   );
   s1.registerLazySingleton<GetEverythingFromQuery>(
       () => GetEverythingFromQuery(newsRepository: s1()));
-
+  s1.registerLazySingleton<GetNewsFromServerTest>(()=> GetNewsFromServerTest(newsRepository: s1()))
+;
   ///BLOC - Cubit
   ///
   s1.registerFactory<NewsCubit>(
-    () => NewsCubit(getTopHeadline: s1(), getEverythingFromQuery: s1()),
+    () => NewsCubit(getTopHeadline: s1(), getEverythingFromQuery: s1(), getNewsFromServerTest: s1()),
   );
   s1.registerFactory<AuthCubit>(
     () => AuthCubit(

@@ -20,14 +20,13 @@ class LocalSettingRepositoryImpl extends LocalSettingRepository {
   }
 
   @override
-  Future<Either<Failure, NoParams>> changeDarkModeStatus({required bool value}) async{
-    try{
+  Future<Either<Failure, NoParams>> changeDarkModeStatus(
+      {required bool value}) async {
+    try {
       await _setting.changeDarkModeStatus(value: value);
       return Right(NoParams());
-    }catch(e){
+    } catch (e) {
       return Left(LocalSettingFailure());
     }
   }
-
-  
 }

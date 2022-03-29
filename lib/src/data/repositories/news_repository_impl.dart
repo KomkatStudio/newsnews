@@ -3,6 +3,7 @@ import 'package:newsnews/src/core/errors/exception.dart';
 import 'package:newsnews/src/core/errors/failure.dart';
 import 'package:newsnews/src/data/datasources/news_datasource/news_api_remote_datasource.dart';
 import 'package:newsnews/src/domain/entities/article/article_entity.dart';
+import 'package:newsnews/src/domain/entities/article_entity2.dart';
 import 'package:newsnews/src/domain/repositories/news_repositories/news_repository.dart';
 
 class NewsRepositoryImpl implements NewsRepository {
@@ -38,6 +39,16 @@ class NewsRepositoryImpl implements NewsRepository {
         query: query,
       );
       return Right(listArticle);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ArticleEntity2>>> getNewsFromServerTest() async {
+    try {
+      final listArticle2 = await newsApiRemoteDatasouce.getNewsFromServerTest();
+      return Right(listArticle2);
     } on ServerException {
       return Left(ServerFailure());
     }

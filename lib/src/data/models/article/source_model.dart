@@ -9,7 +9,9 @@ class SourceModel extends SourceEntity {
         name: json['name'] as String?,
       );
 
-  factory SourceModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) => SourceModel(
+  factory SourceModel.fromSnapshot(
+          DocumentSnapshot<Map<String, dynamic>> snapshot) =>
+      SourceModel(
         id: snapshot.data()!['id'] as String?,
         name: snapshot.data()!['name'] as String?,
       );

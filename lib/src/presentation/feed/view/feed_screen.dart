@@ -8,6 +8,7 @@ import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
 import 'package:newsnews/src/presentation/feed/widgets/page_tab_view.dart';
+import 'package:newsnews/src/presentation/feed/widgets/page_tab_view_for_you.dart';
 import 'package:newsnews/src/presentation/feed/widgets/page_tab_view_with_category.dart';
 import 'package:newsnews/src/widgets/circle_loading.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -27,6 +28,7 @@ class _FeedScreenState extends State<FeedScreen>
 
   final listCategory = [
     "Home",
+    "For you",
     "Covid-19",
     "Business",
     "Entertainment",
@@ -54,7 +56,7 @@ class _FeedScreenState extends State<FeedScreen>
     return BlocProvider.value(
       value: newsCubit,
       child: DefaultTabController(
-        length: 9,
+        length: 10,
         child: Scaffold(
           appBar: AppBar(
             elevation: 2,
@@ -85,20 +87,19 @@ class _FeedScreenState extends State<FeedScreen>
             ),
             actions: [
               IconButton(
-                icon: Badge(
-                  badgeColor: Palette.primaryColor,
-                  badgeContent: const Text(
-                    "3",
-                    style: TextStyle(color: Palette.backgroundBoxColor),
+                  icon: Badge(
+                    badgeColor: Palette.primaryColor,
+                    badgeContent: const Text(
+                      "3",
+                      style: TextStyle(color: Palette.backgroundBoxColor),
+                    ),
+                    child: const Icon(
+                      PhosphorIcons.bellSimple,
+                    ),
+                    position: const BadgePosition(top: -10, end: -6),
                   ),
-                  child: const Icon(
-                    PhosphorIcons.bellSimple,
-                  ),
-                  position: const BadgePosition(top: -10, end: -6),
-                ),
-                iconSize: 26,
-                onPressed: () {},
-              ),
+                  iconSize: 26,
+                  onPressed: () {}),
             ],
           ),
           body: BlocBuilder<NewsCubit, NewsState>(
@@ -112,8 +113,10 @@ class _FeedScreenState extends State<FeedScreen>
               } else if (state is NewsLoaded) {
                 log(state.listArticle.length.toString());
                 return TabBarView(controller: tabController, children: [
-                  PageTabView(newsCubit: newsCubit),
-                  for (int index = 1; index < listCategory.length; index++)
+                  PageTabView(
+                      key: ValueKey(listCategory[0]), newsCubit: newsCubit),
+                  PageTabViewForYou(newsCubit: newsCubit),
+                  for (int index = 2; index < listCategory.length; index++)
                     PageTabViewWithCategory(
                       category: listCategory[index],
                       categoryIndex: index,

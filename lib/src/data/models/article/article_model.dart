@@ -50,12 +50,14 @@ class ArticleModel extends ArticleEntity {
         'content': content,
       };
 
-  factory ArticleModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+  factory ArticleModel.fromSnapshot(
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
     return ArticleModel(
       sourceModel: snapshot.data()!['source'] == null
           ? null
           : SourceModel.fromSnapshot(
-              snapshot.data()!['source'] as DocumentSnapshot<Map<String, dynamic>>,
+              snapshot.data()!['source']
+                  as DocumentSnapshot<Map<String, dynamic>>,
             ),
       author: snapshot.data()!['author'] as String?,
       content: snapshot.data()!['content'] as String?,

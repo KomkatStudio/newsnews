@@ -1,4 +1,3 @@
-
 abstract class HiveSettingDatasource {
   Future<bool> getDarkMode();
 

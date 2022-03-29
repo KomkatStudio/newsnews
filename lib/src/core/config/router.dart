@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newsnews/src/presentation/auth/pages/authentication_screen.dart';
 import 'package:newsnews/src/presentation/favorite/view/favorite_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/detail_article_screen.dart';
+import 'package:newsnews/src/presentation/feed/view/detail_article_screen_for_you.dart';
 import 'package:newsnews/src/presentation/feed/view/feed_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
 import 'package:newsnews/src/presentation/main/presentation/view/main_screen.dart';
@@ -26,6 +27,7 @@ class RouteManager {
   static const privacySecurity = '/privacy';
   static const helpSupport = '/help';
   static const detailArticle = '/detail';
+  static const detailArticle2 = '/detail2';
   static const editProfile = '/edit';
   static const splash = '/';
 
@@ -41,6 +43,7 @@ class RouteManager {
     privacySecurity: (_) => const PrivacyScreenScreen(),
     about: (_) => const AboutScreen(),
     detailArticle: (_) => const DetailArticleScreen(),
-    editProfile:(_) => const EditProfileScreen()
+    detailArticle2: (_) => const DetailArticleScreenForYou(),
+    editProfile: (_) => const EditProfileScreen()
   };
 }

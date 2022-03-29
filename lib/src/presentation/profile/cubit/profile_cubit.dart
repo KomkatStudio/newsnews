@@ -35,4 +35,10 @@ class ProfileCubit extends Cubit<ProfileState> {
         (l) => emit(const LoadUserDataFail(message: "Load user data fail")),
         (r) => emit(LoadUserDataSuccessfully(user: r!)));
   }
+
+  Future<void> updateUserInformation() async {
+    if(state is LoadUserDataSuccessfully){
+      
+    }
+  }
 }

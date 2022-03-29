@@ -14,7 +14,8 @@ class SaveFavoriteArticle extends Usecase<NoParams, Params> {
       : _firebaseServicesRepository = firebaseServicesRepository;
   @override
   Future<Either<Failure, NoParams?>> call(Params params) async {
-    return await _firebaseServicesRepository.saveFavoriteArticle(params.articleEntity);
+    return await _firebaseServicesRepository
+        .saveFavoriteArticle(params.articleEntity);
   }
 }
 

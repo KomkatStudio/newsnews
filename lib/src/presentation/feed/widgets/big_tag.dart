@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 
 class BigTag extends StatelessWidget {
-  const BigTag({Key? key, required this.tag, required this.fontSize}) : super(key: key);
+  const BigTag({Key? key, required this.tag, required this.fontSize})
+      : super(key: key);
 
   final String tag;
   final double fontSize;

@@ -25,7 +25,6 @@ class App extends StatelessWidget {
         BlocProvider<ProfileCubit>(
           create: (_) => s1<ProfileCubit>(),
         ),
-        
       ],
       child: ScreenUtilInit(
         designSize: const Size(411, 823),
