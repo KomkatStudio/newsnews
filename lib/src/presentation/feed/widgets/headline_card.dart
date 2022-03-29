@@ -75,9 +75,7 @@ class HeadlineCard extends StatelessWidget {
                       errorWidget: (context, string, dymamic) => Container(
                         height: 190.h,
                         child: const Center(
-                          child: CustomError(
-                            messageError: "This no image or fail",
-                          ),
+                          child: CustomError(),
                         ),
                         margin: EdgeInsets.only(bottom: 10.h),
                       ),

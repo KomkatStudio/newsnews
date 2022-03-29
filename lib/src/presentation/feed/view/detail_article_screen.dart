@@ -72,9 +72,7 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                   errorWidget: (context, string, dymamic) => Container(
                     height: 370.h,
                     child: const Center(
-                      child: CustomError(
-                        messageError: "This no image or fail",
-                      ),
+                      child: CustomError(),
                     ),
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.vertical(

@@ -17,7 +17,8 @@ import 'package:newsnews/src/widgets/custom_scroll.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
 
 class PageTabView extends StatefulWidget {
-  const PageTabView({Key? key}) : super(key: key);
+  const PageTabView({Key? key, required this.newsCubit}) : super(key: key);
+  final NewsCubit newsCubit;
 
   @override
   State<PageTabView> createState() => _PageTabViewState();
@@ -89,33 +90,31 @@ class _PageTabViewState extends State<PageTabView>
                 height: 24.h,
               ),
               BigTag(tag: "Top Headline", fontSize: 24.sp),
-              Builder(builder: (context) {
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 2.w),
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  height: 330.h,
-                  child: PageView.builder(
-                    onPageChanged: changePage,
-                    itemCount: listForTop.length,
-                    controller: pageController,
-                    itemBuilder: (context, index) {
-                      return HeadlineCard(
-                        imageURL: listForTop[index].urlToImage,
-                        newsTag: "EVERYTHING",
-                        newsTitle: listForTop[index].title!,
-                        onHeadlineTapFunction: () => Navigator.pushNamed(
-                          context,
-                          RouteManager.detailArticle,
-                          arguments: {
-                            "article": listForTop[index],
-                            "newsTag": "EVERYTHING",
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                );
-              }),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 2.w),
+                color: Theme.of(context).scaffoldBackgroundColor,
+                height: 330.h,
+                child: PageView.builder(
+                  onPageChanged: changePage,
+                  itemCount: listForTop.length,
+                  controller: pageController,
+                  itemBuilder: (context, index) {
+                    return HeadlineCard(
+                      imageURL: listForTop[index].urlToImage,
+                      newsTag: "EVERYTHING",
+                      newsTitle: listForTop[index].title!,
+                      onHeadlineTapFunction: () => Navigator.pushNamed(
+                        context,
+                        RouteManager.detailArticle,
+                        arguments: {
+                          "article": listForTop[index],
+                          "newsTag": "EVERYTHING",
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ),
               SizedBox(
                 height: 8.h,
               ),
@@ -132,8 +131,9 @@ class _PageTabViewState extends State<PageTabView>
                 onSeeMoreTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MoreNews(
-                      title: "More Breaking News",
+                    builder: (context) => BlocProvider.value(
+                      value: widget.newsCubit,
+                      child: const MoreNews(),
                     ),
                   ),
                 ),
@@ -146,7 +146,7 @@ class _PageTabViewState extends State<PageTabView>
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return NewsCard(
-                      imageUrl: listForBreakingNews[index].urlToImage!,
+                      imageUrl: listForBreakingNews[index].urlToImage,
                       title: listForBreakingNews[index].title!,
                       tag: "EVERYTHING",
                       time: listForBreakingNews[index].publishedAt,
@@ -171,7 +171,10 @@ class _PageTabViewState extends State<PageTabView>
                 onSeeMoreTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HotAndTrendings(),
+                    builder: (context) => BlocProvider.value(
+                      value: widget.newsCubit,
+                      child: const HotAndTrendings(),
+                    ),
                   ),
                 ),
               ),

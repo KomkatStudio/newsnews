@@ -14,11 +14,15 @@ import 'package:newsnews/src/widgets/news_card.dart';
 
 class PageTabViewWithCategory extends StatefulWidget {
   const PageTabViewWithCategory(
-      {Key? key, required this.categoryIndex, required this.category})
+      {Key? key,
+      required this.categoryIndex,
+      required this.category,
+      required this.newsCubit})
       : super(key: key);
 
   final int categoryIndex;
   final String category;
+  final NewsCubit newsCubit;
 
   @override
   State<PageTabViewWithCategory> createState() =>
@@ -128,8 +132,9 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                 onSeeMoreTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MoreNews(
-                      title: widget.category,
+                    builder: (context) => BlocProvider.value(
+                      value: widget.newsCubit,
+                      child: MoreNews(title: widget.category),
                     ),
                   ),
                 ),

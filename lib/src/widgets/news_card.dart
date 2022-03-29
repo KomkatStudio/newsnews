@@ -88,9 +88,7 @@ class NewsCard extends StatelessWidget {
                   errorWidget: (context, string, dymamic) => SizedBox(
                     height: 200.h,
                     child: const Center(
-                      child: CustomError(
-                        messageError: "No image here",
-                      ),
+                      child: CustomError(),
                     ),
                   ),
                 ),

@@ -110,9 +110,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             "Please choose interests for yourself"),
                                       );
                               } else if (state is LoadUserDataLoading) {
-                                return const Text("Loading!");
+                                return const Center(
+                                  child: Text("Loading!"),
+                                );
                               } else {
-                                return const Text("Can't load your interest");
+                                return const Center(
+                                  child: Text("Can't load your interest"),
+                                );
                               }
                             },
                           ),

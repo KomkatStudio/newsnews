@@ -21,6 +21,7 @@ class NewsCubit extends Cubit<NewsState> {
   }
   final top.GetTopHeadline _getTopHeadline;
   final everything.GetEverythingFromQuery _getEverythingFromQuery;
+  var page = 1;
 
   Future<void> getArticles() async {
     emit(NewsLoading());
@@ -40,7 +41,8 @@ class NewsCubit extends Cubit<NewsState> {
       await _getTopHeadline
           .call(const top.Params(path: "/top-headlines"))
           .then(((value) => value.fold((l) {}, (r) {
-                listArticle.addAll(r);
+                listArticle.addAll(r.map(
+                    (article) => article.copyWith(category: "EVERYTHING")));
               })));
 
       ///Get covid with query
@@ -48,7 +50,10 @@ class NewsCubit extends Cubit<NewsState> {
           .call(everything.Params(path: "/everything", query: listCategory[1]))
           .then(((value) => value.fold((l) {}, (r) {
                 log(listCategory[1] + ":" + r.length.toString());
-      listArticle.addAll(r.map((article) => article.copyWith(category: listCategory[1].toUppercaseFirstLetter()),));
+                listArticle.addAll(r.map(
+                  (article) => article.copyWith(
+                      category: listCategory[1].toUppercaseFirstLetter()),
+                ));
               })));
       for (int i = 2; i < listCategory.length; i++) {
         ///Get top headlines
@@ -59,7 +64,10 @@ class NewsCubit extends Cubit<NewsState> {
                     (l) => log("Get top ${listCategory[i]} fail"),
                     (r) {
                       log(listCategory[i] + ":" + r.length.toString());
-                      listArticle.addAll(r.map((article) => article.copyWith(category: listCategory[i].toUppercaseFirstLetter()),));
+                      listArticle.addAll(r.map(
+                        (article) => article.copyWith(
+                            category: listCategory[i].toUppercaseFirstLetter()),
+                      ));
                     },
                   )),
             );

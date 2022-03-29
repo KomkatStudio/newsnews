@@ -43,37 +43,32 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<NewsCubit>(create: (_) => s1<NewsCubit>()),
-      ],
-      child: Scaffold(
-        body: IndexedStack(
-          index: _currentIndex,
-          children: const [
-            FeedScreen(),
-            SearchScreen(),
-            FavoriteScreen(),
-            ProfileScreen(),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          selectedItemColor: Palette.primaryColor,
-          onTap: (value) => setState(() {
-            _currentIndex = value;
-          }),
-          type: BottomNavigationBarType.fixed,
-          items: itemIconList
-              .map(
-                (element) => BottomNavigationBarItem(
-                  icon: Icon(element["icon"]),
-                  activeIcon: Icon(element["activeIcon"]),
-                  label: labelList[itemIconList.indexOf(element)],
-                ),
-              )
-              .toList(),
-        ),
+    return Scaffold(
+      body: IndexedStack(
+        index: _currentIndex,
+        children: const [
+          FeedScreen(),
+          SearchScreen(),
+          FavoriteScreen(),
+          ProfileScreen(),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        selectedItemColor: Palette.primaryColor,
+        onTap: (value) => setState(() {
+          _currentIndex = value;
+        }),
+        type: BottomNavigationBarType.fixed,
+        items: itemIconList
+            .map(
+              (element) => BottomNavigationBarItem(
+                icon: Icon(element["icon"]),
+                activeIcon: Icon(element["activeIcon"]),
+                label: labelList[itemIconList.indexOf(element)],
+              ),
+            )
+            .toList(),
       ),
     );
   }
