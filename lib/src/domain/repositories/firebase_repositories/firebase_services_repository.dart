@@ -20,4 +20,7 @@ abstract class FirebaseServicesRepository {
 
   Future<Either<Failure, NoParams>> saveFavoriteArticle(
       ArticleEntity articleEntity);
+
+  Future<Either<Failure, NoParams>> hitFavorite(
+      {required String category, required int time});
 }

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
-import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/favorite/view/favorite_screen.dart';
-import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
 import 'package:newsnews/src/presentation/feed/view/feed_screen.dart';
-import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
 import 'package:newsnews/src/presentation/profile/view/profile_screen.dart';
 import 'package:newsnews/src/presentation/search/view/search_screen.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';

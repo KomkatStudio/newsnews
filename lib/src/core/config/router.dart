@@ -5,9 +5,9 @@ import 'package:newsnews/src/presentation/feed/view/detail_article_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/detail_article_screen_for_you.dart';
 import 'package:newsnews/src/presentation/feed/view/feed_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
+import 'package:newsnews/src/presentation/feed/view/webview_screen.dart';
 import 'package:newsnews/src/presentation/main/presentation/view/main_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/about_screen.dart';
-import 'package:newsnews/src/presentation/profile/view/edit_profile_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/privacy_security_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/profile_screen.dart';
 import 'package:newsnews/src/presentation/search/view/search_screen.dart';
@@ -28,7 +28,7 @@ class RouteManager {
   static const helpSupport = '/help';
   static const detailArticle = '/detail';
   static const detailArticle2 = '/detail2';
-  static const editProfile = '/edit';
+  static const webview = '/wv';
   static const splash = '/';
 
   static Map<String, WidgetBuilder> listRoute = {
@@ -44,6 +44,6 @@ class RouteManager {
     about: (_) => const AboutScreen(),
     detailArticle: (_) => const DetailArticleScreen(),
     detailArticle2: (_) => const DetailArticleScreenForYou(),
-    editProfile: (_) => const EditProfileScreen()
+    webview: (_) => const WebViewScreen(),
   };
 }

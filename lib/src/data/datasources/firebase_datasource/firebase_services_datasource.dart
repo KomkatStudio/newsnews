@@ -18,4 +18,6 @@ abstract class FirebaseServicesDatasource {
   Future<void> saveFavoriteArticle(ArticleModel articleModel);
 
   Future<UserModel> getUserData();
+
+  Future<void> updateReadingCategoryOfUser(String category, int time);
 }

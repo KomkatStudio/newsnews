@@ -42,7 +42,7 @@ class _FeedScreenState extends State<FeedScreen>
     super.initState();
     tabController = TabController(vsync: this, length: listCategory.length);
     pageController = PageController();
-    newsCubit = s1<NewsCubit>();
+    newsCubit = injector<NewsCubit>();
   }
 
   @override

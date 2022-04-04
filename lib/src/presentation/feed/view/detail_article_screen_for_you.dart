@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/config/custom_cache_manager.dart';
+import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/domain/entities/article_entity2.dart';
 import 'package:newsnews/src/widgets/custom_error.dart';
@@ -282,7 +283,14 @@ class _DetailArticleScreenForYouState extends State<DetailArticleScreenForYou> {
                                       fontSize: 19.sp,
                                     ),
                                     recognizer: TapGestureRecognizer()
-                                      ..onTap = () {},
+                                      ..onTap = () => Navigator.pushNamed(
+                                            context,
+                                            RouteManager.webview,
+                                            arguments: {
+                                              'title': article.title,
+                                              'urlLink': article.link,
+                                            },
+                                          ),
                                   )
                                 ],
                               ),

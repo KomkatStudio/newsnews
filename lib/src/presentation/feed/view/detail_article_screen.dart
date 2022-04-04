@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:newsnews/src/core/config/custom_cache_manager.dart';
+import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/extension/extension.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/domain/entities/article/article_entity.dart';
@@ -346,7 +347,15 @@ class _DetailArticleScreenState extends State<DetailArticleScreen> {
                                               fontSize: 19.sp,
                                             ),
                                             recognizer: TapGestureRecognizer()
-                                              ..onTap = () {},
+                                              ..onTap = () =>
+                                                  Navigator.pushNamed(
+                                                    context,
+                                                    RouteManager.webview,
+                                                    arguments: {
+                                                      'title': article.title,
+                                                      'urlLink': article.url,
+                                                    },
+                                                  ),
                                           )
                                         ],
                                       ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,6 +8,7 @@ import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
 import 'package:newsnews/src/presentation/profile/cubit/theme_cubit.dart';
+import 'package:newsnews/src/presentation/profile/view/edit_profile_screen.dart';
 import 'package:newsnews/src/presentation/profile/widgets/custom_chip.dart';
 import 'package:newsnews/src/presentation/profile/widgets/custom_stack_item.dart';
 import 'package:newsnews/src/presentation/profile/widgets/switch_user_control.dart';
@@ -55,7 +58,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: BlocListener<ProfileCubit, ProfileState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is ProfileSignOutLoading) {
             showLoadingDialog(context);
           } else if (state is ProfileSignOutSuccessfully) {
@@ -91,24 +94,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: BlocBuilder<ProfileCubit, ProfileState>(
                             builder: (context, state) {
                               if (state is LoadUserDataSuccessfully) {
-                                return state.user.interest?.length != null
-                                    ? ListView.builder(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8.w),
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount:
-                                            state.user.interest?.length ?? 0,
-                                        itemBuilder: (context, index) {
-                                          return CustomChip(
-                                            interest:
-                                                state.user.interest![index],
-                                          );
-                                        },
-                                      )
-                                    : const Center(
-                                        child: Text(
-                                            "Please choose interests for yourself"),
+                                if (state.user.interest != null &&
+                                    state.user.interest!.isNotEmpty) {
+                                  return ListView.builder(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 8.w,
+                                    ),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: state.user.interest?.length ?? 0,
+                                    itemBuilder: (context, index) {
+                                      return CustomChip(
+                                        interest: state.user.interest![index],
                                       );
+                                    },
+                                  );
+                                } else if (state.user.interest != null &&
+                                    state.user.interest!.isEmpty) {
+                                  return const Center(
+                                    child: Text(
+                                        "Please choose interests for yourself"),
+                                  );
+                                } else {
+                                  return const Center(
+                                    child: Text(
+                                        "Please choose interests for yourself"),
+                                  );
+                                }
                               } else if (state is LoadUserDataLoading) {
                                 return const Center(
                                   child: Text("Loading!"),
@@ -122,7 +133,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: 16.w, bottom: 8.h),
+                          padding: EdgeInsets.only(
+                              left: 16.w, bottom: 8.h, top: 8.h),
                           child: Text(
                             "User Settings",
                             style: TextStyle(
@@ -189,6 +201,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             flex: 1,
                           ),
                           BlocBuilder<ProfileCubit, ProfileState>(
+                            // buildWhen: ((previous, current) {
+                            //   return previous != current;
+                            // }),
                             builder: (context, state) {
                               if (state is LoadUserDataSuccessfully) {
                                 return Row(
@@ -211,7 +226,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           padding: const EdgeInsets.all(3.5),
                                           child: CircleAvatar(
                                             backgroundImage: Image.network(
-                                              state.user.imageUrl!,
+                                              state.user.imageUrl ?? "",
                                               loadingBuilder:
                                                   (BuildContext context,
                                                       Widget child,
@@ -265,8 +280,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         Row(
                                           children: [
                                             Text(
-                                              state.user.displayName ??
-                                                  "Your display name will be here",
+                                              state.user.displayName != ""
+                                                  ? state.user.displayName!
+                                                  : "Your name",
                                               style: TextStyle(
                                                 fontSize: 20.sp,
                                                 color: Palette
@@ -282,19 +298,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               child: Material(
                                                 color: Colors.transparent,
                                                 child: IconButton(
-                                                  icon: const Icon(
-                                                      PhosphorIcons.pencilLine),
-                                                  color: Palette
-                                                      .textColorInBlueBGColor,
-                                                  iconSize: 22.sp,
-                                                  constraints:
-                                                      const BoxConstraints(),
-                                                  onPressed: () =>
-                                                      Navigator.pushNamed(
+                                                    icon: const Icon(
+                                                        PhosphorIcons
+                                                            .pencilLine),
+                                                    color: Palette
+                                                        .textColorInBlueBGColor,
+                                                    iconSize: 22.sp,
+                                                    constraints:
+                                                        const BoxConstraints(),
+                                                    onPressed: () async {
+                                                      try {
+                                                        final value =
+                                                            await Navigator
+                                                                .push(
                                                           context,
-                                                          RouteManager
-                                                              .editProfile),
-                                                ),
+                                                          MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                EditProfileScreen(
+                                                                    user: state
+                                                                        .user),
+                                                          ),
+                                                        );
+                                                        if (value) {
+                                                          await Future.delayed(
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    500),
+                                                          ).then((value) => context
+                                                              .read<
+                                                                  ProfileCubit>()
+                                                              .getUserInformation());
+                                                        }
+                                                      } catch (e) {
+                                                        log("No value after pop in Edit to Profile");
+                                                      }
+                                                    }),
                                               ),
                                             ),
                                           ],

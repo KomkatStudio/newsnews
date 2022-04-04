@@ -22,6 +22,8 @@ class FirebaseServicesRepositoryImpl extends FirebaseServicesRepository {
     try {
       final userCredential = await _firebaseServices.signInWithGoogle();
       return Right(userCredential);
+    } on TimeoutServerException {
+      return Left(TimeoutServerFailure());
     } on UserCancelException {
       return Left(UserCancelFailure());
     } on FirebaseServerException {
@@ -89,6 +91,17 @@ class FirebaseServicesRepositoryImpl extends FirebaseServicesRepository {
           .saveUserInformation(UserModel.fromEntity(userEntity));
       return Right(NoParams());
     } on FirebaseServerException {
+      return Left(FirebaseFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, NoParams>> hitFavorite(
+      {required String category, required int time}) async {
+    try {
+      await _firebaseServices.updateReadingCategoryOfUser(category, time);
+      return Right(NoParams());
+    } catch (e) {
       return Left(FirebaseFailure());
     }
   }

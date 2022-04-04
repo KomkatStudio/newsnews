@@ -38,8 +38,7 @@ void setFlavorDevelopment() {
   FlavorConfig(
       flavor: Flavor.dev,
       name: "NewsNews-Dev",
-      values: FlavorValues(baseUrl: "https://newsapi.org/v2", testUrl: "https://9306-2405-4803-d3da-38a0-e9e1-ca85-d05-4f9d.ngrok.io/api/"
-      "v1/news?fbclid=IwAR0--O9vuEYye0iBUtYEzBlPlQ1vIsLM5y1Iw-D-Z6HBovkZaW6gYI4eFkg"));
+      values: FlavorValues(baseUrl: "https://newsapi.org/v2", testUrl: "http://41f2-123-19-231-90.ngrok.io/api/v1/news?userId="));
 }
 
 void setFlavorTesting() {

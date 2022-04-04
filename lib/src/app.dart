@@ -5,9 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
-import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
 import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
 import 'package:newsnews/src/presentation/profile/cubit/theme_cubit.dart';
+import 'package:newsnews/src/presentation/search/cubit/search_cubit.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -17,13 +17,16 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ThemeCubit>(
-          create: (context) => s1<ThemeCubit>(),
+          create: (context) => injector<ThemeCubit>(),
         ),
         BlocProvider<AuthCubit>(
-          create: (context) => s1<AuthCubit>(),
+          create: (context) => injector<AuthCubit>(),
         ),
         BlocProvider<ProfileCubit>(
-          create: (_) => s1<ProfileCubit>(),
+          create: (_) => injector<ProfileCubit>(),
+        ),
+        BlocProvider<SearchCubit>(
+          create: (_) => injector<SearchCubit>(),
         ),
       ],
       child: ScreenUtilInit(

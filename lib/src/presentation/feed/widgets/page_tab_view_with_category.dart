@@ -106,14 +106,19 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                       imageURL: listForTop[index].urlToImage,
                       newsTag: widget.category,
                       newsTitle: listForTop[index].title!,
-                      onHeadlineTapFunction: () => Navigator.pushNamed(
-                        context,
-                        RouteManager.detailArticle,
-                        arguments: {
-                          "article": listForTop[index],
-                          "newsTag": widget.category,
-                        },
-                      ),
+                      onHeadlineTapFunction: () async {
+                        await context
+                            .read<NewsCubit>()
+                            .hitFavorite(category: widget.category);
+                        Navigator.pushNamed(
+                          context,
+                          RouteManager.detailArticle,
+                          arguments: {
+                            "article": listForTop[index],
+                            "newsTag": widget.category,
+                          },
+                        );
+                      },
                     );
                   },
                 ),

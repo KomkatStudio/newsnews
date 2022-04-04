@@ -73,15 +73,18 @@ class NewsApiRemoteDatasouce {
     }
   }
 
-  Future<List<ArticleModel2>> getNewsFromServerTest() async {
-    final url = FlavorConfig.instance.value.testUrl!;
+  Future<List<ArticleModel2>> getNewsFromServerTest(String userId) async {
+    final url =
+        "${FlavorConfig.instance.value.testUrl!}BuXRdz34KNXGEgmEFQOR2VdVf882";
+    log(url);
     final response = await http.get(Uri.parse(url)).timeout(
           const Duration(minutes: 1),
           onTimeout: () => throw ServerException(),
         );
     if (response.statusCode == 200) {
-      var converted = jsonDecode(response.body) as Iterable;
-      return converted
+      var converted = jsonDecode(response.body);
+      Iterable list = converted['feeds'];
+      return list
           .map(
             (e) => ArticleModel2.fromJson(e),
           )

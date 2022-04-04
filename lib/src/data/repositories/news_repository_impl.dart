@@ -45,9 +45,9 @@ class NewsRepositoryImpl implements NewsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ArticleEntity2>>> getNewsFromServerTest() async {
+  Future<Either<Failure, List<ArticleEntity2>>> getNewsFromServerTest(String userId) async {
     try {
-      final listArticle2 = await newsApiRemoteDatasouce.getNewsFromServerTest();
+      final listArticle2 = await newsApiRemoteDatasouce.getNewsFromServerTest(userId);
       return Right(listArticle2);
     } on ServerException {
       return Left(ServerFailure());
