@@ -45,12 +45,22 @@ class NewsRepositoryImpl implements NewsRepository {
   }
 
   @override
-  Future<Either<Failure, List<ArticleEntity2>>> getNewsFromServerTest(String userId) async {
+  Future<Either<Failure, List<ArticleEntity2>>> getNewsFromServerTest({required String path, String? userId}) async {
     try {
-      final listArticle2 = await newsApiRemoteDatasouce.getNewsFromServerTest(userId);
+      final listArticle2 = await newsApiRemoteDatasouce.getNewsFromServerTest(path: path, userId: userId);
       return Right(listArticle2);
     } on ServerException {
       return Left(ServerFailure());
     }
   }
+
+  // @override
+  // Future<Either<Failure, List<ArticleEntity2>>> getNewsFromServerTest(String userId) async {
+    // try {
+    //   final listArticle2 = await newsApiRemoteDatasouce.getNewsFromServerTest(userId);
+    //   return Right(listArticle2);
+    // } on ServerException {
+    //   return Left(ServerFailure());
+    // }
+  // }
 }

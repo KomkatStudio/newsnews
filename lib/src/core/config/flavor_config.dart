@@ -44,7 +44,7 @@ void setFlavorDevelopment() {
       values: FlavorValues(
           baseUrl: "https://newsapi.org/v2",
           testUrl:
-              "https://01ee-116-105-225-220.ngrok.io/api/v1/news?userId="));
+              "https://01ee-116-105-225-220.ngrok.io/api/v1"));
 }
 
 void setFlavorTesting() {

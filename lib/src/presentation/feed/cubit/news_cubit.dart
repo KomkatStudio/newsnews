@@ -53,7 +53,8 @@ class NewsCubit extends Cubit<NewsState> {
       'sports'
     ];
     var listArticle = <ArticleEntity>[];
-    var listForYout = <ArticleEntity2>[];
+    var listForYou = <ArticleEntity2>[];
+    var listArticleAll = <ArticleEntity2>[];
     try {
       ///get all top headlines
       await _getTopHeadline
@@ -63,14 +64,27 @@ class NewsCubit extends Cubit<NewsState> {
                     (article) => article.copyWith(category: "EVERYTHING")));
               })));
 
+      ///Get all news from server AI
+      ///
+      ///
+      await _getNewsFromServerTest
+          .call(const GetNewsServerTestParams(path: '/news/all'))
+          .then((resultNews) {
+        resultNews.fold(
+            (l) => log(l.toString()), (r) => listArticleAll.addAll(r ?? []));
+      });
+
       ///Get for you
       await _getCurrentUser.call(NoParams()).then((getUser) {
         getUser.fold((failure) {}, (user) async {
           await _getNewsFromServerTest
-              .call(GetNewsServerTestParams(user.uid))
+              .call(GetNewsServerTestParams(
+            path: '/news?userId=',
+            userId: user.uid,
+          ))
               .then((resultNews) {
             resultNews.fold(
-                (l) => log(l.toString()), (r) => listForYout.addAll(r ?? []));
+                (l) => log(l.toString()), (r) => listForYou.addAll(r ?? []));
           });
         });
       });
@@ -105,7 +119,7 @@ class NewsCubit extends Cubit<NewsState> {
                   )),
             );
       }
-      emit(NewsLoaded(listArticle, listForYout));
+      emit(NewsLoaded(listArticle, listForYou, listArticleAll));
     } catch (e) {
       emit(const NewsError("error server"));
     }

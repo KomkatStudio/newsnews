@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:newsnews/src/core/config/router.dart';
-import 'package:newsnews/src/domain/entities/article/article_entity.dart';
+import 'package:newsnews/src/domain/entities/article_entity2.dart';
 import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
 import 'package:newsnews/src/widgets/circle_loading.dart';
 import 'package:newsnews/src/widgets/custom_category_choice_chip.dart';
@@ -20,37 +20,21 @@ class MoreNewsForYou extends StatefulWidget {
 }
 
 class _MoreNewsForYouState extends State<MoreNewsForYou> {
-  late List<ArticleEntity> listFilter;
-  final categoryList = [
-    "All",
-    "Covid-19",
-    "Business",
-    "Entertainment",
-    "Health",
-    "Technology",
-    "Science",
-    "Sports"
-  ];
+  late List<ArticleEntity2> listFilter;
+  final categoryList = ["All", "business", "life", "sports", "travel", "world"];
   var choseCategoryList = <bool>[];
 
   @override
   void initState() {
-    if (widget.title == null) {
-      choseCategoryList =
-          List.filled(categoryList.length, false, growable: false)
-            ..first = true;
-    }
+    choseCategoryList = List.filled(categoryList.length, false, growable: false)
+      ..first = true;
+
     final state = context.read<NewsCubit>().state;
     if (state is NewsLoaded) {
       if (widget.title == null) {
-        listFilter = <ArticleEntity>[...state.listArticle];
+        listFilter = <ArticleEntity2>[...state.listAllFromAI];
       } else {
-        listFilter = <ArticleEntity>[
-          ...state.listArticle.where(
-            (article) =>
-                article.category!.toLowerCase() == widget.title!.toLowerCase(),
-          )
-        ];
+        listFilter = <ArticleEntity2>[...state.listForYou];
       }
     }
     super.initState();
@@ -83,56 +67,51 @@ class _MoreNewsForYouState extends State<MoreNewsForYou> {
       ),
       body: Column(
         children: [
-          widget.title == null
-              ? SizedBox(
-                  height: 65.h,
-                  child:
-                      BlocSelector<NewsCubit, NewsState, List<ArticleEntity>>(
-                    selector: (state) {
-                      return state is NewsLoaded ? state.listArticle : [];
-                    },
-                    builder: (context, listArticle) {
-                      return ListView.builder(
-                        padding:
-                            EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: categoryList.length,
-                        itemBuilder: (context, index) {
-                          return CustomCategoryChoiceChip(
-                            category: categoryList[index],
-                            choiceStatus: choseCategoryList[index],
-                            onSelectCategoryFunction: (value) => setState(() {
-                              if (index == 0) {
-                                choseCategoryList = List<bool>.filled(
-                                    categoryList.length, false,
-                                    growable: false)
-                                  ..first = true;
-                                listFilter.clear();
-                                listFilter.addAll(listArticle);
-                              } else if (index != 0 &&
-                                  !choseCategoryList[index]) {
-                                choseCategoryList = List<bool>.filled(
-                                    categoryList.length, false,
-                                    growable: false);
-                                choseCategoryList[index] = value;
-                                choseCategoryList[0] = false;
-                                listFilter.clear();
-                                listFilter.addAll(listArticle.where(
-                                  (article) =>
-                                      article.category!.toLowerCase() ==
-                                      categoryList[index].toLowerCase(),
-                                ));
-                              }
-                            }),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                )
-              : const SizedBox(),
           SizedBox(
-            height: 8.h,
+            height: 65.h,
+            child: BlocSelector<NewsCubit, NewsState, List<ArticleEntity2>>(
+              selector: (state) {
+                return state is NewsLoaded ? state.listForYou : [];
+              },
+              builder: (context, listForYou) {
+                return ListView.builder(
+                  padding: EdgeInsets.only(left: 10.w, right: 10.w, top: 10.h),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categoryList.length,
+                  itemBuilder: (context, index) {
+                    return CustomCategoryChoiceChip(
+                      category: categoryList[index],
+                      choiceStatus: choseCategoryList[index],
+                      onSelectCategoryFunction: (value) => setState(() {
+                        if (index == 0) {
+                          choseCategoryList = List<bool>.filled(
+                              categoryList.length, false,
+                              growable: false)
+                            ..first = true;
+                          listFilter.clear();
+                          listFilter.addAll(listForYou);
+                        } else if (index != 0 && !choseCategoryList[index]) {
+                          choseCategoryList = List<bool>.filled(
+                              categoryList.length, false,
+                              growable: false);
+                          choseCategoryList[index] = value;
+                          choseCategoryList[0] = false;
+                          listFilter.clear();
+                          listFilter.addAll(listForYou.where(
+                            (article) =>
+                                article.category!.toLowerCase() ==
+                                categoryList[index].toLowerCase(),
+                          ));
+                        }
+                      }),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+          SizedBox(
+            height: 4.h,
           ),
           Expanded(
             child: BlocBuilder<NewsCubit, NewsState>(
@@ -150,17 +129,17 @@ class _MoreNewsForYouState extends State<MoreNewsForYou> {
                             verticalOffset: 75.0,
                             child: FadeInAnimation(
                               child: NewsCard(
-                                imageUrl: listFilter[index].urlToImage,
+                                imageUrl: listFilter[index].imgUrl,
                                 title: listFilter[index].title!,
                                 tag: listFilter[index].category!,
-                                time: listFilter[index].publishedAt!,
+                                time: DateTime.now(),
                                 verticalMargin: 8.h,
                                 needHeart: true,
                                 isFavorite: false,
                                 onHeartTapFunction: () {},
                                 onNewsTapFunction: () => Navigator.pushNamed(
                                   context,
-                                  RouteManager.detailArticle,
+                                  RouteManager.detailArticle2,
                                   arguments: {
                                     "article": listFilter[index],
                                     "newsTag": listFilter[index].category,

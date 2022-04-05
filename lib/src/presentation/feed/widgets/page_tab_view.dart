@@ -17,8 +17,7 @@ import 'package:newsnews/src/widgets/custom_scroll.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
 
 class PageTabView extends StatefulWidget {
-  const PageTabView({Key? key, required this.newsCubit}) : super(key: key);
-  final NewsCubit newsCubit;
+  const PageTabView({Key? key}) : super(key: key);
 
   @override
   State<PageTabView> createState() => _PageTabViewState();
@@ -131,10 +130,7 @@ class _PageTabViewState extends State<PageTabView>
                 onSeeMoreTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => BlocProvider.value(
-                      value: widget.newsCubit,
-                      child: const MoreNews(),
-                    ),
+                    builder: (context) => const MoreNews(),
                   ),
                 ),
               ),
@@ -171,10 +167,7 @@ class _PageTabViewState extends State<PageTabView>
                 onSeeMoreTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => BlocProvider.value(
-                      value: widget.newsCubit,
-                      child: const HotAndTrendings(),
-                    ),
+                    builder: (context) => const HotAndTrendings(),
                   ),
                 ),
               ),

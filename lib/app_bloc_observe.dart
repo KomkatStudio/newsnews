@@ -8,12 +8,13 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase bloc, Change change) {
     super.onChange(bloc, change);
-    log('onChange(${bloc.runtimeType}, $change)');
+    log('onChange(${bloc.runtimeType}, $change)', name: '${bloc.runtimeType}');
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    log('onError(${bloc.runtimeType}, $error, $stackTrace)');
+    log('onError(${bloc.runtimeType}, $error, $stackTrace)',
+        name: 'ERROR:${bloc.runtimeType}');
     super.onError(bloc, error, stackTrace);
   }
 }
@@ -30,6 +31,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
         blocObserver: AppBlocObserver(),
       );
     },
-    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
+    (error, stackTrace) =>
+        log(error.toString(), stackTrace: stackTrace, name: "ERROR"),
   );
 }

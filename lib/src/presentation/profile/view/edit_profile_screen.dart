@@ -31,11 +31,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   ];
 
   final categoryAIList = <String>[
-    'sport',
+    'life',
     'business',
-    'politics',
-    'entertainment',
-    'tech',
+    'travel',
+    'world',
+    'sports',
   ];
   // late List<bool> choseCategoryList;
   late List<bool> choseCaterogryAIList;

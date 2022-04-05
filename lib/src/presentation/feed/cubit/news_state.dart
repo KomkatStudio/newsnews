@@ -14,8 +14,9 @@ class NewsLoading extends NewsState {}
 class NewsLoaded extends NewsState {
   final List<ArticleEntity> listArticle;
   final List<ArticleEntity2> listForYou;
-  
-  const NewsLoaded(this.listArticle, this.listForYou);
+  final List<ArticleEntity2> listAllFromAI;
+
+  const NewsLoaded(this.listArticle, this.listForYou, this.listAllFromAI);
 
   @override
   List<Object> get props => [listArticle];

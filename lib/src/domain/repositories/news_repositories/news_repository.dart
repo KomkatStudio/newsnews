@@ -14,5 +14,5 @@ abstract class NewsRepository {
   Future<Either<Failure, List<ArticleEntity>>> getEverythingFromQuery(
       {required String path, String? query});
 
-  Future<Either<Failure, List<ArticleEntity2>>> getNewsFromServerTest(String userId);
+  Future<Either<Failure, List<ArticleEntity2>>> getNewsFromServerTest({required String path, String? userId});
 }
