@@ -12,6 +12,7 @@ import 'package:newsnews/src/presentation/feed/widgets/big_tag.dart';
 import 'package:newsnews/src/presentation/feed/widgets/headline_card.dart';
 import 'package:newsnews/src/presentation/feed/widgets/row_tag_see_more.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class PageTabViewForYou extends StatefulWidget {
   const PageTabViewForYou({Key? key}) : super(key: key);
@@ -66,100 +67,118 @@ class _PageTabViewForYouState extends State<PageTabViewForYou>
         return state is NewsLoaded ? state.listForYou : [];
       },
       builder: (context, listForYou) {
-        log(listForYou.toString());
-        final listForTop = listForYou.getRange(0, 3).toList();
-        log(listForTop.length.toString());
+        if (listForYou.isNotEmpty) {
+          log(listForYou.toString());
+          final listForTop = listForYou.getRange(0, 3).toList();
+          log(listForTop.length.toString());
 
-        final listMore = listForYou.getRange(3, listForYou.length).toList();
-        return RefreshIndicator(
-          onRefresh: () => context.read<NewsCubit>().getArticles(),
-          child: ListView(
-            children: [
-              SizedBox(
-                height: 24.h,
-              ),
-              BigTag(tag: "Top Headline", fontSize: 24.sp),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 2.w),
-                color: Theme.of(context).scaffoldBackgroundColor,
-                height: 330.h,
-                child: PageView.builder(
-                  onPageChanged: changePage,
-                  itemCount: listForTop.length,
-                  controller: pageController,
-                  itemBuilder: (context, index) {
-                    return HeadlineCard(
-                      imageURL: listForTop[index].imgUrl,
-                      newsTag: listForTop[index].category!,
-                      newsTitle: listForTop[index].title!,
-                      onHeadlineTapFunction: () => Navigator.pushNamed(
-                        context,
-                        RouteManager.detailArticle2,
-                        arguments: {
-                          "article": listForTop[index],
-                          "newsTag": listForTop[index].category!,
-                        },
-                      ),
-                    );
-                  },
+          final listMore = listForYou.getRange(3, listForYou.length).toList();
+          return RefreshIndicator(
+            onRefresh: () => context.read<NewsCubit>().getArticles(),
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 24.h,
                 ),
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: _buildPageIndicator(),
-              ),
-              SizedBox(
-                height: 14.h,
-              ),
-              RowTagSeeMore(
-                tag: "More News for you",
-                onSeeMoreTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MoreNewsForYou(
-                      title: "More news for you",
+                BigTag(tag: "Top Headline", fontSize: 24.sp),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 2.w),
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  height: 330.h,
+                  child: PageView.builder(
+                    onPageChanged: changePage,
+                    itemCount: listForTop.length,
+                    controller: pageController,
+                    itemBuilder: (context, index) {
+                      return HeadlineCard(
+                          imageURL: listForTop[index].imgUrl,
+                          newsTag: listForTop[index].category!,
+                          newsTitle: listForTop[index].title!,
+                          onHeadlineTapFunction: () {
+                            context.read<NewsCubit>().hitFavorite(
+                                category: listForTop[index].category!);
+                            Navigator.pushNamed(
+                              context,
+                              RouteManager.detailArticle2,
+                              arguments: {
+                                "article": listForTop[index],
+                                "newsTag": listForTop[index].category!,
+                              },
+                            );
+                          });
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: _buildPageIndicator(),
+                ),
+                SizedBox(
+                  height: 14.h,
+                ),
+                RowTagSeeMore(
+                  tag: "More News for you",
+                  onSeeMoreTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MoreNewsForYou(
+                        title: "More news for you",
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 12.h),
-              SizedBox(
-                height: 400,
-                child: ListView.separated(
-                  itemCount: listMore.length,
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
-                  itemBuilder: (context, index) {
-                    return NewsCard(
-                      imageUrl: listMore[index].imgUrl,
-                      title: listMore[index].title!,
-                      tag: listMore[index].category!,
-                      time: DateTime.now(),
-                      verticalMargin: 0.h,
-                      onNewsTapFunction: () => Navigator.pushNamed(
-                        context,
-                        RouteManager.detailArticle2,
-                        arguments: {
-                          "article": listMore[index],
-                          "newsTag": listMore[index].category!,
-                        },
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return SizedBox(
-                      height: 24.h,
-                    );
-                  },
+                SizedBox(height: 12.h),
+                SizedBox(
+                  height: 400,
+                  child: ListView.separated(
+                    itemCount: listMore.length,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 16.h),
+                    itemBuilder: (context, index) {
+                      return NewsCard(
+                          imageUrl: listMore[index].imgUrl,
+                          title: listMore[index].title!,
+                          tag: listMore[index].category!,
+                          time: DateTime.now(),
+                          verticalMargin: 0.h,
+                          onNewsTapFunction: () {
+                            context.read<NewsCubit>().hitFavorite(
+                                  category: listMore[index].category!,
+                                );
+                            Navigator.pushNamed(
+                              context,
+                              RouteManager.detailArticle2,
+                              arguments: {
+                                "article": listMore[index],
+                                "newsTag": listMore[index].category!,
+                              },
+                            );
+                          });
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        height: 24.h,
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
+              ],
+            ),
+          );
+        } else {
+          return Center(
+            child: Column(
+              children: [
+                Icon(PhosphorIcons.warning, color: Palette.primaryColor),
+                const Text("No news for you in here"),
+              ],
+            ),
+          );
+        }
       },
     );
   }

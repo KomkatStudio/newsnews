@@ -93,18 +93,22 @@ class _PageTabViewAIState extends State<PageTabViewAI>
                 controller: pageController,
                 itemBuilder: (context, index) {
                   return HeadlineCard(
-                    imageURL: listForTop[index].imgUrl,
-                    newsTag: listForTop[index].category!,
-                    newsTitle: listForTop[index].title!,
-                    onHeadlineTapFunction: () => Navigator.pushNamed(
-                      context,
-                      RouteManager.detailArticle2,
-                      arguments: {
-                        "article": listForTop[index],
-                        "newsTag": listForTop[index].category,
-                      },
-                    ),
-                  );
+                      imageURL: listForTop[index].imgUrl,
+                      newsTag: listForTop[index].category!,
+                      newsTitle: listForTop[index].title!,
+                      onHeadlineTapFunction: () {
+                        context.read<NewsCubit>().hitFavorite(
+                              category: listForTop[index].category!,
+                            );
+                        Navigator.pushNamed(
+                          context,
+                          RouteManager.detailArticle2,
+                          arguments: {
+                            "article": listForTop[index],
+                            "newsTag": listForTop[index].category!,
+                          },
+                        );
+                      });
                 },
               ),
             ),
@@ -129,6 +133,9 @@ class _PageTabViewAIState extends State<PageTabViewAI>
               ),
             ),
             SizedBox(
+              height: 8.h,
+            ),
+            SizedBox(
               height: 400.h,
               child: ScrollConfiguration(
                 behavior: CustomScroll(),
@@ -141,7 +148,7 @@ class _PageTabViewAIState extends State<PageTabViewAI>
                         title: listForBreakingNews[index].title!,
                         tag: listForBreakingNews[index].category!,
                         time: DateTime.now(),
-                        verticalMargin: 16.h,
+                        verticalMargin: 8.h,
                         onNewsTapFunction: () {
                           context.read<NewsCubit>().hitFavorite(
                                 category: listForBreakingNews[index].category!,

@@ -322,6 +322,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                           const BoxConstraints(),
                                                       onPressed: () async {
                                                         try {
+                                                          context
+                                                              .read<
+                                                                  ProfileCubit>()
+                                                              .getUserInformation();
                                                           final value =
                                                               await Navigator
                                                                   .push(

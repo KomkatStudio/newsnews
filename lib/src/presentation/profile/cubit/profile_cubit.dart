@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:newsnews/src/core/usecases/usecase.dart';
@@ -47,8 +49,10 @@ class ProfileCubit extends Cubit<ProfileState> {
       List<String> interest, String displayName) async {
     if (state is LoadUserDataSuccessfully) {
       final state = this.state as LoadUserDataSuccessfully;
+      //TODO: convert to stream
       UserEntity user =
           state.user.copyWith(interestAI: interest, displayName: displayName);
+      log(user.toString());
       emit(UpdateUserDataLoading());
       await _saveUserInformation
           .call(save.Params(userEntity: user))
