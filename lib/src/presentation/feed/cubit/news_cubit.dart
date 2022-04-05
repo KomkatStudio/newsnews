@@ -105,7 +105,6 @@ class NewsCubit extends Cubit<NewsState> {
                   )),
             );
       }
-      log(listArticle.length.toString());
       emit(NewsLoaded(listArticle, listForYout));
     } catch (e) {
       emit(const NewsError("error server"));
@@ -115,7 +114,7 @@ class NewsCubit extends Cubit<NewsState> {
   Future<void> hitFavorite({required String category}) async {
     try {
       log("hit $category");
-      await _hitFavorite.call(HitFavoriteParams(category: category, time: 1));
+      await _hitFavorite.call(HitFavoriteParams(category: category));
     } catch (e) {
       rethrow;
     }

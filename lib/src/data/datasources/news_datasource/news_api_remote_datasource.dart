@@ -74,8 +74,7 @@ class NewsApiRemoteDatasouce {
   }
 
   Future<List<ArticleModel2>> getNewsFromServerTest(String userId) async {
-    final url =
-        "${FlavorConfig.instance.value.testUrl!}BuXRdz34KNXGEgmEFQOR2VdVf882";
+    final url = "${FlavorConfig.instance.value.testUrl!}$userId";
     log(url);
     final response = await http.get(Uri.parse(url)).timeout(
           const Duration(minutes: 1),

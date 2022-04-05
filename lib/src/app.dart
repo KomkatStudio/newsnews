@@ -22,9 +22,9 @@ class App extends StatelessWidget {
         BlocProvider<AuthCubit>(
           create: (context) => injector<AuthCubit>(),
         ),
-        BlocProvider<ProfileCubit>(
-          create: (_) => injector<ProfileCubit>(),
-        ),
+        // BlocProvider<ProfileCubit>(
+        //   create: (_) => injector<ProfileCubit>(),
+        // ),
         BlocProvider<SearchCubit>(
           create: (_) => injector<SearchCubit>(),
         ),

@@ -12,20 +12,17 @@ class HitFavorite extends Usecase<NoParams, HitFavoriteParams> {
       : _firebaseRepository = firebaseRepository;
 
   @override
-  Future<Either<Failure, NoParams?>> call(HitFavoriteParams params) {
-    return _firebaseRepository.hitFavorite(
-        category: params.category, time: params.time);
+  Future<Either<Failure, NoParams?>> call(HitFavoriteParams params) async {
+    return await _firebaseRepository.hitFavorite(category: params.category);
   }
 }
 
 class HitFavoriteParams extends Equatable {
   final String category;
-  final int time;
   const HitFavoriteParams({
     required this.category,
-    required this.time,
   });
 
   @override
-  List<Object?> get props => [category, time];
+  List<Object?> get props => [category];
 }

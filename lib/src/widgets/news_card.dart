@@ -134,7 +134,7 @@ class NewsCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Tooltip(
-                        message: tag,
+                        message: tag.toUppercaseFirstLetter(),
                         child: Container(
                           height: 30.h,
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -147,7 +147,7 @@ class NewsCard extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              tag,
+                              tag.toUppercaseFirstLetter(),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(

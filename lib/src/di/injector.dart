@@ -10,7 +10,7 @@ import 'package:newsnews/src/data/datasources/firebase_datasource/firebase_servi
 import 'package:newsnews/src/data/datasources/local_datasource/hive_setting_datasource.dart';
 import 'package:newsnews/src/data/datasources/local_datasource/hive_setting_datasource_impl.dart';
 import 'package:newsnews/src/data/datasources/news_datasource/news_api_remote_datasource.dart';
-import 'package:newsnews/src/data/repositories/firebase_services_repository_imp.dart';
+import 'package:newsnews/src/data/repositories/firebase_services_repository_impl.dart';
 import 'package:newsnews/src/data/repositories/local_setting_repository_impl.dart';
 import 'package:newsnews/src/domain/repositories/firebase_repositories/firebase_services_repository.dart';
 import 'package:newsnews/src/domain/repositories/local_repositories/local_setting_repository.dart';

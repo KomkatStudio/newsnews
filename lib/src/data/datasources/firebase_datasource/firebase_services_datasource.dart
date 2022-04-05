@@ -19,5 +19,5 @@ abstract class FirebaseServicesDatasource {
 
   Future<UserModel> getUserData();
 
-  Future<void> updateReadingCategoryOfUser(String category, int time);
+  Future<void> updateReadingCategoryOfUser(String category);
 }

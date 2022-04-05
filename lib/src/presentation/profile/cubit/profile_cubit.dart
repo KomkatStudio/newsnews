@@ -1,7 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/usecases/usecase.dart';
 import 'package:newsnews/src/domain/entities/user/user_entity.dart';
 import 'package:newsnews/src/domain/usecases/get_user_data.dart';
@@ -50,7 +48,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     if (state is LoadUserDataSuccessfully) {
       final state = this.state as LoadUserDataSuccessfully;
       UserEntity user =
-          state.user.copyWith(interest: interest, displayName: displayName);
+          state.user.copyWith(interestAI: interest, displayName: displayName);
       emit(UpdateUserDataLoading());
       await _saveUserInformation
           .call(save.Params(userEntity: user))

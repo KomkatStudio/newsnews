@@ -13,8 +13,8 @@ class GetNewsFromServerTest with Usecase<List<ArticleEntity2>, GetNewsServerTest
       : _newsRepository = newsRepository;
 
   @override
-  Future<Either<Failure, List<ArticleEntity2>?>> call(GetNewsServerTestParams params) {
-    return _newsRepository.getNewsFromServerTest(params.userId);
+  Future<Either<Failure, List<ArticleEntity2>?>> call(GetNewsServerTestParams params) async {
+    return await _newsRepository.getNewsFromServerTest(params.userId);
   }
 }
 

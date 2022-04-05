@@ -77,8 +77,13 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
     try {
       final userCollection = _firebaseFirestore.collection('users');
       final user = await getCurrentUser();
+      log(userModel.toString());
       await userCollection.doc(user.uid).get().then((userDoc) {
-        userCollection.doc(user.uid).update(userModel.toDocument());
+        if (!userDoc.exists) {
+          userCollection.doc(user.uid).set(userModel.toDocument());
+        } else {
+          userCollection.doc(user.uid).update(userModel.toDocument());
+        }
       });
     } catch (e) {
       throw FirebaseServerException();
@@ -91,29 +96,6 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
       final user = await getCurrentUser();
       final userSnapshot =
           await _firebaseFirestore.collection('users').doc(user.uid).get();
-      if (!userSnapshot.exists) {
-        UserModel newUser = UserModel(
-            displayName: user.displayName,
-            uuid: user.uid,
-            email: user.email,
-            imageUrl: user.photoURL,
-            favoriteArticle: const [],
-            favorites: const {},
-            interest: const []);
-        await _firebaseFirestore
-            .collection('users')
-            .doc(user.uid)
-            .set(newUser.toDocument())
-            .then((value) async {
-          await _firebaseFirestore
-              .collection('users')
-              .doc(user.uid)
-              .get()
-              .then((value) {
-            return UserModel.fromSnapshot(userSnapshot);
-          });
-        });
-      }
       return UserModel.fromSnapshot(userSnapshot);
     } catch (e) {
       rethrow;
@@ -122,29 +104,21 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
   }
 
   @override
-  Future<void> updateReadingCategoryOfUser(String category, int time) async {
-    // try {
-    final user = await getCurrentUser();
-    log("hit $category and ${time.toString()}", name: "datasource");
-    final userDoc =
-        await _firebaseFirestore.collection('users').doc(user.uid).get();
-    print(userDoc.data()!["favorites"] as Map<String, dynamic>);
-
-    if ((userDoc.data()!["favorites"] as Map<String, dynamic>)
-        .containsKey(category)) {
-      await _firebaseFirestore.collection('users').doc(user.uid).update({
-        'favorites.$category': (userDoc.data()!["favorites"]
-            as Map<String, dynamic>)['category'] += 1
+  Future<void> updateReadingCategoryOfUser(String category) async {
+    try {
+      log(category);
+      final user = await getCurrentUser();
+      final userCollection = _firebaseFirestore.collection('users');
+      await userCollection.doc(user.uid).get().then((userDoc) async {
+        log("run");
+        Map<String, dynamic> data =
+            Map.from((userDoc.data()?['favorites'] as Map<String, dynamic>));
+        data.update(category, (value) => ++value, ifAbsent: () => 1);
+        await userCollection.doc(user.uid).update({'favorites': data});
       });
-    } else {
-      await _firebaseFirestore
-          .collection('users')
-          .doc(user.uid)
-          .update({'favorites.$category': 1});
+    } catch (e) {
+      rethrow;
+      throw FirebaseServerException();
     }
-    // } catch (e) {
-    //   rethrow;
-    //   throw FirebaseServerException();
-    // }
   }
 }

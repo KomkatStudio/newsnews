@@ -22,5 +22,5 @@ abstract class FirebaseServicesRepository {
       ArticleEntity articleEntity);
 
   Future<Either<Failure, NoParams>> hitFavorite(
-      {required String category, required int time});
+      {required String category});
 }

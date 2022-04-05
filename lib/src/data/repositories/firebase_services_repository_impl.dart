@@ -21,6 +21,7 @@ class FirebaseServicesRepositoryImpl extends FirebaseServicesRepository {
   Future<Either<Failure, UserCredential>> signInWithGoogle() async {
     try {
       final userCredential = await _firebaseServices.signInWithGoogle();
+      
       return Right(userCredential);
     } on TimeoutServerException {
       return Left(TimeoutServerFailure());
@@ -97,9 +98,9 @@ class FirebaseServicesRepositoryImpl extends FirebaseServicesRepository {
 
   @override
   Future<Either<Failure, NoParams>> hitFavorite(
-      {required String category, required int time}) async {
+      {required String category}) async {
     try {
-      await _firebaseServices.updateReadingCategoryOfUser(category, time);
+      await _firebaseServices.updateReadingCategoryOfUser(category);
       return Right(NoParams());
     } catch (e) {
       return Left(FirebaseFailure());

@@ -57,11 +57,10 @@ class AuthenticationScreen extends StatelessWidget {
                 ),
                 Builder(builder: (context) {
                   return SignInWithButton(
-                    logoName: 'Google',
-                    logoPath: AssetPath.googleLogo,
-                    onPressFunction: () =>
-                        context.read<AuthCubit>().signInUsingGoolge(),
-                  );
+                      logoName: 'Google',
+                      logoPath: AssetPath.googleLogo,
+                      onPressFunction: () =>
+                          context.read<AuthCubit>().signInUsingGoolge());
                 }),
                 SizedBox(height: 12.h),
                 SignInWithButton(

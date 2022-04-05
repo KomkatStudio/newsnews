@@ -115,7 +115,7 @@ class _FeedScreenState extends State<FeedScreen>
                 return TabBarView(controller: tabController, children: [
                   PageTabView(
                       key: ValueKey(listCategory[0]), newsCubit: newsCubit),
-                  PageTabViewForYou(newsCubit: newsCubit),
+                  PageTabViewForYou(newsCubit: newsCubit, listForYou: state.listForYou),
                   for (int index = 2; index < listCategory.length; index++)
                     PageTabViewWithCategory(
                       category: listCategory[index],

@@ -8,7 +8,10 @@ class FlavorValues {
   final String? baseUrl;
   final String? testUrl;
 
-  FlavorValues({this.baseUrl, this.testUrl, });
+  FlavorValues({
+    this.baseUrl,
+    this.testUrl,
+  });
 }
 
 class FlavorConfig {
@@ -38,7 +41,10 @@ void setFlavorDevelopment() {
   FlavorConfig(
       flavor: Flavor.dev,
       name: "NewsNews-Dev",
-      values: FlavorValues(baseUrl: "https://newsapi.org/v2", testUrl: "http://41f2-123-19-231-90.ngrok.io/api/v1/news?userId="));
+      values: FlavorValues(
+          baseUrl: "https://newsapi.org/v2",
+          testUrl:
+              "https://01ee-116-105-225-220.ngrok.io/api/v1/news?userId="));
 }
 
 void setFlavorTesting() {

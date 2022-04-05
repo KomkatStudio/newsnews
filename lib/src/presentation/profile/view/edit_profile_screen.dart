@@ -20,7 +20,7 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   late TextEditingController displayNameController;
 
-  final categoryList = [
+  final categoryList = <String>[
     "Covid-19",
     "Business",
     "Entertainment",
@@ -29,15 +29,28 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     "Science",
     "Sports"
   ];
-  var choseCategoryList = <bool>[];
+
+  final categoryAIList = <String>[
+    'sport',
+    'business',
+    'politics',
+    'entertainment',
+    'tech',
+  ];
+  // late List<bool> choseCategoryList;
+  late List<bool> choseCaterogryAIList;
 
   @override
   void initState() {
-    choseCategoryList = List.filled(categoryList.length, false);
+    // choseCategoryList = List.filled(categoryList.length, false);
+    choseCaterogryAIList = List.filled(categoryAIList.length, false);
     displayNameController =
         TextEditingController(text: widget.user.displayName);
-    for (var interest in widget.user.interest!) {
-      choseCategoryList[categoryList.indexOf(interest)] = true;
+    // for (var interest in widget.user.interest!) {
+    //   choseCategoryList[categoryList.indexOf(interest)] = true;
+    // }
+    for (var interest in widget.user.interestAI!) {
+      choseCaterogryAIList[categoryAIList.indexOf(interest)] = true;
     }
     super.initState();
   }
@@ -178,30 +191,50 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   SizedBox(height: 8.h),
                   Wrap(
-                    children: categoryList
+                    children: categoryAIList
                         .map(
                           (category) => CustomCategoryChoiceChip(
                             category: category,
-                            choiceStatus: choseCategoryList[
-                                categoryList.indexOf(category)],
+                            choiceStatus: choseCaterogryAIList[
+                                categoryAIList.indexOf(category)],
                             onSelectCategoryFunction: (value) {
                               setState(() {
-                                choseCategoryList[
-                                    categoryList.indexOf(category)] = value;
+                                choseCaterogryAIList[
+                                    categoryAIList.indexOf(category)] = value;
                               });
                             },
                             sideBorderIsPrimaryColor: false,
                           ),
                         )
                         .toList(),
+                    // children: categoryList
+                    //     .map(
+                    //       (category) => CustomCategoryChoiceChip(
+                    //         category: category,
+                    //         choiceStatus: choseCategoryList[
+                    //             categoryList.indexOf(category)],
+                    //         onSelectCategoryFunction: (value) {
+                    //           setState(() {
+                    //             choseCategoryList[
+                    //                 categoryList.indexOf(category)] = value;
+                    //           });
+                    //         },
+                    //         sideBorderIsPrimaryColor: false,
+                    //       ),
+                    //     )
+                    //     .toList(),
                   ),
                   SizedBox(height: 16.h),
                   InkWell(
                     onTap: () async {
                       //TODO: send interest list to Firebase, update data
-                      final listInterestOfUser = categoryList
-                          .where((element) =>
-                              choseCategoryList[categoryList.indexOf(element)])
+                      // final listInterestOfUser = categoryList
+                      //     .where((element) =>
+                      //         choseCategoryList[categoryList.indexOf(element)])
+                      //     .toList();
+                      final listInterestOfUser = categoryAIList
+                          .where((element) => choseCaterogryAIList[
+                              categoryAIList.indexOf(element)])
                           .toList();
                       context.read<ProfileCubit>().updateUserInformation(
                             listInterestOfUser,
