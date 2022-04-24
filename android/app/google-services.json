@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "612647796004-984n1dtvgaor086ifnnmp28b3f4fcatp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.komkat.newsnews",
+            "certificate_hash": "715d12ce4955482e242124c31ea810c1944c409b"
+          }
+        },
+        {
           "client_id": "612647796004-mjlrmv77bolj8fl8d6gb8ircpr619223.apps.googleusercontent.com",
           "client_type": 3
         }
