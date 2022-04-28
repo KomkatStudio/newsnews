@@ -16,12 +16,7 @@ Future<void> main() async {
   await di.initDependence();
   await dotenv.load(fileName: "assets/.env");
   setFlavorProduction();
-  // bootstrap(
-  //   () => DevicePreview(
-  //     enabled: !kReleaseMode,
-  //     builder: (context) => const App(),
-  //   ),
-  // );
+
   bootstrap(
     () => const App(),
   );

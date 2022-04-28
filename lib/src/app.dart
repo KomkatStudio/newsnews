@@ -24,7 +24,7 @@ class App extends StatelessWidget {
       child: ScreenUtilInit(
         designSize: const Size(411, 823),
         minTextAdapt: true,
-        builder: () {
+        builder: (context) {
           return BlocSelector<ThemeCubit, ThemeState, bool>(
             selector: (state) => state is DarkTheme,
             builder: (context, isDarkMode) {
