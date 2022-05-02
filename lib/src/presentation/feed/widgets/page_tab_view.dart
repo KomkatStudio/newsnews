@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -72,15 +70,15 @@ class _PageTabViewState extends State<PageTabView>
         final tagArticleList = listArticle
             .getRange(0, NumbericContant.pageSizeForToplines)
             .toList();
-        log(tagArticleList.length.toString());
+        // log(tagArticleList.length.toString());
         final listForTop = tagArticleList.getRange(0, 3).toList();
-        log(listForTop.length.toString());
+        // log(listForTop.length.toString());
 
         final listForBreakingNews = tagArticleList.getRange(3, 7).toList();
-        log(listForBreakingNews.length.toString());
+        // log(listForBreakingNews.length.toString());
 
         final listForHotTrendings = tagArticleList.getRange(7, 11).toList();
-        log(listForHotTrendings.length.toString());
+        // log(listForHotTrendings.length.toString());
         return ScrollConfiguration(
           behavior: CustomScroll(),
           child: ListView(

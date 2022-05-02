@@ -18,10 +18,8 @@ import 'package:newsnews/src/domain/repositories/news_repositories/news_reposito
 import 'package:newsnews/src/domain/usecases/change_dark_mode_status.dart';
 import 'package:newsnews/src/domain/usecases/get_current_user.dart';
 import 'package:newsnews/src/domain/usecases/get_everything_from_query.dart';
-import 'package:newsnews/src/domain/usecases/get_news_from_server_test.dart';
 import 'package:newsnews/src/domain/usecases/get_user_data.dart';
 import 'package:newsnews/src/domain/usecases/has_current_user.dart';
-import 'package:newsnews/src/domain/usecases/hit_favorite.dart';
 import 'package:newsnews/src/domain/usecases/save_favorite_article.dart';
 import 'package:newsnews/src/domain/usecases/save_user_information.dart';
 import 'package:newsnews/src/domain/usecases/sign_in_with_google.dart';
@@ -95,12 +93,10 @@ Future<void> initDependence() async {
         () => SaveFavoriteArticle(firebaseServicesRepository: injector()))
     ..registerLazySingleton<GetEverythingFromQuery>(
         () => GetEverythingFromQuery(newsRepository: injector()))
-    ..registerLazySingleton<GetNewsFromServerTest>(
-        () => GetNewsFromServerTest(newsRepository: injector()))
     ..registerLazySingleton<SaveUserInformation>(
-        () => SaveUserInformation(firebaseRepository: injector()))
-    ..registerLazySingleton<HitFavorite>(
-        () => HitFavorite(firebaseRepository: injector()));
+        () => SaveUserInformation(firebaseRepository: injector()));
+  // ..registerLazySingleton<HitFavorite>(
+  //     () => HitFavorite(firebaseRepository: injector()));
 
   ///BLOC - Cubit
   ///
@@ -109,9 +105,8 @@ Future<void> initDependence() async {
       () => NewsCubit(
         getTopHeadline: injector(),
         getEverythingFromQuery: injector(),
-        getNewsFromServerTest: injector(),
         getCurrentUser: injector(),
-        hitFavorite: injector(),
+        // hitFavorite: injector(),
       ),
     )
     ..registerFactory<AuthCubit>(

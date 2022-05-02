@@ -99,10 +99,10 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                     imageURL: listForTop[index].urlToImage,
                     newsTag: widget.category,
                     newsTitle: listForTop[index].title!,
-                    onHeadlineTapFunction: () async {
-                      await context
-                          .read<NewsCubit>()
-                          .hitFavorite(category: widget.category);
+                    onHeadlineTapFunction: ()  {
+                      // await context
+                      //     .read<NewsCubit>()
+                      //     .hitFavorite(category: widget.category);
                       Navigator.pushNamed(
                         context,
                         RouteManager.detailArticle,
@@ -140,7 +140,7 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
             SizedBox(
               height: 300.h,
               child: ListView.builder(
-                itemCount: 4,
+                itemCount: listForMore.length,
                 itemBuilder: (context, index) {
                   return NewsCard(
                     imageUrl: listForMore[index].urlToImage ?? "",

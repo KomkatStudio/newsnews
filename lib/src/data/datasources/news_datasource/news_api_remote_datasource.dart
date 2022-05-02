@@ -6,7 +6,6 @@ import 'package:newsnews/src/core/config/flavor_config.dart';
 import 'package:newsnews/src/core/constant/numberic_constant.dart';
 import 'package:newsnews/src/core/errors/exception.dart';
 import 'package:newsnews/src/data/models/article/article_model.dart';
-import 'package:newsnews/src/data/models/article_model2.dart';
 import 'dart:developer';
 
 class NewsApiRemoteDatasouce {
@@ -73,29 +72,5 @@ class NewsApiRemoteDatasouce {
     }
   }
 
-  Future<List<ArticleModel2>> getNewsFromServerTest({required String path, String? userId}) async {
-    String? url;
-    if(userId != null){
-      url = "${FlavorConfig.instance.value.testUrl!}$path$userId";
-    }
-    else {
-      url = "${FlavorConfig.instance.value.testUrl!}$path";
-    }
-    log(url);
-    final response = await http.get(Uri.parse(url)).timeout(
-          const Duration(minutes: 1),
-          onTimeout: () => throw ServerException(),
-        );
-    if (response.statusCode == 200) {
-      var converted = jsonDecode(response.body);
-      Iterable list = converted['feeds'];
-      return list
-          .map(
-            (e) => ArticleModel2.fromJson(e),
-          )
-          .toList();
-    } else {
-      throw ServerException();
-    }
-  }
+  
 }

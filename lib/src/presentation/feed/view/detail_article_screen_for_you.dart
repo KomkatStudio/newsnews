@@ -15,15 +15,9 @@ import 'package:newsnews/src/widgets/custom_scroll.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-class DetailArticleScreenForYou extends StatefulWidget {
+class DetailArticleScreenForYou extends StatelessWidget {
   const DetailArticleScreenForYou({Key? key}) : super(key: key);
 
-  @override
-  State<DetailArticleScreenForYou> createState() =>
-      _DetailArticleScreenForYouState();
-}
-
-class _DetailArticleScreenForYouState extends State<DetailArticleScreenForYou> {
   @override
   Widget build(BuildContext context) {
     final argument =
@@ -88,20 +82,6 @@ class _DetailArticleScreenForYouState extends State<DetailArticleScreenForYou> {
                         ),
                       ),
                     ),
-                    // child: Container(
-                    //   height: 370.h,
-                    //   decoration: BoxDecoration(
-                    // borderRadius: const BorderRadius.vertical(
-                    //   bottom: Radius.circular(25),
-                    // ),
-                    //     image: DecorationImage(
-                    //       image: Image.network(
-                    //         widget.imageUrl,
-                    //       ).image,
-                    //       fit: BoxFit.cover,
-                    //     ),
-                    //   ),
-                    // ),
                   ),
                   Container(
                     height: 370.h,
@@ -359,26 +339,27 @@ class _DetailArticleScreenForYouState extends State<DetailArticleScreenForYou> {
                               final indexRandom =
                                   Random().nextInt(listAllFromAI.length - 1);
                               return NewsCard(
-                                  imageUrl: listAllFromAI[indexRandom].imgUrl,
-                                  title: listAllFromAI[indexRandom].title!,
-                                  tag: listAllFromAI[indexRandom].category!,
-                                  time: DateTime.now(),
-                                  verticalMargin: 16.h,
-                                  onNewsTapFunction: () {
-                                    context.read<NewsCubit>().hitFavorite(
-                                          category: listAllFromAI[indexRandom]
-                                              .category!,
-                                        );
-                                    Navigator.popAndPushNamed(
-                                      context,
-                                      RouteManager.detailArticle2,
-                                      arguments: {
-                                        "article": listAllFromAI[indexRandom],
-                                        "newsTag":
-                                            listAllFromAI[indexRandom].category,
-                                      },
-                                    );
-                                  });
+                                imageUrl: listAllFromAI[indexRandom].imgUrl,
+                                title: listAllFromAI[indexRandom].title!,
+                                tag: listAllFromAI[indexRandom].category!,
+                                time: DateTime.now(),
+                                verticalMargin: 16.h,
+                                onNewsTapFunction: () {
+                                  // context.read<NewsCubit>().hitFavorite(
+                                  //       category: listAllFromAI[indexRandom]
+                                  //           .category!,
+                                  //     );
+                                  Navigator.popAndPushNamed(
+                                    context,
+                                    RouteManager.detailArticle2,
+                                    arguments: {
+                                      "article": listAllFromAI[indexRandom],
+                                      "newsTag":
+                                          listAllFromAI[indexRandom].category,
+                                    },
+                                  );
+                                },
+                              );
                             },
                           ),
                         )

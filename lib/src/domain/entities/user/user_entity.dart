@@ -9,7 +9,6 @@ class UserEntity extends Equatable {
   final String? imageUrl;
   final Map<String, int>? favorites;
   final List<String>? interest;
-  final List<String>? interestAI;
   final List<ArticleEntity>? favoriteArticle;
 
   const UserEntity({
@@ -20,7 +19,6 @@ class UserEntity extends Equatable {
     this.favoriteArticle = const <ArticleEntity>[],
     this.favorites = const <String, int>{},
     this.interest = const <String>[],
-    this.interestAI = const <String>[],
   });
 
   @override
@@ -32,7 +30,6 @@ class UserEntity extends Equatable {
       imageUrl,
       favorites,
       interest,
-      interestAI,
       favoriteArticle,
     ];
   }
@@ -47,7 +44,6 @@ class UserEntity extends Equatable {
     String? imageUrl,
     Map<String, int>? favorites,
     List<String>? interest,
-    List<String>? interestAI,
     List<ArticleEntity>? favoriteArticle,
   }) {
     return UserEntity(
@@ -57,7 +53,6 @@ class UserEntity extends Equatable {
       imageUrl: imageUrl ?? this.imageUrl,
       favorites: favorites ?? this.favorites,
       interest: interest ?? this.interest,
-      interestAI: interestAI ?? this.interestAI,
       favoriteArticle: favoriteArticle ?? this.favoriteArticle,
     );
   }

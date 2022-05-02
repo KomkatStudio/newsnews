@@ -96,14 +96,14 @@ class FirebaseServicesRepositoryImpl extends FirebaseServicesRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, NoParams>> hitFavorite(
-      {required String category}) async {
-    try {
-      await _firebaseServices.updateReadingCategoryOfUser(category);
-      return Right(NoParams());
-    } catch (e) {
-      return Left(FirebaseFailure());
-    }
-  }
+  // @override
+  // Future<Either<Failure, NoParams>> hitFavorite(
+  //     {required String category}) async {
+  //   try {
+  //     await _firebaseServices.updateReadingCategoryOfUser(category);
+  //     return Right(NoParams());
+  //   } catch (e) {
+  //     return Left(FirebaseFailure());
+  //   }
+  // }
 }

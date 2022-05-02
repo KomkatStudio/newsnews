@@ -1,14 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
-import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
 import 'package:newsnews/src/presentation/feed/widgets/page_tab_view.dart';
-import 'package:newsnews/src/presentation/feed/widgets/page_tab_view_ai.dart';
-import 'package:newsnews/src/presentation/feed/widgets/page_tab_view_for_you.dart';
+
 import 'package:newsnews/src/presentation/feed/widgets/page_tab_view_with_category.dart';
 import 'package:newsnews/src/widgets/circle_loading.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -27,8 +23,6 @@ class _FeedScreenState extends State<FeedScreen>
 
   final listCategory = [
     "Home",
-    "Home AI",
-    "For you",
     "Covid-19",
     "Business",
     "Entertainment",
@@ -47,7 +41,7 @@ class _FeedScreenState extends State<FeedScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 10,
+      length: 8,
       child: Scaffold(
         appBar: AppBar(
           elevation: 2,
@@ -108,12 +102,10 @@ class _FeedScreenState extends State<FeedScreen>
                 child: Text(state.message),
               );
             } else if (state is NewsLoaded) {
-              log(state.listArticle.length.toString());
+              // log(state.listArticle.length.toString());
               return TabBarView(controller: tabController, children: [
-                PageTabView(key: ValueKey(listCategory[0])),
-                PageTabViewAI(key: ValueKey(listCategory[1])),
-                const PageTabViewForYou(),
-                for (int index = 3; index < listCategory.length; index++)
+                const PageTabView(),
+                for (int index = 1; index < listCategory.length; index++)
                   PageTabViewWithCategory(
                     category: listCategory[index],
                     categoryIndex: index,

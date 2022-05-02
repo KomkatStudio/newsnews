@@ -12,7 +12,6 @@ class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({Key? key, required this.user}) : super(key: key);
 
   final UserEntity user;
-
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
@@ -30,27 +29,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     "Sports"
   ];
 
-  final categoryAIList = <String>[
-    'life',
-    'business',
-    'travel',
-    'world',
-    'sports',
-  ];
-  // late List<bool> choseCategoryList;
-  late List<bool> choseCaterogryAIList;
+  late List<bool> choseCategoryList;
 
   @override
   void initState() {
-    // choseCategoryList = List.filled(categoryList.length, false);
-    choseCaterogryAIList = List.filled(categoryAIList.length, false);
     displayNameController =
         TextEditingController(text: widget.user.displayName);
-    // for (var interest in widget.user.interest!) {
-    //   choseCategoryList[categoryList.indexOf(interest)] = true;
-    // }
-    for (var interest in widget.user.interestAI!) {
-      choseCaterogryAIList[categoryAIList.indexOf(interest)] = true;
+    choseCategoryList = List.filled(categoryList.length, false);
+    for (var interest in widget.user.interest!) {
+      choseCategoryList[categoryList.indexOf(interest)] = true;
     }
     super.initState();
   }
@@ -64,8 +51,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             content: Text(state.message),
           ));
         } else if (state is UpdateUserDataSuccessfully) {
-          Navigator.pop(context);
-          Navigator.pop(context, true);
+          Navigator.of(context)
+            ..pop()
+            ..pop(true);
         } else if (state is UpdateUserDataLoading) {
           showLoadingDialog(context);
         }
@@ -159,6 +147,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               padding: EdgeInsets.zero,
                               constraints: const BoxConstraints(),
                               icon: const Icon(PhosphorIcons.cameraBold),
+                              //TODO: implement picture for user
                               onPressed: () {},
                             ),
                           ),
@@ -191,80 +180,65 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   ),
                   SizedBox(height: 8.h),
                   Wrap(
-                    children: categoryAIList
+                    children: categoryList
                         .map(
                           (category) => CustomCategoryChoiceChip(
                             category: category,
-                            choiceStatus: choseCaterogryAIList[
-                                categoryAIList.indexOf(category)],
+                            choiceStatus: choseCategoryList[
+                                categoryList.indexOf(category)],
                             onSelectCategoryFunction: (value) {
                               setState(() {
-                                choseCaterogryAIList[
-                                    categoryAIList.indexOf(category)] = value;
+                                choseCategoryList[
+                                    categoryList.indexOf(category)] = value;
                               });
                             },
                             sideBorderIsPrimaryColor: false,
                           ),
                         )
                         .toList(),
-                    // children: categoryList
-                    //     .map(
-                    //       (category) => CustomCategoryChoiceChip(
-                    //         category: category,
-                    //         choiceStatus: choseCategoryList[
-                    //             categoryList.indexOf(category)],
-                    //         onSelectCategoryFunction: (value) {
-                    //           setState(() {
-                    //             choseCategoryList[
-                    //                 categoryList.indexOf(category)] = value;
-                    //           });
-                    //         },
-                    //         sideBorderIsPrimaryColor: false,
-                    //       ),
-                    //     )
-                    //     .toList(),
                   ),
                   SizedBox(height: 16.h),
-                  InkWell(
-                    onTap: () async {
-                      //TODO: send interest list to Firebase, update data
-                      // final listInterestOfUser = categoryList
-                      //     .where((element) =>
-                      //         choseCategoryList[categoryList.indexOf(element)])
-                      //     .toList();
-                      final listInterestOfUser = categoryAIList
-                          .where((element) => choseCaterogryAIList[
-                              categoryAIList.indexOf(element)])
+                  _buidUpdateButton(
+                    onTapFunction: () async {
+                      final listInterestOfUser = categoryList
+                          .where((element) =>
+                              choseCategoryList[categoryList.indexOf(element)])
                           .toList();
-                      context.read<ProfileCubit>().updateUserInformation(
+
+                      await context.read<ProfileCubit>().updateUserInformation(
                             listInterestOfUser,
                             displayNameController.text,
                           );
                     },
-                    borderRadius: BorderRadius.circular(12.r),
-                    child: Ink(
-                      height: 50.h,
-                      width: double.infinity,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12.r),
-                        color: Palette.primaryColor,
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Update ",
-                          style: TextStyle(
-                            color: Palette.backgroundBoxColor,
-                            fontSize: 18.sp,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ),
                   )
                 ],
               ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  InkWell _buidUpdateButton({required VoidCallback onTapFunction}) {
+    return InkWell(
+      onTap: onTapFunction,
+      borderRadius: BorderRadius.circular(12.r),
+      child: Ink(
+        height: 50.h,
+        width: double.infinity,
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.w),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.r),
+          color: Palette.primaryColor,
+        ),
+        child: Center(
+          child: Text(
+            "Update",
+            style: TextStyle(
+              color: Palette.backgroundBoxColor,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),

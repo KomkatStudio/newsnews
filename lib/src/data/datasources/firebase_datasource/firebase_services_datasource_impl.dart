@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -43,8 +41,6 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
     } on UserCancelException {
       throw UserCancelException();
     } catch (e) {
-      log("catch");
-      log(e.toString());
       throw FirebaseServerException();
     }
   }
@@ -77,7 +73,7 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
     try {
       final userCollection = _firebaseFirestore.collection('users');
       final user = await getCurrentUser();
-      log(userModel.toString());
+
       await userCollection.doc(user.uid).get().then((userDoc) {
         if (!userDoc.exists) {
           userCollection.doc(user.uid).set(userModel.toDocument());
@@ -98,27 +94,27 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
           await _firebaseFirestore.collection('users').doc(user.uid).get();
       return UserModel.fromSnapshot(userSnapshot);
     } catch (e) {
-      rethrow;
+      // rethrow;
       throw FirebaseServerException();
     }
   }
 
-  @override
-  Future<void> updateReadingCategoryOfUser(String category) async {
-    try {
-      log(category);
-      final user = await getCurrentUser();
-      final userCollection = _firebaseFirestore.collection('users');
-      await userCollection.doc(user.uid).get().then((userDoc) async {
-        log("run");
-        Map<String, dynamic> data =
-            Map.from((userDoc.data()?['favorites'] as Map<String, dynamic>));
-        data.update(category, (value) => ++value, ifAbsent: () => 1);
-        await userCollection.doc(user.uid).update({'favorites': data});
-      });
-    } catch (e) {
-      rethrow;
-      throw FirebaseServerException();
-    }
-  }
+  // @override
+  // Future<void> updateReadingCategoryOfUser(String category) async {
+  //   try {
+
+  //     final user = await getCurrentUser();
+  //     final userCollection = _firebaseFirestore.collection('users');
+  //     await userCollection.doc(user.uid).get().then((userDoc) async {
+  //       log("run");
+  //       Map<String, dynamic> data =
+  //           Map.from((userDoc.data()?['favorites'] as Map<String, dynamic>));
+  //       data.update(category, (value) => ++value, ifAbsent: () => 1);
+  //       await userCollection.doc(user.uid).update({'favorites': data});
+  //     });
+  //   } catch (e) {
+  //     // rethrow;
+  //     throw FirebaseServerException();
+  //   }
+  // }
 }

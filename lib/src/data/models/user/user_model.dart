@@ -8,7 +8,6 @@ class UserModel extends UserEntity {
     required String? displayName,
     required String? email,
     required Map<String, int>? favorites,
-    required List<String>? interestAI,
     required List<ArticleModel>? favoriteArticle,
     required List<String>? interest,
     required String? imageUrl,
@@ -19,7 +18,6 @@ class UserModel extends UserEntity {
           favorites: favorites,
           favoriteArticle: favoriteArticle,
           interest: interest,
-          interestAI: interestAI,
           imageUrl: imageUrl,
         );
 
@@ -38,9 +36,6 @@ class UserModel extends UserEntity {
           ?.map((e) => ArticleModel.fromSnapshot(
               e as DocumentSnapshot<Map<String, dynamic>>))
           .toList(),
-      interestAI: (snapshot.data()?['interestAI'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
     );
   }
   Map<String, dynamic> toDocument() {
@@ -51,7 +46,6 @@ class UserModel extends UserEntity {
       'favorites': favorites,
       'imageUrl': imageUrl,
       'interest': interest,
-      'interestAI': interestAI,
       'favoriteArticle': favoriteArticle,
     };
   }
@@ -66,7 +60,6 @@ class UserModel extends UserEntity {
       interest: entity?.interest,
       favoriteArticle:
           entity?.favoriteArticle?.map(ArticleModel.fromEntity).toList(),
-      interestAI: entity?.interestAI,
     );
   }
 }
