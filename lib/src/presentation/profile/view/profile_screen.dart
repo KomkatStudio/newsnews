@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
 import 'package:newsnews/src/presentation/profile/cubit/theme_cubit.dart';
-import 'package:newsnews/src/presentation/profile/view/edit_profile_screen.dart';
 import 'package:newsnews/src/presentation/profile/widgets/custom_chip.dart';
 import 'package:newsnews/src/presentation/profile/widgets/custom_stack_item.dart';
 import 'package:newsnews/src/presentation/profile/widgets/switch_user_control.dart';
@@ -73,8 +73,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (state is ProfileSignOutLoading) {
               showLoadingDialog(context);
             } else if (state is ProfileSignOutSuccessfully) {
-              Navigator.pushNamedAndRemoveUntil(context, RouteManager.signIn,
-                  ModalRoute.withName(RouteManager.signIn));
+              context.go(RouteManager.signIn);
+            } else if (state is UpdateUserDataSuccessfully) {
+              await Future.delayed(
+                const Duration(milliseconds: 300),
+              ).then(
+                (value) => profileCubit.getUserInformation(),
+              );
             }
           },
           child: RefreshIndicator(
@@ -185,8 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               typeBorderRadius: i == 0
                                   ? 0
                                   : (i == userTabControl.length - 1 ? 1 : 2),
-                              onTabNameFunction: () => Navigator.pushNamed(
-                                context,
+                              onTabNameFunction: () => context.push(
                                 userTabControl[i]["routeName"] as String,
                               ),
                               tabName: userTabControl[i]["tabName"] as String,
@@ -356,34 +360,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Material(
                       color: Colors.transparent,
                       child: IconButton(
-                          icon: const Icon(PhosphorIcons.pencilLine),
-                          color: Palette.textColorInBlueBGColor,
-                          iconSize: 22.sp,
-                          constraints: const BoxConstraints(),
-                          onPressed: () async {
-                            try {
-                              final value = await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      BlocProvider<ProfileCubit>.value(
-                                    value: profileCubit,
-                                    child: EditProfileScreen(
-                                      user: state.user,
-                                    ),
-                                  ),
-                                ),
-                              );
-                              if (value) {
-                                await Future.delayed(
-                                  const Duration(milliseconds: 500),
-                                ).then((value) =>
-                                    profileCubit.getUserInformation());
-                              }
-                            } catch (e) {
-                              log("No value after pop in Edit to Profile");
-                            }
-                          }),
+                        icon: const Icon(PhosphorIcons.pencilLine),
+                        color: Palette.textColorInBlueBGColor,
+                        iconSize: 22.sp,
+                        constraints: const BoxConstraints(),
+                        onPressed: () => context.push(
+                          RouteManager.editProfile,
+                          extra: <String, dynamic>{
+                            'user': state.user,
+                            'bloc': profileCubit,
+                          },
+                        ),
+                      ),
                     ),
                   ),
                 ],

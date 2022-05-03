@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/domain/entities/article/article_entity.dart';
 import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
@@ -158,10 +159,9 @@ class _MoreNewsState extends State<MoreNews> {
                                 needHeart: true,
                                 isFavorite: false,
                                 onHeartTapFunction: () {},
-                                onNewsTapFunction: () => Navigator.pushNamed(
-                                  context,
+                                onNewsTapFunction: () => context.go(
                                   RouteManager.detailArticle,
-                                  arguments: {
+                                  extra: {
                                     "article": listFilter[index],
                                     "newsTag": listFilter[index].category,
                                   },

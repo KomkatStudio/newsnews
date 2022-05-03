@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/helpers/show_snackbar_impl.dart';
@@ -37,18 +38,14 @@ class _SplashScreenState extends State<SplashScreen>
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccessful) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
+            context.go(
               RouteManager.main,
-              (route) => false,
             );
             showSnackbarImpl(context,
                 message: "Signed in with your Google: " + state.email);
           } else if (state is NoAuth) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
+            context.go(
               RouteManager.signIn,
-              (route) => false,
             );
           } else if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(

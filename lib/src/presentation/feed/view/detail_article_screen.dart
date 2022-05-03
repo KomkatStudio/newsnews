@@ -154,14 +154,16 @@ class DetailArticleScreen extends StatelessWidget {
                                   time: listArticle[indexRandom].publishedAt!,
                                   verticalMargin: 16.h,
                                   onNewsTapFunction: () {
-                                    context.go(
-                                      RouteManager.detailArticle,
-                                      extra: {
-                                        "article": listArticle[indexRandom],
-                                        "newsTag":
-                                            listArticle[indexRandom].category,
-                                      },
-                                    );
+                                    context
+                                      ..pop()
+                                      ..push(
+                                        RouteManager.detailArticle,
+                                        extra: {
+                                          "article": listArticle[indexRandom],
+                                          "newsTag":
+                                              listArticle[indexRandom].category,
+                                        },
+                                      );
                                   },
                                 );
                               },

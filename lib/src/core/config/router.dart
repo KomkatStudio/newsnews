@@ -1,5 +1,7 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/domain/entities/article/article_entity.dart';
+import 'package:newsnews/src/domain/entities/user/user_entity.dart';
 import 'package:newsnews/src/presentation/auth/pages/authentication_screen.dart';
 import 'package:newsnews/src/presentation/favorite/view/favorite_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/detail_article_screen.dart';
@@ -7,7 +9,9 @@ import 'package:newsnews/src/presentation/feed/view/feed_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
 import 'package:newsnews/src/presentation/feed/view/webview_screen.dart';
 import 'package:newsnews/src/presentation/main/presentation/view/main_screen.dart';
+import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
 import 'package:newsnews/src/presentation/profile/view/about_screen.dart';
+import 'package:newsnews/src/presentation/profile/view/edit_profile_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/privacy_security_screen.dart';
 import 'package:newsnews/src/presentation/profile/view/profile_screen.dart';
 import 'package:newsnews/src/presentation/search/view/search_screen.dart';
@@ -24,6 +28,7 @@ class RouteManager {
   static const signIn = '/register';
   static const preferences = "/preferences";
   static const about = '/abouts';
+  static const editProfile = '/edit';
   static const privacySecurity = '/privacy';
   static const helpSupport = '/help';
   static const detailArticle = '/detail';
@@ -55,6 +60,19 @@ class RouteManager {
       GoRoute(
         path: user,
         builder: (context, state) => const ProfileScreen(),
+      ),
+      GoRoute(
+        path: editProfile,
+        builder: (context, state) {
+          final Map<String, dynamic> extraData =
+              state.extra as Map<String, dynamic>;
+          return BlocProvider<ProfileCubit>.value(
+            value: extraData['bloc'] as ProfileCubit,
+            child: EditProfileScreen(
+              user: extraData['user'] as UserEntity,
+            ),
+          );
+        },
       ),
       GoRoute(
         path: hotTrendings,

@@ -101,7 +101,7 @@ class _PageTabViewState extends State<PageTabView>
                       imageURL: listForTop[index].urlToImage,
                       newsTag: "EVERYTHING",
                       newsTitle: listForTop[index].title!,
-                      onHeadlineTapFunction: () => context.go(
+                      onHeadlineTapFunction: () => context.push(
                         RouteManager.detailArticle,
                         extra: <String, dynamic>{
                           "article": listForTop[index],
@@ -145,7 +145,7 @@ class _PageTabViewState extends State<PageTabView>
                       tag: "EVERYTHING",
                       time: listForBreakingNews[index].publishedAt,
                       verticalMargin: 16.h,
-                      onNewsTapFunction: () => context.go(
+                      onNewsTapFunction: () => context.push(
                         RouteManager.detailArticle,
                         extra: <String, dynamic>{
                           "article": listForBreakingNews[index],
@@ -181,7 +181,7 @@ class _PageTabViewState extends State<PageTabView>
                       tag: "EVERYTHING",
                       time: listForBreakingNews[index].publishedAt,
                       verticalMargin: 16.h,
-                      onNewsTapFunction: () => context.go(
+                      onNewsTapFunction: () => context.push(
                         RouteManager.detailArticle,
                         extra: <String, dynamic>{
                           "article": listForHotTrendings[index],
