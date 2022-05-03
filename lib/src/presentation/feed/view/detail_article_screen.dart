@@ -324,7 +324,7 @@ class _NewsContentState extends State<_NewsContent> {
                       SizedBox(height: 5.h),
                       Text(
                         widget.article.description ??
-                            "No description, please read content",
+                            "No description in here, please read content",
                         style: TextStyle(
                           height: 1.8.h,
                           fontSize: 18.sp,
