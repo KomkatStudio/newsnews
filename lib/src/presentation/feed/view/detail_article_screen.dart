@@ -154,10 +154,9 @@ class DetailArticleScreen extends StatelessWidget {
                                   time: listArticle[indexRandom].publishedAt!,
                                   verticalMargin: 16.h,
                                   onNewsTapFunction: () {
-                                    Navigator.popAndPushNamed(
-                                      context,
+                                    context.go(
                                       RouteManager.detailArticle,
-                                      arguments: {
+                                      extra: {
                                         "article": listArticle[indexRandom],
                                         "newsTag":
                                             listArticle[indexRandom].category,
