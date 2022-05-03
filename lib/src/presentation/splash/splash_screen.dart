@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen>
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(state.message),
             ));
-            Navigator.pop(context);
+            context.pop();
           }
         },
         child: Center(

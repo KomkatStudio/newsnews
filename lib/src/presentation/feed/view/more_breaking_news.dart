@@ -64,7 +64,7 @@ class _MoreNewsState extends State<MoreNews> {
         leading: IconButton(
           splashRadius: 24,
           icon: const Icon(PhosphorIcons.arrowLeft),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
           color: Colors.black,
         ),
         title: Text(widget.title ?? "More Breaking News"),

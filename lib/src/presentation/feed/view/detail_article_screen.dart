@@ -136,7 +136,7 @@ class DetailArticleScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            height: 10.h,
+                            height: 8.h,
                           ),
                           SizedBox(
                             height: 150.h,

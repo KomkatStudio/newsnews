@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class AboutScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(PhosphorIcons.arrowLeft),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
           color: Colors.black,
           iconSize: 22,
         ),

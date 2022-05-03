@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/domain/entities/article/article_entity.dart';
 import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
-import 'package:newsnews/src/presentation/feed/view/more_breaking_news.dart';
 import 'package:newsnews/src/presentation/feed/widgets/big_tag.dart';
 import 'package:newsnews/src/presentation/feed/widgets/headline_card.dart';
 import 'package:newsnews/src/presentation/feed/widgets/row_tag_see_more.dart';
@@ -99,11 +99,11 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                     imageURL: listForTop[index].urlToImage,
                     newsTag: widget.category,
                     newsTitle: listForTop[index].title!,
-                    onHeadlineTapFunction: () {
-                      // await context
-                      //     .read<NewsCubit>()
-                      //     .hitFavorite(category: widget.category);
-                    },
+                    onHeadlineTapFunction: () =>
+                        context.push(RouteManager.detailArticle, extra: {
+                      "article": listForTop[index],
+                      "newsTag": widget.category,
+                    }),
                   );
                 },
               ),
@@ -121,12 +121,8 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
             ),
             RowTagSeeMore(
               tag: "More ${widget.category.toUpperCase()} news",
-              onSeeMoreTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => MoreNews(title: widget.category),
-                ),
-              ),
+              onSeeMoreTap: () =>
+                  context.push("${RouteManager.moreNews}/${widget.category}"),
             ),
             SizedBox(height: 8.h),
             SizedBox(
@@ -136,12 +132,11 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                 itemBuilder: (context, index) {
                   return NewsCard(
                     imageUrl: listForMore[index].urlToImage ?? "",
-                    onNewsTapFunction: () => Navigator.pushNamed(
-                        context, RouteManager.detailArticle,
-                        arguments: {
-                          "article": listForMore[index],
-                          "newsTag": widget.category,
-                        }),
+                    onNewsTapFunction: () =>
+                        context.push(RouteManager.detailArticle, extra: {
+                      "article": listForMore[index],
+                      "newsTag": widget.category,
+                    }),
                     tag: widget.category,
                     time: listForMore[index].publishedAt,
                     title: listForMore[index].title!,

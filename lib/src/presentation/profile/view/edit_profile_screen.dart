@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/domain/entities/user/user_entity.dart';
@@ -51,9 +52,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             content: Text(state.message),
           ));
         } else if (state is UpdateUserDataSuccessfully) {
-          Navigator.of(context)
-            ..pop()
-            ..pop(true);
+          context.pop();
         } else if (state is UpdateUserDataLoading) {
           showLoadingDialog(context);
         }
@@ -64,7 +63,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(PhosphorIcons.arrowLeft),
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
             ),
             title: const Text("Edit Profile"),
             titleTextStyle: TextStyle(
@@ -204,8 +203,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           .where((element) =>
                               choseCategoryList[categoryList.indexOf(element)])
                           .toList();
-
-                      await context.read<ProfileCubit>().updateUserInformation(
+                      context.read<ProfileCubit>().updateUserInformation(
                             listInterestOfUser,
                             displayNameController.text,
                           );

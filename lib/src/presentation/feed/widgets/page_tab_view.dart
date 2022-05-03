@@ -7,8 +7,6 @@ import 'package:newsnews/src/core/constant/numberic_constant.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/domain/entities/article/article_entity.dart';
 import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
-import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
-import 'package:newsnews/src/presentation/feed/view/more_breaking_news.dart';
 import 'package:newsnews/src/presentation/feed/widgets/big_tag.dart';
 import 'package:newsnews/src/presentation/feed/widgets/headline_card.dart';
 import 'package:newsnews/src/presentation/feed/widgets/row_tag_see_more.dart';
@@ -125,12 +123,7 @@ class _PageTabViewState extends State<PageTabView>
               ),
               RowTagSeeMore(
                 tag: "Breaking news",
-                onSeeMoreTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MoreNews(),
-                  ),
-                ),
+                onSeeMoreTap: () => context.push(RouteManager.moreNews),
               ),
               SizedBox(
                 height: 150.h,
@@ -161,12 +154,7 @@ class _PageTabViewState extends State<PageTabView>
               ),
               RowTagSeeMore(
                 tag: "Hot & trendings",
-                onSeeMoreTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HotAndTrendings(),
-                  ),
-                ),
+                onSeeMoreTap: () => context.push(RouteManager.hotTrendings),
               ),
               SizedBox(
                 height: 150.h,

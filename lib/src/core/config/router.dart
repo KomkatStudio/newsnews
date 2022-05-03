@@ -7,6 +7,7 @@ import 'package:newsnews/src/presentation/favorite/view/favorite_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/detail_article_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/feed_screen.dart';
 import 'package:newsnews/src/presentation/feed/view/hot_and_trendings.dart';
+import 'package:newsnews/src/presentation/feed/view/more_breaking_news.dart';
 import 'package:newsnews/src/presentation/feed/view/webview_screen.dart';
 import 'package:newsnews/src/presentation/main/presentation/view/main_screen.dart';
 import 'package:newsnews/src/presentation/profile/cubit/profile_cubit.dart';
@@ -48,6 +49,16 @@ class RouteManager {
       GoRoute(
         path: feeds,
         builder: (context, state) => const FeedScreen(),
+      ),
+      GoRoute(
+        path: moreNews,
+        builder: (context, state) => const MoreNews(),
+      ),
+      GoRoute(
+        path: '$moreNews/:category',
+        builder: (context, state) => MoreNews(
+          title: state.params['category'],
+        ),
       ),
       GoRoute(
         path: search,
@@ -104,7 +115,7 @@ class RouteManager {
       GoRoute(
         path: webview,
         builder: (context, state) => const WebViewScreen(),
-      )
+      ),
     ],
     debugLogDiagnostics: true,
   );
