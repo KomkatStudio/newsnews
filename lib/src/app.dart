@@ -2,6 +2,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
@@ -36,7 +37,7 @@ class App extends StatelessWidget {
           return BlocSelector<ThemeCubit, ThemeState, bool>(
             selector: (state) => state is DarkTheme,
             builder: (context, isDarkMode) {
-              return MaterialApp(
+              return MaterialApp.router(
                 title: "NewsNews",
                 debugShowCheckedModeBanner: false,
                 useInheritedMediaQuery: true,
@@ -57,7 +58,8 @@ class App extends StatelessWidget {
                 ),
                 themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
                 darkTheme: ThemeData.dark(),
-                routes: RouteManager.listRoute,
+                routerDelegate: RouteManager.router.routerDelegate,
+                routeInformationParser: RouteManager.router.routeInformationParser,
               );
             },
           );

@@ -58,6 +58,7 @@ dependencies:
   lottie: ^1.2.2
   flutter_staggered_animations: ^1.0.0
   google_mobile_ads: ^1.2.0
+  go_router: ^3.1.0
 
 dev_dependencies:
   flutter_test:

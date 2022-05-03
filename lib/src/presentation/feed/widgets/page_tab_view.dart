@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/constant/numberic_constant.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
@@ -100,10 +101,9 @@ class _PageTabViewState extends State<PageTabView>
                       imageURL: listForTop[index].urlToImage,
                       newsTag: "EVERYTHING",
                       newsTitle: listForTop[index].title!,
-                      onHeadlineTapFunction: () => Navigator.pushNamed(
-                        context,
+                      onHeadlineTapFunction: () => context.go(
                         RouteManager.detailArticle,
-                        arguments: {
+                        extra: <String, dynamic>{
                           "article": listForTop[index],
                           "newsTag": "EVERYTHING",
                         },
@@ -145,10 +145,9 @@ class _PageTabViewState extends State<PageTabView>
                       tag: "EVERYTHING",
                       time: listForBreakingNews[index].publishedAt,
                       verticalMargin: 16.h,
-                      onNewsTapFunction: () => Navigator.pushNamed(
-                        context,
+                      onNewsTapFunction: () => context.go(
                         RouteManager.detailArticle,
-                        arguments: {
+                        extra: <String, dynamic>{
                           "article": listForBreakingNews[index],
                           "newsTag": "EVERYTHING",
                         },
@@ -182,10 +181,9 @@ class _PageTabViewState extends State<PageTabView>
                       tag: "EVERYTHING",
                       time: listForBreakingNews[index].publishedAt,
                       verticalMargin: 16.h,
-                      onNewsTapFunction: () => Navigator.pushNamed(
-                        context,
+                      onNewsTapFunction: () => context.go(
                         RouteManager.detailArticle,
-                        arguments: {
+                        extra: <String, dynamic>{
                           "article": listForHotTrendings[index],
                           "newsTag": "EVERYTHING",
                         },

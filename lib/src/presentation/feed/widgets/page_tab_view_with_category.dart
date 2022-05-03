@@ -103,14 +103,7 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
                       // await context
                       //     .read<NewsCubit>()
                       //     .hitFavorite(category: widget.category);
-                      Navigator.pushNamed(
-                        context,
-                        RouteManager.detailArticle,
-                        arguments: {
-                          "article": listForTop[index],
-                          "newsTag": widget.category,
-                        },
-                      );
+                      
                     },
                   );
                 },
