@@ -517,7 +517,7 @@ class _NewsImageAndTitle extends StatelessWidget {
                   ),
                   padding: EdgeInsets.only(left: 10.w),
                   child: Text(
-                    article.title!,
+                    article.title ?? "Notitle",
                     style: TextStyle(
                       height: 1.4,
                       fontSize: 24.sp,
