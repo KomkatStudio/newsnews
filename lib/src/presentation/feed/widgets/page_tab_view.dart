@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/constant/numberic_constant.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
@@ -72,15 +71,15 @@ class _PageTabViewState extends State<PageTabView>
         final tagArticleList = listArticle
             .getRange(0, NumbericContant.pageSizeForToplines)
             .toList();
-        log(tagArticleList.length.toString());
+        // log(tagArticleList.length.toString());
         final listForTop = tagArticleList.getRange(0, 3).toList();
-        log(listForTop.length.toString());
+        // log(listForTop.length.toString());
 
         final listForBreakingNews = tagArticleList.getRange(3, 7).toList();
-        log(listForBreakingNews.length.toString());
+        // log(listForBreakingNews.length.toString());
 
         final listForHotTrendings = tagArticleList.getRange(7, 11).toList();
-        log(listForHotTrendings.length.toString());
+        // log(listForHotTrendings.length.toString());
         return ScrollConfiguration(
           behavior: CustomScroll(),
           child: ListView(
@@ -89,36 +88,30 @@ class _PageTabViewState extends State<PageTabView>
                 height: 24.h,
               ),
               BigTag(tag: "Top Headline", fontSize: 24.sp),
-              SizedBox(
-                height: 12.h,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 2.w),
+                color: Theme.of(context).scaffoldBackgroundColor,
+                height: 330.h,
+                child: PageView.builder(
+                  onPageChanged: changePage,
+                  itemCount: listForTop.length,
+                  controller: pageController,
+                  itemBuilder: (context, index) {
+                    return HeadlineCard(
+                      imageURL: listForTop[index].urlToImage,
+                      newsTag: "EVERYTHING",
+                      newsTitle: listForTop[index].title!,
+                      onHeadlineTapFunction: () => context.go(
+                        RouteManager.detailArticle,
+                        extra: <String, dynamic>{
+                          "article": listForTop[index],
+                          "newsTag": "EVERYTHING",
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
-              Builder(builder: (context) {
-                return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 2.w),
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  height: 320.h,
-                  child: PageView.builder(
-                    onPageChanged: changePage,
-                    itemCount: listForTop.length,
-                    controller: pageController,
-                    itemBuilder: (context, index) {
-                      return HeadlineCard(
-                        imageURL: listForTop[index].urlToImage,
-                        newsTag: "EVERYTHING",
-                        newsTitle: listForTop[index].title!,
-                        onHeadlineTapFunction: () => Navigator.pushNamed(
-                          context,
-                          RouteManager.detailArticle,
-                          arguments: {
-                            "article": listForTop[index],
-                            "newsTag": "EVERYTHING",
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                );
-              }),
               SizedBox(
                 height: 8.h,
               ),
@@ -135,32 +128,26 @@ class _PageTabViewState extends State<PageTabView>
                 onSeeMoreTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const MoreNews(
-                      title: "More Breaking News",
-                    ),
+                    builder: (context) => const MoreNews(),
                   ),
                 ),
               ),
               SizedBox(
-                height: 7.h,
-              ),
-              SizedBox(
-                height: 140.h,
+                height: 150.h,
                 child: ListView.builder(
                   itemCount: 3,
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return NewsCard(
-                      imageUrl: listForBreakingNews[index].urlToImage!,
+                      imageUrl: listForBreakingNews[index].urlToImage,
                       title: listForBreakingNews[index].title!,
                       tag: "EVERYTHING",
                       time: listForBreakingNews[index].publishedAt,
-                      verticalMargin: 12.h,
-                      onNewsTapFunction: () => Navigator.pushNamed(
-                        context,
+                      verticalMargin: 16.h,
+                      onNewsTapFunction: () => context.go(
                         RouteManager.detailArticle,
-                        arguments: {
+                        extra: <String, dynamic>{
                           "article": listForBreakingNews[index],
                           "newsTag": "EVERYTHING",
                         },
@@ -170,7 +157,7 @@ class _PageTabViewState extends State<PageTabView>
                 ),
               ),
               SizedBox(
-                height: 14.h,
+                height: 8.h,
               ),
               RowTagSeeMore(
                 tag: "Hot & trendings",
@@ -182,10 +169,7 @@ class _PageTabViewState extends State<PageTabView>
                 ),
               ),
               SizedBox(
-                height: 7.h,
-              ),
-              SizedBox(
-                height: 140.h,
+                height: 150.h,
                 child: ListView.builder(
                   itemCount: 3,
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -196,11 +180,10 @@ class _PageTabViewState extends State<PageTabView>
                       title: listForHotTrendings[index].title!,
                       tag: "EVERYTHING",
                       time: listForBreakingNews[index].publishedAt,
-                      verticalMargin: 12.h,
-                      onNewsTapFunction: () => Navigator.pushNamed(
-                        context,
+                      verticalMargin: 16.h,
+                      onNewsTapFunction: () => context.go(
                         RouteManager.detailArticle,
-                        arguments: {
+                        extra: <String, dynamic>{
                           "article": listForHotTrendings[index],
                           "newsTag": "EVERYTHING",
                         },

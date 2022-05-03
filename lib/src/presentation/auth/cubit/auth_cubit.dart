@@ -27,8 +27,10 @@ class AuthCubit extends Cubit<AuthState> {
     signInGoogle.fold((l) {
       if (l is UserCancelFailure) {
         emit(const AuthError("user cancel"));
+      } else if (l is TimeoutServerFailure) {
+        emit(const AuthError("Time out server error"));
       } else {
-        emit(const AuthError("Server error"));
+        emit(const AuthError("Server Firebase error"));
       }
     }, ((r) => emit(AuthSuccessful(r.user!.email!))));
   }

@@ -24,10 +24,10 @@ class HeadlineCard extends StatelessWidget {
     return GestureDetector(
       onTap: onHeadlineTapFunction,
       child: Container(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(15),
           boxShadow: const [
             BoxShadow(
               color: Colors.black12,
@@ -50,7 +50,7 @@ class HeadlineCard extends StatelessWidget {
                       cacheManager: CustomCacheManager.customCacheManager,
                       imageUrl: imageURL ?? "",
                       imageBuilder: (context, imageProvider) => Container(
-                        height: 200.h,
+                        height: 190.h,
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             image: imageProvider,
@@ -62,7 +62,7 @@ class HeadlineCard extends StatelessWidget {
                       ),
                       progressIndicatorBuilder: (context, string, progress) {
                         return Container(
-                          height: 200.h,
+                          height: 190.h,
                           child: Center(
                             child: CircularProgressIndicator(
                               value: progress.progress,
@@ -73,11 +73,9 @@ class HeadlineCard extends StatelessWidget {
                         );
                       },
                       errorWidget: (context, string, dymamic) => Container(
-                        height: 200.h,
+                        height: 190.h,
                         child: const Center(
-                          child: CustomError(
-                            messageError: "This no image or fail",
-                          ),
+                          child: CustomError(),
                         ),
                         margin: EdgeInsets.only(bottom: 10.h),
                       ),

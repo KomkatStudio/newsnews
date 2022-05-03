@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -38,10 +36,11 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
         idToken: googleAuth?.idToken,
       );
       return await _firebaseAuth.signInWithCredential(credential);
+    } on TimeoutServerException {
+      throw TimeoutServerException();
     } on UserCancelException {
       throw UserCancelException();
     } catch (e) {
-      log(e.toString());
       throw FirebaseServerException();
     }
   }
@@ -61,7 +60,8 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
       final user = await getCurrentUser();
       final userCollection = _firebaseFirestore.collection('users');
       userCollection.doc(user.uid).update({
-        'favorites': FieldValue.arrayUnion([articleModel.toJsonAndSnapshot()])
+        'favoriteArticle':
+            FieldValue.arrayUnion([articleModel.toJsonAndSnapshot()])
       });
     } catch (e) {
       throw FirebaseServerException();
@@ -73,9 +73,12 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
     try {
       final userCollection = _firebaseFirestore.collection('users');
       final user = await getCurrentUser();
-      userCollection.doc(user.uid).get().then((userDoc) {
+
+      await userCollection.doc(user.uid).get().then((userDoc) {
         if (!userDoc.exists) {
           userCollection.doc(user.uid).set(userModel.toDocument());
+        } else {
+          userCollection.doc(user.uid).update(userModel.toDocument());
         }
       });
     } catch (e) {
@@ -89,10 +92,29 @@ class FirebaseServicesDatasourceImpl extends FirebaseServicesDatasource {
       final user = await getCurrentUser();
       final userSnapshot =
           await _firebaseFirestore.collection('users').doc(user.uid).get();
-      final userData = UserModel.fromSnapshot(userSnapshot);
-      return userData;
+      return UserModel.fromSnapshot(userSnapshot);
     } catch (e) {
+      // rethrow;
       throw FirebaseServerException();
     }
   }
+
+  // @override
+  // Future<void> updateReadingCategoryOfUser(String category) async {
+  //   try {
+
+  //     final user = await getCurrentUser();
+  //     final userCollection = _firebaseFirestore.collection('users');
+  //     await userCollection.doc(user.uid).get().then((userDoc) async {
+  //       log("run");
+  //       Map<String, dynamic> data =
+  //           Map.from((userDoc.data()?['favorites'] as Map<String, dynamic>));
+  //       data.update(category, (value) => ++value, ifAbsent: () => 1);
+  //       await userCollection.doc(user.uid).update({'favorites': data});
+  //     });
+  //   } catch (e) {
+  //     // rethrow;
+  //     throw FirebaseServerException();
+  //   }
+  // }
 }

@@ -14,11 +14,19 @@
       },
       "oauth_client": [
         {
-          "client_id": "612647796004-fv5qj5g17narv3qq0b1jqu90fveokj2q.apps.googleusercontent.com",
+          "client_id": "612647796004-2f88r67v4ed4tkkvm001d7a1sqv9iop1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.komkat.newsnews",
-            "certificate_hash": "1920f73bffdc69f180b22e3db43a0118e75b5d3f"
+            "certificate_hash": "8859973dbd3b8af65c2fc76a59e60e369cd3a201"
+          }
+        },
+        {
+          "client_id": "612647796004-984n1dtvgaor086ifnnmp28b3f4fcatp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.komkat.newsnews",
+            "certificate_hash": "715d12ce4955482e242124c31ea810c1944c409b"
           }
         },
         {

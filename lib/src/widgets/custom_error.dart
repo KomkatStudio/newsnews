@@ -4,9 +4,9 @@ import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class CustomError extends StatelessWidget {
-  const CustomError({Key? key, required this.messageError}) : super(key: key);
+  const CustomError({Key? key, this.messageError}) : super(key: key);
 
-  final String messageError;
+  final String? messageError;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,13 +19,15 @@ class CustomError extends StatelessWidget {
         SizedBox(
           height: 5.h,
         ),
-        Text(
-          messageError,
-          style: TextStyle(
-            color: Palette.primaryColor,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
+        messageError != null
+            ? Text(
+                messageError!,
+                style: TextStyle(
+                  color: Palette.primaryColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              )
+            : const SizedBox(),
       ],
     );
   }

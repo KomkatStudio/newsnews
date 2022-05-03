@@ -1,12 +1,10 @@
-import 'dart:developer';
-
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
 import 'package:newsnews/src/presentation/feed/widgets/page_tab_view.dart';
+
 import 'package:newsnews/src/presentation/feed/widgets/page_tab_view_with_category.dart';
 import 'package:newsnews/src/widgets/circle_loading.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -43,7 +41,7 @@ class _FeedScreenState extends State<FeedScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 9,
+      length: 8,
       child: Scaffold(
         appBar: AppBar(
           elevation: 2,
@@ -74,19 +72,24 @@ class _FeedScreenState extends State<FeedScreen>
           ),
           actions: [
             IconButton(
-              icon: Badge(
-                badgeColor: Palette.primaryColor,
-                badgeContent: const Text(
-                  "3",
-                  style: TextStyle(color: Palette.backgroundBoxColor),
-                ),
-                child: const Icon(
-                  PhosphorIcons.bellSimple,
-                ),
-                position: const BadgePosition(top: -10, end: -6),
+              // icon: Badge(
+              //   badgeColor: Palette.primaryColor,
+              //   badgeContent: const Text(
+              //     "3",
+              //     style: TextStyle(color: Palette.backgroundBoxColor),
+              //   ),
+              //   child: const Icon(
+              //     PhosphorIcons.bellSimple,
+              //   ),
+              //   position: const BadgePosition(top: -10, end: -6),
+              // ),
+              icon: const Icon(
+                PhosphorIcons.arrowClockwise,
               ),
               iconSize: 26,
-              onPressed: () {},
+              splashRadius: 24,
+              onPressed: () async =>
+                  await context.read<NewsCubit>().getArticles(),
             ),
           ],
         ),
@@ -99,7 +102,7 @@ class _FeedScreenState extends State<FeedScreen>
                 child: Text(state.message),
               );
             } else if (state is NewsLoaded) {
-              log(state.listArticle.length.toString());
+              // log(state.listArticle.length.toString());
               return TabBarView(controller: tabController, children: [
                 const PageTabView(),
                 for (int index = 1; index < listCategory.length; index++)

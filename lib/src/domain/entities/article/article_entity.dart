@@ -20,7 +20,7 @@ class ArticleEntity extends Equatable {
     this.description,
     this.url,
     this.urlToImage,
-    this.category, 
+    this.category,
     this.publishedAt,
     this.content,
   });

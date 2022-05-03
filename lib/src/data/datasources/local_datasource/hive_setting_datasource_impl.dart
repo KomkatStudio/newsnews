@@ -7,11 +7,12 @@ class HiveSettingDatasourceImpl extends HiveSettingDatasource {
   HiveSettingDatasourceImpl({required this.themeBox});
 
   @override
-  Future<bool> getDarkMode() async => themeBox.get('darkMode', defaultValue: false);
+  Future<bool> getDarkMode() async =>
+      themeBox.get('darkMode', defaultValue: false);
 
   @override
   Future<bool> changeDarkModeStatus({required bool value}) async {
-    await themeBox.put('darkMode',value);
+    await themeBox.put('darkMode', value);
     return value;
   }
 }

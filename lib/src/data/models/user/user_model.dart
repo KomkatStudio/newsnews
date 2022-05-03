@@ -7,7 +7,8 @@ class UserModel extends UserEntity {
     required String? uuid,
     required String? displayName,
     required String? email,
-    required List<ArticleModel>? favorites,
+    required Map<String, int>? favorites,
+    required List<ArticleModel>? favoriteArticle,
     required List<String>? interest,
     required String? imageUrl,
   }) : super(
@@ -15,6 +16,7 @@ class UserModel extends UserEntity {
           displayName: displayName,
           email: email,
           favorites: favorites,
+          favoriteArticle: favoriteArticle,
           interest: interest,
           imageUrl: imageUrl,
         );
@@ -22,15 +24,18 @@ class UserModel extends UserEntity {
   factory UserModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> snapshot) {
     return UserModel(
-      uuid: snapshot.data()!['uuid'] as String?,
-      displayName: snapshot.data()!['displayName'] as String?,
-      email: snapshot.data()!['email'] as String?,
-      favorites: (snapshot.data()!['favorites'] as List<ArticleModel>?)
+      uuid: snapshot.data()?['uid'] as String?,
+      displayName: snapshot.data()?['displayName'] as String?,
+      email: snapshot.data()?['email'] as String?,
+      favorites: Map<String, int>.from(snapshot.data()?['favorites'] ?? {}),
+      imageUrl: snapshot.data()?['imageUrl'] as String?,
+      interest: (snapshot.data()?['interest'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      favoriteArticle: (snapshot.data()?['favoriteArticle'] as List<dynamic>?)
           ?.map((e) => ArticleModel.fromSnapshot(
               e as DocumentSnapshot<Map<String, dynamic>>))
           .toList(),
-      imageUrl: snapshot.data()!['imageUrl'] as String?,
-      interest: (snapshot.data()!['interest'] as List<String>?),
     );
   }
   Map<String, dynamic> toDocument() {
@@ -41,6 +46,7 @@ class UserModel extends UserEntity {
       'favorites': favorites,
       'imageUrl': imageUrl,
       'interest': interest,
+      'favoriteArticle': favoriteArticle,
     };
   }
 
@@ -49,9 +55,11 @@ class UserModel extends UserEntity {
       uuid: entity?.uuid,
       displayName: entity?.displayName,
       email: entity?.email,
-      favorites: entity?.favorites as List<ArticleModel>?,
+      favorites: entity?.favorites,
       imageUrl: entity?.imageUrl,
       interest: entity?.interest,
+      favoriteArticle:
+          entity?.favoriteArticle?.map(ArticleModel.fromEntity).toList(),
     );
   }
 }

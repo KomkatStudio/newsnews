@@ -6,8 +6,12 @@ enum Flavor {
 
 class FlavorValues {
   final String? baseUrl;
+  final String? testUrl;
 
-  FlavorValues({this.baseUrl});
+  FlavorValues({
+    this.baseUrl,
+    this.testUrl,
+  });
 }
 
 class FlavorConfig {
@@ -37,7 +41,10 @@ void setFlavorDevelopment() {
   FlavorConfig(
       flavor: Flavor.dev,
       name: "NewsNews-Dev",
-      values: FlavorValues(baseUrl: "https://newsapi.org/v2"));
+      values: FlavorValues(
+          baseUrl: "https://newsapi.org/v2",
+          testUrl:
+              "https://01ee-116-105-225-220.ngrok.io/api/v1"));
 }
 
 void setFlavorTesting() {

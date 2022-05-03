@@ -2,10 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:newsnews/src/core/config/custom_cache_manager.dart';
+import 'package:newsnews/src/core/extension/stringx.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:newsnews/src/widgets/custom_error.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'package:newsnews/src/core/extension/extension.dart';
+import 'package:newsnews/src/core/extension/datetimex.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({
@@ -88,9 +89,7 @@ class NewsCard extends StatelessWidget {
                   errorWidget: (context, string, dymamic) => SizedBox(
                     height: 200.h,
                     child: const Center(
-                      child: CustomError(
-                        messageError: "No image here",
-                      ),
+                      child: CustomError(),
                     ),
                   ),
                 ),
@@ -136,7 +135,7 @@ class NewsCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Tooltip(
-                        message: tag,
+                        message: tag.toUppercaseFirstLetter,
                         child: Container(
                           height: 30.h,
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -149,7 +148,7 @@ class NewsCard extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              tag,
+                              tag.toUppercaseFirstLetter,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
@@ -171,7 +170,7 @@ class NewsCard extends StatelessWidget {
                             color: Palette.primaryColor,
                           ),
                           Text(
-                            time?.getTimeAgo() ?? "Recently",
+                            time?.getTimeAgo ?? "Recently",
                             style: TextStyle(
                               color: Palette.descriptionColor,
                             ),

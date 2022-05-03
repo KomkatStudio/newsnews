@@ -9,7 +9,6 @@ abstract class ThemeState extends Equatable {
 
 class ThemeInitial extends ThemeState {}
 
-class DarkTheme extends ThemeState{}
+class DarkTheme extends ThemeState {}
 
-class LightTheme extends ThemeState{}
-
+class LightTheme extends ThemeState {}

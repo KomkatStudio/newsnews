@@ -2,10 +2,13 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
+import 'package:newsnews/src/presentation/feed/cubit/news_cubit.dart';
 import 'package:newsnews/src/presentation/profile/cubit/theme_cubit.dart';
+import 'package:newsnews/src/presentation/search/cubit/search_cubit.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -15,20 +18,26 @@ class App extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<ThemeCubit>(
-          create: (context) => s1<ThemeCubit>(),
+          create: (context) => injector<ThemeCubit>(),
         ),
         BlocProvider<AuthCubit>(
-          create: (context) => s1<AuthCubit>(),
+          create: (context) => injector<AuthCubit>(),
+        ),
+        BlocProvider<NewsCubit>(
+          create: (context) => injector<NewsCubit>(),
+        ),
+        BlocProvider<SearchCubit>(
+          create: (context) => injector<SearchCubit>(),
         ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(411, 823),
         minTextAdapt: true,
-        builder: (context) {
+        builder: () {
           return BlocSelector<ThemeCubit, ThemeState, bool>(
             selector: (state) => state is DarkTheme,
             builder: (context, isDarkMode) {
-              return MaterialApp(
+              return MaterialApp.router(
                 title: "NewsNews",
                 debugShowCheckedModeBanner: false,
                 useInheritedMediaQuery: true,
@@ -49,7 +58,8 @@ class App extends StatelessWidget {
                 ),
                 themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
                 darkTheme: ThemeData.dark(),
-                routes: RouteManager.listRoute,
+                routerDelegate: RouteManager.router.routerDelegate,
+                routeInformationParser: RouteManager.router.routeInformationParser,
               );
             },
           );

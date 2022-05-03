@@ -13,17 +13,10 @@ class NewsLoading extends NewsState {}
 
 class NewsLoaded extends NewsState {
   final List<ArticleEntity> listArticle;
+  final List<ArticleEntity2> listForYou;
+  final List<ArticleEntity2> listAllFromAI;
 
-  const NewsLoaded(this.listArticle);
-
-  @override
-  List<Object> get props => [listArticle];
-}
-
-class NewsCategoryLoaded extends NewsState {
-  final List<ArticleEntity> listArticle;
-
-  const NewsCategoryLoaded(this.listArticle);
+  const NewsLoaded(this.listArticle, this.listForYou, this.listAllFromAI);
 
   @override
   List<Object> get props => [listArticle];
@@ -37,7 +30,6 @@ class NewsError extends NewsState {
   @override
   List<Object> get props => [message];
 }
-
 
 class NewsCategoryError extends NewsState {
   final String message;

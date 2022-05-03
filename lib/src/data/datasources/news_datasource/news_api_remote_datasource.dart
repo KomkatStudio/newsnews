@@ -6,7 +6,6 @@ import 'package:newsnews/src/core/config/flavor_config.dart';
 import 'package:newsnews/src/core/constant/numberic_constant.dart';
 import 'package:newsnews/src/core/errors/exception.dart';
 import 'package:newsnews/src/data/models/article/article_model.dart';
-import 'package:newsnews/src/domain/entities/article/article_entity.dart';
 import 'dart:developer';
 
 class NewsApiRemoteDatasouce {
@@ -51,7 +50,7 @@ class NewsApiRemoteDatasouce {
   }
 
   //Stream
-  Future<List<ArticleEntity>> getEverythingFromQuery(
+  Future<List<ArticleModel>> getEverythingFromQuery(
       {required String path,
       String? query,
       int pageSize = NumbericContant.pageSize}) async {
@@ -60,7 +59,10 @@ class NewsApiRemoteDatasouce {
     };
     final url =
         "${FlavorConfig.instance.value.baseUrl!}$path?q=$query&pageSize=$pageSize";
-    final response = await http.get(Uri.parse(url), headers: header);
+    final response = await http.get(Uri.parse(url), headers: header).timeout(
+          const Duration(minutes: 1),
+          onTimeout: () => throw ServerException(),
+        );
     if (response.statusCode == 200) {
       var converted = jsonDecode(response.body);
       Iterable list = converted['articles'];
@@ -69,4 +71,6 @@ class NewsApiRemoteDatasouce {
       throw ServerException();
     }
   }
+
+  
 }

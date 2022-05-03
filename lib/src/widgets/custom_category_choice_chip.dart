@@ -8,11 +8,13 @@ class CustomCategoryChoiceChip extends StatelessWidget {
     required this.category,
     required this.choiceStatus,
     this.onSelectCategoryFunction,
+    this.sideBorderIsPrimaryColor = true,
   }) : super(key: key);
 
   final String category;
   final bool choiceStatus;
   final ValueChanged<bool>? onSelectCategoryFunction;
+  final bool sideBorderIsPrimaryColor;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,7 +22,14 @@ class CustomCategoryChoiceChip extends StatelessWidget {
       child: ChoiceChip(
         shape: RoundedRectangleBorder(
           borderRadius: const BorderRadius.all(Radius.circular(6)),
-          side: BorderSide(color: Palette.primaryColor, width: 1.4),
+          side: sideBorderIsPrimaryColor
+              ? BorderSide(color: Palette.primaryColor, width: 1.4)
+              : BorderSide(
+                  color: choiceStatus
+                      ? Palette.primaryColor
+                      : Palette.descriptionColor,
+                  width: 1.4,
+                ),
         ),
         label: Text(category),
         labelStyle: TextStyle(

@@ -11,7 +11,7 @@ class GetDarkMode extends Usecase<bool, NoParams> {
   }) : _settingRepository = settingRepository;
 
   @override
-  Future<Either<Failure, bool>> call(NoParams params) {
-    return _settingRepository.getDarkModeStatus();
+  Future<Either<Failure, bool>> call(NoParams params) async {
+    return await _settingRepository.getDarkModeStatus();
   }
 }

@@ -13,7 +13,8 @@ class ChangeDarkModeStatus extends Usecase<NoParams, Params> {
 
   @override
   Future<Either<Failure, NoParams?>> call(Params params) async {
-    return await localSettingRepository.changeDarkModeStatus(value: params.value); 
+    return await localSettingRepository.changeDarkModeStatus(
+        value: params.value);
   }
 }
 

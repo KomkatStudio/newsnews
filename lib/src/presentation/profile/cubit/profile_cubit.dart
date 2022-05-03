@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:newsnews/src/core/usecases/usecase.dart';
 import 'package:newsnews/src/domain/entities/user/user_entity.dart';
 import 'package:newsnews/src/domain/usecases/get_user_data.dart';
+import 'package:newsnews/src/domain/usecases/save_user_information.dart';
 import 'package:newsnews/src/domain/usecases/sign_out_the_app.dart';
 
 part 'profile_state.dart';
@@ -10,9 +11,14 @@ part 'profile_state.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   final SignOutTheApp _signOutTheApp;
   final GetUserData _getUserData;
+  final SaveUserInformation _saveUserInformation;
+
   ProfileCubit(
-      {required GetUserData getUserData, required SignOutTheApp signOutTheApp})
+      {required GetUserData getUserData,
+      required SignOutTheApp signOutTheApp,
+      required SaveUserInformation saveUserInformation})
       : _signOutTheApp = signOutTheApp,
+        _saveUserInformation = saveUserInformation,
         _getUserData = getUserData,
         super(ProfileInitial()) {
     getUserInformation();
@@ -32,8 +38,26 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(LoadUserDataLoading());
     final getDataUnit = await _getUserData.call(NoParams());
     getDataUnit.fold(
-        (l) => emit(const LoadUserDataFail(
-            message: "firebase error signout no thanh cong")),
+        (l) => emit(const LoadUserDataFail(message: "Load user data fail")),
         (r) => emit(LoadUserDataSuccessfully(user: r!)));
+  }
+
+  Future<void> updateUserInformation(
+      List<String> interest, String displayName) async {
+    if (state is LoadUserDataSuccessfully) {
+      final state = this.state as LoadUserDataSuccessfully;
+      UserEntity user =
+          state.user.copyWith(interest: interest, displayName: displayName);
+      emit(UpdateUserDataLoading());
+      await _saveUserInformation
+          .call(SaveParams(userEntity: user))
+          .then((value) {
+        value.fold(
+            (l) => emit(
+                const UpdateUserDataFail(message: "Update user data fail")),
+            (r) => emit(const UpdateUserDataSuccessfully(
+                message: "Save user data successfully")));
+      });
+    }
   }
 }

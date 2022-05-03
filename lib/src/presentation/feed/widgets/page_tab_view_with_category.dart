@@ -9,7 +9,6 @@ import 'package:newsnews/src/presentation/feed/view/more_breaking_news.dart';
 import 'package:newsnews/src/presentation/feed/widgets/big_tag.dart';
 import 'package:newsnews/src/presentation/feed/widgets/headline_card.dart';
 import 'package:newsnews/src/presentation/feed/widgets/row_tag_see_more.dart';
-import 'package:newsnews/src/widgets/custom_scroll.dart';
 import 'package:newsnews/src/widgets/news_card.dart';
 
 class PageTabViewWithCategory extends StatefulWidget {
@@ -72,96 +71,87 @@ class _PageTabViewWithCategoryState extends State<PageTabViewWithCategory>
       },
       builder: (context, listArticle) {
         final tagArticleList = listArticle
-            .where((element) => element.category == widget.category)
+            .where((element) =>
+                element.category!.toLowerCase() ==
+                widget.category.toLowerCase())
             .toList();
         final listForTop = tagArticleList.getRange(0, 3).toList();
         final listForMore =
             tagArticleList.getRange(4, tagArticleList.length).toList();
-        return ScrollConfiguration(
-          behavior: CustomScroll(),
-          child: ListView(
-            children: [
-              SizedBox(
-                height: 24.h,
+        return ListView(
+          children: [
+            SizedBox(
+              height: 24.h,
+            ),
+            BigTag(
+              tag: "Top ${widget.category.toUpperCase()} Headlines",
+              fontSize: 24.sp,
+            ),
+            Container(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              height: 330.h,
+              child: PageView.builder(
+                onPageChanged: changePage,
+                itemCount: listForTop.length,
+                controller: pageController,
+                itemBuilder: (context, index) {
+                  return HeadlineCard(
+                    imageURL: listForTop[index].urlToImage,
+                    newsTag: widget.category,
+                    newsTitle: listForTop[index].title!,
+                    onHeadlineTapFunction: ()  {
+                      // await context
+                      //     .read<NewsCubit>()
+                      //     .hitFavorite(category: widget.category);
+                      
+                    },
+                  );
+                },
               ),
-              BigTag(
-                tag: "Top ${widget.category.toUpperCase()} Headlines",
-                fontSize: 24.sp,
+            ),
+            SizedBox(
+              height: 8.h,
+            ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: _buildPageIndicator(),
+            ),
+            SizedBox(
+              height: 14.h,
+            ),
+            RowTagSeeMore(
+              tag: "More ${widget.category.toUpperCase()} news",
+              onSeeMoreTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MoreNews(title: widget.category),
+                ),
               ),
-              SizedBox(
-                height: 12.h,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 2.w),
-                color: Theme.of(context).scaffoldBackgroundColor,
-                height: 320.h,
-                child: PageView.builder(
-                  onPageChanged: changePage,
-                  itemCount: listForTop.length,
-                  controller: pageController,
-                  itemBuilder: (context, index) {
-                    return HeadlineCard(
-                      imageURL: listForTop[index].urlToImage,
-                      newsTag: widget.category,
-                      newsTitle: listForTop[index].title!,
-                      onHeadlineTapFunction: () => Navigator.pushNamed(
-                        context,
-                        RouteManager.detailArticle,
+            ),
+            SizedBox(height: 8.h),
+            SizedBox(
+              height: 300.h,
+              child: ListView.builder(
+                itemCount: listForMore.length,
+                itemBuilder: (context, index) {
+                  return NewsCard(
+                    imageUrl: listForMore[index].urlToImage ?? "",
+                    onNewsTapFunction: () => Navigator.pushNamed(
+                        context, RouteManager.detailArticle,
                         arguments: {
-                          "article": listForTop[index],
+                          "article": listForMore[index],
                           "newsTag": widget.category,
-                        },
-                      ),
-                    );
-                  },
-                ),
+                        }),
+                    tag: widget.category,
+                    time: listForMore[index].publishedAt,
+                    title: listForMore[index].title!,
+                    verticalMargin: 12.h,
+                  );
+                },
               ),
-              SizedBox(
-                height: 8.h,
-              ),
-              Wrap(
-                alignment: WrapAlignment.center,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: _buildPageIndicator(),
-              ),
-              SizedBox(
-                height: 14.h,
-              ),
-              RowTagSeeMore(
-                tag: "More ${widget.category.toUpperCase()} news",
-                onSeeMoreTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MoreNews(
-                      title: widget.category,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 140.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return NewsCard(
-                      imageUrl: listForMore[index].urlToImage ?? "",
-                      onNewsTapFunction: () => Navigator.pushNamed(
-                          context, RouteManager.detailArticle,
-                          arguments: {
-                            "article": listForMore[index],
-                            "newsTag": widget.category,
-                          }),
-                      tag: widget.category,
-                      time: listForMore[index].publishedAt,
-                      title: listForMore[index].title!,
-                      verticalMargin: 12.h,
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         );
       },
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/core/helpers/show_loading_dialog.dart';
 import 'package:newsnews/src/core/helpers/show_snackbar_impl.dart';
@@ -19,11 +20,7 @@ class AuthenticationScreen extends StatelessWidget {
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccessful) {
-            Navigator.pushNamedAndRemoveUntil(
-              context,
-              RouteManager.main,
-              (route) => false,
-            );
+            context.go(RouteManager.main);
             showSnackbarImpl(context,
                 message: "Signed in with your Google: " + state.email);
           } else if (state is AuthLoading) {
@@ -32,7 +29,7 @@ class AuthenticationScreen extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(state.message),
             ));
-            Navigator.pop(context);
+            context.pop();
           }
         },
         child: Center(
@@ -63,7 +60,7 @@ class AuthenticationScreen extends StatelessWidget {
                         context.read<AuthCubit>().signInUsingGoolge(),
                   );
                 }),
-                SizedBox(height: 12.h),
+                SizedBox(height: 14.h),
                 SignInWithButton(
                   logoName: 'Facebook',
                   logoPath: AssetPath.facebookLogo,
