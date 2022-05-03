@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/theme/palette.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -19,7 +20,7 @@ class WebViewScreen extends StatelessWidget {
             PhosphorIcons.arrowLeft,
             color: Palette.backgroundBoxColor,
           ),
-          onPressed: () => Navigator.pop(context),
+          onPressed: () => context.pop(),
         ),
         backgroundColor: Palette.primaryColor,
         title: Text(title!,
