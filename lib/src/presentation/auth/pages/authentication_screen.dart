@@ -60,7 +60,7 @@ class AuthenticationScreen extends StatelessWidget {
                         context.read<AuthCubit>().signInUsingGoolge(),
                   );
                 }),
-                SizedBox(height: 12.h),
+                SizedBox(height: 14.h),
                 SignInWithButton(
                   logoName: 'Facebook',
                   logoPath: AssetPath.facebookLogo,
