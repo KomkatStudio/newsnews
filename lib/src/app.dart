@@ -2,7 +2,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:newsnews/src/core/config/router.dart';
 import 'package:newsnews/src/di/injector.dart';
 import 'package:newsnews/src/presentation/auth/cubit/auth_cubit.dart';
@@ -59,7 +58,8 @@ class App extends StatelessWidget {
                 themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
                 darkTheme: ThemeData.dark(),
                 routerDelegate: RouteManager.router.routerDelegate,
-                routeInformationParser: RouteManager.router.routeInformationParser,
+                routeInformationParser:
+                    RouteManager.router.routeInformationParser,
               );
             },
           );
